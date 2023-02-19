@@ -1,29 +1,54 @@
 import { useNavigation } from '@react-navigation/native'
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+
+import { UserPhoto } from '../UserPhoto'
 
 import { COLORS } from '../../theme'
 
 import { styles } from "./styles"
 
-export const NavBar = ({ title, children }) => {
+export const NavBar = ({ title, isBackScreen, children }) => {
     const navigation = useNavigation()
-
-    const handleMenu = () => {
-        navigation.openDrawer()
-    }
 
     return (
         <View style={styles.container}>
-            <Ionicons.Button
-                onPress={handleMenu}
-                backgroundColor={COLORS.TRANSPARENT}
-                color={COLORS.WHITE}
-                name='menu-outline' 
-                size={28    }  
-            />
+            <View style={styles.ActionButtonContainer}>
+                {
+                    !isBackScreen ? (
+                        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                            <Ionicons 
+                                name="menu-outline" 
+                                size={35} 
+                                color={COLORS.GRAY_SECONDARY} 
+                            />
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <Ionicons 
+                                name="arrow-back" 
+                                size={35} 
+                                color={COLORS.GRAY_SECONDARY} 
+                            />
+                        </TouchableOpacity>
+                    )
+                }
+            </View>
 
-            <Text style={styles.title}>{ title }</Text>
+            <View style={styles.textContainer}>
+                <Text style={styles.title}>{ title }</Text>
+            </View>
+
+            <View style={styles.UserPhotoContainer}>
+                {!isBackScreen ? (
+                    <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                        <UserPhoto />
+                    </TouchableOpacity>
+                ) : (
+                    <View style={{ width: 30, height: 10 }}></View>
+                )
+                }
+            </View>
         </View>
     )
 }

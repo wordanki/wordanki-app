@@ -1,7 +1,12 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { Tabs } from './tabs'
+import Question from '../screens/Question'
+
+import Profile from '../screens/Profile'
+
 import { Drawer } from './drawer'
+
+import { NavBar } from '../components/NavBar'
 
 const Stack = createNativeStackNavigator()
 
@@ -13,6 +18,22 @@ export const Routes = () => {
                 component={Drawer}
                 options={{
                     headerShown: false
+                }} 
+            />
+
+            <Stack.Screen 
+                name='Question' 
+                component={Question}
+                options={{
+                    header: () => <NavBar isBackScreen title='Todas'></NavBar>
+                }} 
+            />
+
+            <Stack.Screen 
+                name='Profile' 
+                component={Profile}
+                options={{
+                    header: () => <NavBar isBackScreen title='Perfil'></NavBar>
                 }} 
             />
         </Stack.Navigator>

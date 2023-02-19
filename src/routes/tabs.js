@@ -103,7 +103,7 @@ const Tabs = () => (
             }}
         />
 
-        <Tab.Screen 
+        {/* <Tab.Screen 
             name="Profile" 
             component={ProfileStackNavigation} 
             options={{
@@ -116,7 +116,7 @@ const Tabs = () => (
                 );
                 }
             }}
-        />
+        /> */}
     </Tab.Navigator>
 )
 

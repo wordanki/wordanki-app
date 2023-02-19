@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: defaultSpacing,
     paddingTop: defaultSpacing * 2,
     paddingBottom: defaultSpacing / 2.5,
+    width: windowWidth,
     backgroundColor: COLORS.BLACK_PRIMARY,
     borderBottomWidth: 1,
     borderColor: COLORS.WHITE,
@@ -19,6 +20,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  ActionButtonContainer: {
+    // width: windowWidth / 3
+  },
+  textContainer: {
+    backgroundColor: COLORS.GRAY_QUATERNARY,
+    width: 150,
+    height: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius
+  },  
   title: {
     color: COLORS.WHITE,
     fontFamily: FONTS.REGULAR,

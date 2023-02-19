@@ -1,9 +1,17 @@
 import React from 'react';
+
 import { Text, View, TouchableHighlight } from 'react-native';
+import { useNavigation } from '@react-navigation/native'
 
 import { styles } from './styles';
 
 export default function AllWords() {
+    const navigation = useNavigation()
+
+    const handleStudy = () => {
+        navigation.navigate('Question')
+    }
+
     return (
         <>
         <Text style={styles.title}>Todas as palavras</Text>
@@ -22,7 +30,7 @@ export default function AllWords() {
                 </View>
                 <Text style={styles.numberInfo}>64</Text>
             </View>
-            <TouchableHighlight style={styles.studyButton}>
+            <TouchableHighlight onPress={handleStudy} style={styles.studyButton}>
                 <Text style={styles.studyText}>Estudar</Text>
             </TouchableHighlight>
         </View>

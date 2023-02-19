@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     tabBarStyle: {
         elevation: 0,
         shadowOpacity: 0,
-        height: 70
+        height: 60
     },
     tabBarItemStyle: {
         flexDirection: 'row',
