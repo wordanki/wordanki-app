@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableHighlight } from 'react-native'
+import { FontAwesome5 } from '@expo/vector-icons';
 
 import { AntDesign } from '@expo/vector-icons'
 import * as Speech from 'expo-speech';
@@ -10,54 +11,86 @@ import { styles } from "./styles"
 
 export default function Profile({ route }) {
     const [isSelectedWord, setIsSelectedWord] = useState()
-
-    const answers = ['Casa', 'Cavalo', 'Acredito', 'Alface', 'Não sei']
+    const [word, setWord] = useState("believe")
+    const [sentence, setSentence] = useState("I don't believe in ghosts at all.")
+    const answers = ['Casa', 'Cavalo', 'Acredito', 'Alface']
 
     const handleSound = () => {
-        Speech.speak('I dont believe in you!', {
+        Speech.stop();
+        Speech.speak(sentence, {
             language: 'en'
         });
     }
 
     return (
-        <View style={styles.container}>     
+        <View style={styles.container}>
             <View style={styles.questionContainer}>
-                <Text style={styles.question}>
-                    I don't <Text style={styles.word}>believe</Text> in ghosts at all.
-                </Text>
-
-                <TouchableOpacity onPress={handleSound}>
+                <TouchableHighlight onPress={handleSound} style={styles.soundButton}>
                     <AntDesign 
                         name="sound" 
                         size={30} 
-                        color={COLORS.GRAY_SECONDARY} 
+                        color={Speech.isSpeakingAsync ? COLORS.GRAY_SECONDARY : "red"} 
                     />
-                </TouchableOpacity>
+                </TouchableHighlight>
+                <Text style={styles.question}>
+                    {/* {sentence.split(' ', ',', '.').forEach(element => {
+                        element === word ? (<Text styles={styles.word}>{element}</Text>) : element
+                    })} */}
+                    I don't <Text style={styles.word}>believe</Text> in ghosts at all.
+                </Text>
             </View>
 
             <View>
                 {answers.map(answer => (
-                    <TouchableOpacity 
+                    <TouchableHighlight 
                         key={answer}
-                        style={{...styles.answerButton, backgroundColor: isSelectedWord === answer  ? COLORS.GREEN : COLORS.TRANSPARENT}} 
-                        onPress={() => setIsSelectedWord(answer)} 
+                        style={{
+                            ...styles.answerButton, 
+                            backgroundColor: isSelectedWord === answer  ? "#30B956" : "#31313E",
+                            borderColor: isSelectedWord === answer ? "#38D664" : "#414153",
+                        }} 
+                        onPress={() => setIsSelectedWord(answer)}
                     >
-                        <Text 
-                            style={styles.answerText}
-                        >
+                        <Text style={styles.answerText}>
                             {answer}
                         </Text>
-                    </TouchableOpacity>
+                    </TouchableHighlight>
                 ))}
+                <TouchableHighlight 
+                    key={"Não sei"}
+                    style={{
+                        ...styles.answerButton,
+                        backgroundColor: "#145C7E",
+                        borderColor: "#0E79A9",
+                    }} 
+                    onPress={() => setIsSelectedWord("Não sei")} 
+                >
+                    <Text style={styles.answerText}>Não sei</Text>
+                </TouchableHighlight>
             </View>
 
-            {isSelectedWord && (
-                <View style={styles.translation}>
+            {isSelectedWord ? (
+                <View style={{...styles.translation, borderColor: "#0E79A9"}}>
                     <Text style={styles.translationText}>
                         Eu não <Text style={styles.word}>acredito</Text> em fantasmas de jeito nenhum.
                     </Text>
                 </View>
+            ) : (
+                <View style={{...styles.translation, borderColor: "#383842"}}>
+                    <Text style={{...styles.translationText, color: "#aaaaaa",}}>
+                        A tradução da frase irá aparecer aqui depois que você clicar na resposta
+                    </Text>
+                </View>
             )}
+
+            <View style={styles.buttonsContainer}>
+                {isSelectedWord && <TouchableHighlight style={styles.changeWord}>
+                    <>
+                        <Text style={styles.textChangeWord}>Próxima</Text>
+                        <FontAwesome5 name="arrow-right" size={24} color="#dddddd"/>
+                    </>
+                </TouchableHighlight>}
+            </View>
         </View>
     )
 }

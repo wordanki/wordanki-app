@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, TouchableHighlight, ImageBackground, ScrollView } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
 
 import TopicContainer from '../topicContainer'
 
@@ -11,11 +10,11 @@ export default function Topics() {
         <>
         <View style={styles.titleContainer}>
             <Text style={styles.title}>Estude por tópicos</Text>
-            <FontAwesome5 name="arrow-right" size={24} color="#dddddd" />
+            <Text style={styles.seeMore}>Ver mais</Text>
         </View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.topics}>
-            <TopicContainer/>
-            <TopicContainer/>
+            <TopicContainer topic={'Trabalho'} width={300} marginTop={10} marginLeft={20} bgcolor={'444444'}/>
+            <TopicContainer topic={'Escola'} width={300} marginTop={10} marginLeft={20} bgcolor={'444444'}/>
         </ScrollView>
         </>
     );

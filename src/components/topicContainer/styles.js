@@ -3,12 +3,10 @@ import { COLORS, FONTS } from "../../theme"
 
 export const styles = StyleSheet.create({
     container: {
-        width: 300,
         height: 140,
-        backgroundColor: "#3E5287dd",
-        borderRadius: 15,
         marginTop: 10,
         marginLeft: 20,
+        borderRadius: 15,
     },
     imageContainer: {
         // width: "100%",
@@ -21,10 +19,21 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 10,
         justifyContent: "space-between",
-        backgroundColor: "#58367Abb",
+        // backgroundColor: "#58367Abb",
+        borderRadius: 15,
+    },
+    containerTop: {
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
     },
     titleTopic: {
         fontSize: 25,
+        color: "#ffffff",
+    },
+    totalWords: {
+        fontSize: 15,
         color: "#ffffff",
     },
     containerBottom: {

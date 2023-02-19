@@ -17,12 +17,11 @@ export const styles = StyleSheet.create({
         marginRight: 20,
         borderRadius: 12.5,
         justifyContent: "center",
+        overflow: "hidden",
     },
     completedBar: {
         height: "100%",
         backgroundColor: "#30B956",
-        borderTopLeftRadius: 12.5,
-        borderBottomLeftRadius: 12.5,
     },
     dailyGoalText: {
         color: "#dddddd",

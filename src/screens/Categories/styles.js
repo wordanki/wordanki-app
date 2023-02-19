@@ -5,14 +5,14 @@ import { COLORS, FONTS } from "../../theme"
 const windowWidth = Dimensions.get('window').width
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.BLACK_PRIMARY,
-    width: windowWidth,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  title: {
-    color: COLORS.WHITE
-  }
+    container: {
+      flex: 1,
+      backgroundColor: "#222228",
+      paddingHorizontal: 20,
+    },
+    title: {
+      color: COLORS.WHITE,
+      fontSize: 20,
+      marginTop: 20,
+    },
 })

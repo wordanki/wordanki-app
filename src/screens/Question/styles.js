@@ -9,52 +9,77 @@ const defaultSpacing = 20
 const maxWidth = windowWidth * 0.8
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.BGCOLOR_DARK,
-    width: windowWidth,
-    alignItems: 'center'
-  },
-  questionContainer: {
-    width: maxWidth,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  },
-  question: {
-    color: COLORS.WHITE,
-    marginTop: defaultSpacing * 2,
-    marginBottom: defaultSpacing * 2,
-    fontSize: 30
-  },
-  word: {
-    color: COLORS.PINK,
-    fontWeight: 'bold'
-  },
-  answerButton: {
-    borderWidth: 1,
-    borderColor: COLORS.WHITE,
-    borderRadius,
-    paddingVertical: 10,
-    width: maxWidth,
-    alignItems: 'center',
-    marginBottom: defaultSpacing
-  },
-  answerText: {
-    color: COLORS.WHITE,
-    fontSize: 16,
-  },
-  translation: {
-    marginTop: defaultSpacing,
-    borderWidth: 1,
-    width: maxWidth,
-    borderColor: COLORS.WHITE,
-    borderRadius,
-    paddingVertical: defaultSpacing
-  },
-  translationText: {
-    fontSize: 16,
-    color: COLORS.WHITE,
-    paddingHorizontal: defaultSpacing
-  }
+    container: {
+        width: "100%",
+        flex: 1,
+        backgroundColor: "#222228",
+        width: windowWidth,
+        padding: 20,
+    },
+    questionContainer: {
+        width: "100%",
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 40,
+    },
+    soundButton: {
+        marginRight: 20,
+    },
+    question: {
+        flex: 1,
+        color: COLORS.WHITE,
+        fontSize: 30,
+    },
+    word: {
+        color: "#30B956",
+        fontWeight: 'bold'
+    },
+    answerButton: {
+        width: "100%",
+        height: 50,
+        borderWidth: 2,
+        borderRadius: 15,
+        paddingVertical: 10,
+        justifyContent: "center",
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    answerText: {
+        color: "#dddddd",
+        fontSize: 22,
+    },
+    translation: {
+        marginTop: 20,
+        borderWidth: 3,
+        width: "100%",
+        borderColor: "#58585B",
+        borderRadius: 15,
+        paddingVertical: 10,
+        paddingHorizontal: 15, 
+    },
+    translationText: {
+        fontSize: 22,
+        color: COLORS.WHITE,
+    },
+    buttonsContainer: {
+        width: "100%",
+        height: 45,
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: 40,
+    },
+    changeWord: {
+        width: "50%",
+        height: "100%",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        backgroundColor: "#ffffff22",
+        borderRadius: 100,
+        paddingHorizontal: 20,
+    },
+    textChangeWord: {
+        fontSize: 20,
+        color: "#dddddd"
+    }
 })

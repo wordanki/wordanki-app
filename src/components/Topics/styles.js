@@ -7,12 +7,17 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "flex-end",
         justifyContent: "space-between",
+        alignItems: "center",
+        marginTop: 20,
         marginLeft: 20,
         marginRight: 20,
     },
     title: {
         fontSize: 20,
         color: "#ffffff",
-        marginTop: 20,
+    },
+    seeMore: {
+        fontSize: 15,
+        color: "#dddddd",
     },
 });
