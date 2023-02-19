@@ -2,19 +2,22 @@ import { StyleSheet, Dimensions } from 'react-native'
 import { COLORS, FONTS } from "../../theme"
 
 export const styles = StyleSheet.create({
-    container: {
-        width: "100%",
-        backgroundColor: "#3E5287dd",
-        borderRadius: 15,
-        marginTop: 10,
-        padding: 15,
-        justifyContent: "space-between",
-        alignItems: "center",
-    },
     title: {
         fontSize: 20,
         color: "#ffffff",
         marginTop: 20,
+        marginLeft: 20,
+    },
+    container: {
+        flex: 1,
+        backgroundColor: "#3E5287dd",
+        borderRadius: 15,
+        marginTop: 10,
+        marginLeft: 20,
+        marginRight: 20,
+        padding: 15,
+        justifyContent: "space-between",
+        alignItems: "center",
     },
     info: {
         width: "100%",
@@ -46,12 +49,12 @@ export const styles = StyleSheet.create({
     },
     studyButton: {
         width: "100%",
-        height: 50,
+        height: 45,
         borderRadius: 30,
         backgroundColor: "#30B956",
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 30,
+        marginTop: 22.5,
     },
     studyText: {
         fontSize: 24,

@@ -2,30 +2,33 @@ import { StyleSheet, Dimensions } from 'react-native'
 import { COLORS, FONTS } from "../../theme"
 
 export const styles = StyleSheet.create({
-    dailyGoalContainer: {
-        width: "100%",
-        height: 60,
-        backgroundColor: "#8DA7CE33",
-        borderRadius: 15,
-        padding: 8,
-        justifyContent: "space-between",
-    },
-    dailyGoalText: {
-        color: "#dddddd",
-        fontSize: 15,
+    title: {
+        fontSize: 20,
+        color: "#ffffff",
+        marginTop: 20,
+        marginLeft: 20,
     },
     dailyGoalBar: {
-        width: "100%",
-        height: 20,
+        flex: 1,
+        height: 25,
         backgroundColor: "#ffffff22",
-        marginLeft: "auto",
-        marginRight: "auto",
-        borderRadius: 10,
+        marginTop: 10,
+        marginLeft: 20,
+        marginRight: 20,
+        borderRadius: 12.5,
+        justifyContent: "center",
     },
     completedBar: {
         height: "100%",
         backgroundColor: "#30B956",
-        borderTopLeftRadius: 10,
-        borderBottomLeftRadius: 10,
-    }
+        borderTopLeftRadius: 12.5,
+        borderBottomLeftRadius: 12.5,
+    },
+    dailyGoalText: {
+        color: "#dddddd",
+        fontSize: 15,
+        position: "absolute",
+        left: 15,
+        fontWeight: "bold",
+    },
 });

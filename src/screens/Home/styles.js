@@ -12,6 +12,5 @@ export const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     backgroundColor: COLORS.BGCOLOR_DARK,
-    padding: 20,
   },
 })

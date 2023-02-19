@@ -4,19 +4,14 @@ import { Text, View } from 'react-native';
 import { styles } from './styles';
 
 export default function DailyGoal() {
-    const value = 30;
+    const value = 64;
 
     return (
         <>
-        <Text style={styles.title}></Text>
-        <View style={styles.dailyGoalContainer}>
-            <Text style={styles.dailyGoalText}>Meta diária:
-                
-            </Text>
-            <View style={styles.dailyGoalBar}>
-                <View style={[styles.completedBar, {width: `${value}%`}]}></View>
-                <Text style={{color: "#ffffff"}}> {value}/100</Text>
-            </View>
+        <Text style={styles.title}>Meta diária</Text>
+        <View style={styles.dailyGoalBar}>
+            <View style={[styles.completedBar, {width: `${value}%`}]}></View>
+            <Text style={styles.dailyGoalText}>{value}/100</Text>
         </View>
         </>
     );
