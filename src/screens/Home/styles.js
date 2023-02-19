@@ -10,12 +10,8 @@ const defaultSpacing = 20
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.BLACK_PRIMARY,
-    width: windowWidth,
-    alignItems: 'center',
-    justifyContent: 'center'
+    width: "100%",
+    backgroundColor: COLORS.BGCOLOR_DARK,
+    padding: 20,
   },
-  title: {
-    color: COLORS.WHITE
-  }
 })

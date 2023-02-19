@@ -39,7 +39,7 @@ export default function App() {
       <StatusBar 
         style='light' 
         translucent
-        backgroundColor={COLORS.TRASNPARENT} 
+        backgroundColor={COLORS.TRANSPARENT}
       />
 
       <SafeAreaProvider style={{ backgroundColor: COLORS.BLACK_PRIMARY }}>
