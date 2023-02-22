@@ -4,13 +4,13 @@ import { COLORS, FONTS } from "../../theme"
 export const styles = StyleSheet.create({
     title: {
         fontSize: 20,
-        color: "#ffffff",
+        color: "#eeeeee",
         marginTop: 20,
         marginLeft: 20,
     },
     container: {
         flex: 1,
-        backgroundColor: "#3E5287dd",
+        // backgroundColor: "#3E5287",
         borderRadius: 15,
         marginTop: 10,
         marginLeft: 20,
@@ -47,14 +47,28 @@ export const styles = StyleSheet.create({
         fontSize: 20,
         color: "#dddddd",
     },
-    studyButton: {
+    studyButtonContainer: {
         width: "100%",
         height: 45,
         borderRadius: 30,
-        backgroundColor: "#30B956",
+        marginTop: 22.5,
+        // shadowColor: "#0008",
+        // shadowOffset: {
+        //     width: 2,
+        //     height: 4,
+        // },
+        // shadowOpacity: 0.25,
+        // shadowRadius: 3.84,
+
+        // elevation: 5,
+    },
+    studyButton: {
+        width: "100%",
+        height: "100%",
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 22.5,
+        borderRadius: 30,
+        backgroundColor: "#30B956",
     },
     studyText: {
         fontSize: 24,

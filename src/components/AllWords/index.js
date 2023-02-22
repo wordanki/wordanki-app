@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { Text, View, TouchableHighlight } from 'react-native';
+import { Text, View, TouchableHighlight,  } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { styles } from './styles';
 
@@ -15,7 +16,8 @@ export default function AllWords() {
     return (
         <>
         <Text style={styles.title}>Todas as palavras</Text>
-        <View style={styles.container}>
+        {/* <LinearGradient style={styles.container} colors={['#3E5287', '#3E7587']}> */}
+        <LinearGradient style={styles.container} colors={['#1B578Fdd', '#1B738Fdd']}>
             <View style={styles.info}>
                 <View style={styles.textInfoContainer}>
                     <View style={[styles.dotInfo, {backgroundColor: "#14DC28"}]}></View>
@@ -30,10 +32,12 @@ export default function AllWords() {
                 </View>
                 <Text style={styles.numberInfo}>64</Text>
             </View>
-            <TouchableHighlight onPress={handleStudy} style={styles.studyButton}>
-                <Text style={styles.studyText}>Estudar</Text>
+            <TouchableHighlight onPress={handleStudy} style={styles.studyButtonContainer}>
+                <View style={styles.studyButton}>
+                    <Text style={styles.studyText}>Estudar</Text>
+                </View>
             </TouchableHighlight>
-        </View>
+        </LinearGradient>
         </>
     );
 }

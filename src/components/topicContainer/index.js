@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, TouchableHighlight, ImageBackground } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-// import { Images } from '../../assets/img_topics'
+// import Images from '../../assets/img_topics'
 
 import { styles } from './styles';
 

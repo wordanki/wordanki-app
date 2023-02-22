@@ -14,7 +14,10 @@ export const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        color: "#ffffff",
+        color: "#eeeeee",
+    },
+    seeMoreContainer: {
+        paddingVertical: 3,
     },
     seeMore: {
         fontSize: 15,

@@ -4,7 +4,7 @@ import { COLORS, FONTS } from "../../theme"
 export const styles = StyleSheet.create({
     title: {
         fontSize: 20,
-        color: "#ffffff",
+        color: "#eeeeee",
         marginTop: 20,
         marginLeft: 20,
     },

@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
         marginTop: 40,
     },
     changeWord: {
-        width: "50%",
+        width: "60%",
         height: "100%",
         flexDirection: "row",
         justifyContent: "space-between",

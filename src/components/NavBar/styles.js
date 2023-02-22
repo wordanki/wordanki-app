@@ -13,9 +13,17 @@ const styles = StyleSheet.create({
     paddingTop: defaultSpacing * 2,
     paddingBottom: defaultSpacing / 2.5,
     width: windowWidth,
-    backgroundColor: COLORS.BLACK_PRIMARY,
-    borderBottomWidth: 1,
-    borderColor: COLORS.WHITE,
+    backgroundColor: "#222228",
+
+    shadowColor: "#ffffffbb",
+    shadowOffset: {
+        width: 0,
+        height: 4,
+    },
+    shadowOpacity: 0.30,
+    shadowRadius: 4.65,
+    elevation: 8,
+
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -24,17 +32,17 @@ const styles = StyleSheet.create({
     // width: windowWidth / 3
   },
   textContainer: {
-    backgroundColor: COLORS.GRAY_QUATERNARY,
-    width: 150,
-    height: 25,
+    backgroundColor: "#ffffff22",
+    width: 180,
+    height: 27,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius
+    borderRadius: 20
   },  
   title: {
     color: COLORS.WHITE,
     fontFamily: FONTS.REGULAR,
-    fontSize: 16
+    fontSize: 18
   }
 })
 

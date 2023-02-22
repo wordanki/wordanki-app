@@ -10,11 +10,13 @@ export default function Topics() {
         <>
         <View style={styles.titleContainer}>
             <Text style={styles.title}>Estude por tópicos</Text>
-            <Text style={styles.seeMore}>Ver mais</Text>
+            <View style={styles.seeMoreContainer}>
+                <Text style={styles.seeMore}>Ver mais</Text>
+            </View>
         </View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.topics}>
-            <TopicContainer topic={'Trabalho'} width={300} marginTop={10} marginLeft={20} bgcolor={'444444'}/>
-            <TopicContainer topic={'Escola'} width={300} marginTop={10} marginLeft={20} bgcolor={'444444'}/>
+            <TopicContainer topic={'Trabalho'} width={300} marginTop={10} marginLeft={20} bgcolor={'444B55'}/>
+            <TopicContainer topic={'Escola'} width={300} marginTop={10} marginLeft={20} bgcolor={'444B55'}/>
         </ScrollView>
         </>
     );
