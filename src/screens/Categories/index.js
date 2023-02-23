@@ -9,14 +9,14 @@ import TopicContainer from "../../components/topicContainer"
 export default function Categories({ route }) {
 
     const topics = ['Viagens', 'Escola', 'Trabalho', 'Tecnologia'];
-    const colors = ['7087AF', '70AF7A', '8470AF', 'AFAD70'];
-    // const colors = ['444444', '444444', '444444', '444444'];
+    // const colors = ['7087AF', '70AF7A', '8470AF', 'AFAD70'];
+    const colors = ['444B55', '444B55', '444B55', '444B55'];
 
     const renderTopics = (search) => {
         return topics.map((topic, index) => {
             if(search == '' || topic.toLocaleLowerCase().includes(search.toLowerCase())) {
                 return (
-                    <TopicContainer key={index} topic={topic} width={"100%"} marginTop={20} marginLeft={0} bgcolor={colors[index]}/>
+                    <TopicContainer key={index} topic={topic} width={"100%"} marginTop={20} marginLeft={0} bgcolor={colors[index]} image={'../../assets/img_topics/Escola.png'} />
                 );
             }
         })
