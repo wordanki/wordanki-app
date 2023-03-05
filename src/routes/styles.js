@@ -8,7 +8,8 @@ export const styles = StyleSheet.create({
     tabBarStyle: {
         elevation: 0,
         shadowOpacity: 0,
-        height: 60
+        height: 70,
+        borderTopWidth: 0
     },
     tabBarItemStyle: {
         flexDirection: 'row',
@@ -25,11 +26,32 @@ export const styles = StyleSheet.create({
         fontSize: 13,
         marginLeft: 16
     },
-    container: {
+    globalTabContainer: {
+        backgroundColor: COLORS.BLACK_TERTIARY
+    },
+    tabsContainer: {
+        flexDirection: 'row',
+        backgroundColor: COLORS.BLACK_TERTIARY
+    },
+    tabContainer: {
         justifyContent: 'center', 
         height: 70,
         alignItems: 'center', 
-        width: windowWidth / 5
+        width: windowWidth / 4,
+    },
+    slidingTabContainer: {
+        // ...StyleSheet.absoluteFillObject,
+        width: windowWidth / 4
+    },
+    slidingTab: {
+        height: 2,
+        backgroundColor: COLORS.RED
+    },  
+    icon: {
+        borderRadius: 15,
+        width: "50%",
+        justifyContent: 'center', 
+        alignItems: 'center'
     },
     buttonAdd: {
         height: 70,

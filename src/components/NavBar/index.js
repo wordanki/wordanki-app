@@ -40,14 +40,7 @@ export const NavBar = ({ title, isBackScreen, children }) => {
             </View>
 
             <View style={styles.UserPhotoContainer}>
-                {!isBackScreen ? (
-                    <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                        <UserPhoto />
-                    </TouchableOpacity>
-                ) : (
-                    <View style={{ width: 30, height: 10 }}></View>
-                )
-                }
+                <View style={{ width: 30, height: 10 }}></View>
             </View>
         </View>
     )

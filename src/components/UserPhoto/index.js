@@ -17,8 +17,8 @@ const SIZES = {
         avatarSize: 30
     },
     HIGHER: {
-        containerSize: 60,
-        avatarSize: 52
+        containerSize: 70,
+        avatarSize: 62
     }
 }
 

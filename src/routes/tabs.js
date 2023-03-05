@@ -1,13 +1,16 @@
-import { View, Text } from 'react-native'
+import { useState, useEffect } from 'react'
+import { View, Text, Dimensions, TouchableOpacity } from 'react-native'
+import Animated, { EasingNode } from 'react-native-reanimated';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { Ionicons } from '@expo/vector-icons'
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
 import Home from '../screens/Home'
 import Categories from '../screens/Categories'
 import Profile from '../screens/Profile'
+import Words from '../screens/Words'
 
 import { NavBar } from '../components/NavBar'
 
@@ -17,107 +20,118 @@ import { styles } from './styles'
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
 
-const HomeStackNavigation = () => {
-    return (
-        <Stack.Navigator>
-            <Stack.Screen 
-                name="Home" 
-                component={Home} 
-                options={{
-                    header: () => <NavBar title='Home'></NavBar>
-                }}
-            />
-        </Stack.Navigator>
-    )
-}
+const windowWidth = Dimensions.get('window').width
+const tabWidth = windowWidth / 4
 
-const CategoriesStackNavigation = () => {
-    return (
-        <Stack.Navigator>
-            <Stack.Screen 
-                name="Tópicos" 
-                component={Categories}
-                options={{
-                    header: () => <NavBar title='Tópicos'></NavBar>
-                }} 
-            />
-        </Stack.Navigator>
-    )
-}
-
-const ProfileStackNavigation = () => {
-    return (
-        <Stack.Navigator>
-            <Stack.Screen 
-                name="Perfil" 
-                component={Profile} 
-                options={{
-                    header: () => <NavBar title='Perfil'></NavBar>
-                }}
-            />
-        </Stack.Navigator>
-    )
-}
-
-const Tabs = () => (
-    <Tab.Navigator
-        screenOptions={{
-            headerShown: false,
-            tabBarShowLabel: false,
-            tabBarStyle: styles.tabBarStyle,
-            tabBarItemStyle: styles.tabBarItemStyle,
-            tabBarIconStyle: styles.tabBarIconStyle,
-            tabBarLabelStyle: styles.tabBarLabelStyle,
-            tabBarInactiveBackgroundColor: COLORS.BLACK_TERTIARY,
-            tabBarActiveBackgroundColor:  COLORS.BLACK_SECONDARY, 
-            tabBarActiveTintColor:  COLORS.WHITE
-        }}
-    >
-        <Tab.Screen 
-            name="Initial" 
-            component={HomeStackNavigation} 
+const MyTabBar = ({ name, component }) => () => (
+    <Stack.Navigator>
+        <Stack.Screen 
+            name={name} 
+            component={component} 
             options={{
-                tabBarIcon: ({color, size, focused}) => {
-                return (
-                    <View style={styles.container}>
-                        <Ionicons name="home-outline" size={size} color={focused ? COLORS.ORANGE : color} />
-                        <Text style={styles.text}>Home</Text>
-                    </View>
-                );
-                }
+                header: () => <NavBar title={name}></NavBar>
             }}
         />
-
-        <Tab.Screen 
-            name="Categories" 
-            component={CategoriesStackNavigation} 
-            options={{
-                tabBarIcon: ({color, size, focused}) => {
-                return (
-                    <View style={styles.container}>
-                        <Ionicons name="search-outline" size={size} color={focused ? COLORS.ORANGE : color} />
-                        <Text style={styles.text}>Tópicos</Text>
-                    </View>
-                );
-                }
-            }}
-        />
-
-        {/* <Tab.Screen 
-            name="Profile" 
-            component={ProfileStackNavigation} 
-            options={{
-                tabBarIcon: ({color, size, focused}) => {
-                return (
-                    <View style={styles.container}>
-                        <Ionicons name="person-circle-outline" size={size} color={focused ? COLORS.ORANGE : color} />
-                        <Text style={styles.text}>Perfil</Text>
-                    </View>
-                );
-                }
-            }}
-        /> */}
-    </Tab.Navigator>
+    </Stack.Navigator>
 )
 
-export { Tabs }
+const TabsContent = [
+    { route: { tab: 'Initial', screen: 'Home' }, label: 'Home', type: IconType.Ionicons, activeIcon: 'home-outline', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Home", component: Home }) },
+    { route: { tab: 'Topics', screen: 'Tópicos' }, label: 'Tópicos', type: IconType.Ionicons, activeIcon: 'search-outline', inActiveIcon: 'search-outline', component: MyTabBar({ name: "Tópicos", component: Categories }) },
+    { route: { tab: 'Words', screen: 'Palavras' }, label: 'Palavras', type: IconType.MaterialCommunityIcons, activeIcon: 'format-letter-case', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Palavras", component: Words }) },
+    { route: { tab: 'Profile', screen: 'Perfil' }, label: 'Perfil', type: IconType.Ionicons, activeIcon: 'person-outline', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Perfil", component: Profile }) },
+];
+
+const TabBar = ({ state, descriptors, navigation }) => {
+    const [translateX] = useState(new Animated.Value(0))
+
+    const translateTab = (index) => {
+        Animated.timing(translateX, {
+            toValue: index * tabWidth,
+            duration: 150,
+            easing: EasingNode.inOut(EasingNode.bounce),
+            useNativeDriver: true   
+        }).start()
+    }
+
+    useEffect(() => {
+        translateTab(state.index)
+    }, [state.index])
+
+    return (
+        <View style={styles.globalTabContainer}>
+            <View style={styles.tabsContainer}>
+                {state.routes.map((route, index) => {
+                    const { options } = descriptors[route.key]
+
+                    const isFocused = state.index === index
+
+                    const onPress = () => {
+                        const event = navigation.emit({
+                        type: 'tabPress',
+                        target: route.key,
+                        })
+            
+                        if (!isFocused && !event.defaultPrevented) {
+                        navigation.navigate(route.name)
+                        }
+                    }
+            
+                    const onLongPress = () => {
+                        navigation.emit({
+                        type: 'tabLongPress',
+                        target: route.key,
+                        });
+                    }
+            
+                    const tab = TabsContent[index]
+
+                    return (
+                        <TouchableOpacity
+                            accessibilityRole='button'
+                            accessibilityState={isFocused ? { selected: true } : {}}
+                            accessibilityLabel={options.tabBarAccessibilityLabel}
+                            testID={options.tabBarTestID}
+                            onPress={onPress}
+                            onLongPress={onLongPress}
+                            key={index}
+                        >
+                            <View  style={[styles.tabContainer]}>
+                                    <View style={[styles.icon, { backgroundColor: isFocused ? COLORS.RED : "transparent" }]}>
+                                        <Icon
+                                            name={tab.activeIcon}
+                                            type={tab.type}
+                                            size={20} 
+                                            color={COLORS.WHITE}
+                                        />
+                                    </View >
+
+                                    <Text style={[styles.text]}>{tab.label}</Text>
+                                </View>
+                        </TouchableOpacity>
+                    )
+                })}
+            </View>
+
+            <View style={styles.slidingTabContainer}>
+                <Animated.View style={[styles.slidingTab, { transform: [{translateX}] }]} />
+            </View>
+        </View>
+    )
+}
+
+export const Tabs = () => (
+    <Tab.Navigator
+        tabBar={props => <TabBar {...props} />}
+        screenOptions={{
+            headerShown: false
+        }}
+    >
+        {TabsContent.map((tab, index) => (
+            <Tab.Screen key={index} 
+                name={tab.route.tab} 
+                component={tab.component}
+            />
+        ))}
+    </Tab.Navigator>
+)

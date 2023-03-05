@@ -13,16 +13,16 @@ const styles = StyleSheet.create({
     paddingTop: defaultSpacing * 2,
     paddingBottom: defaultSpacing / 2.5,
     width: windowWidth,
-    backgroundColor: "#222228",
+    backgroundColor: COLORS.BLACK_TERTIARY,
 
-    shadowColor: "#ffffffbb",
-    shadowOffset: {
-        width: 0,
-        height: 4,
-    },
-    shadowOpacity: 0.30,
-    shadowRadius: 4.65,
-    elevation: 8,
+    // shadowColor: "#ffffffbb",
+    // shadowOffset: {
+    //     width: 0,
+    //     height: 4,
+    // },
+    // shadowOpacity: 0.30,
+    // shadowRadius: 4.65,
+    // elevation: 8,
 
     flexDirection: 'row',
     justifyContent: 'space-between',
