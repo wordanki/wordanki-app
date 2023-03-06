@@ -28,8 +28,6 @@ export const styles = StyleSheet.create({
     },
     globalTabContainer: {
         backgroundColor: "#2F2F35",
-        position: "absolute",
-        bottom: 0,
     },
     tabsContainer: {
         flexDirection: 'row',
