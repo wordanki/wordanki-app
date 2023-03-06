@@ -29,6 +29,7 @@ export default function Categories({ route }) {
             <ScrollView style={styles.innerContainer} showsVerticalScrollIndicator={false}>
                 <View style={styles.containerSearchTopic}>
                     {/* <Text style={styles.title}>Tópicos</Text> */}
+                    <FontAwesome name="search" size={22} color="#bbbbbb" style={{marginLeft: 15}} />
                     <TextInput
                         style={styles.searchTopic}
                         onChangeText={(value) => setSearchInput(value)}
@@ -36,7 +37,6 @@ export default function Categories({ route }) {
                         placeholder={"Pesquisar tópico"}
                         placeholderTextColor={"#bbbbbb"}
                     />
-                    <FontAwesome name="search" size={22} color="#bbbbbb" style={{marginRight: 15}} />
                 </View>
                 {renderTopics(searchInput)}
             </ScrollView>

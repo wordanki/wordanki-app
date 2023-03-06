@@ -3,8 +3,12 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { styles } from "./styles"
 
+import WordContainer from '../../components/WordContainer'
+
 export default function Words({ route }) {
     return (
-        <Text>OLA</Text>
+        <View style={styles.container}>
+            <WordContainer></WordContainer>
+        </View>
     )
 }

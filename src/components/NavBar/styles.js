@@ -15,14 +15,8 @@ const styles = StyleSheet.create({
     width: windowWidth,
     backgroundColor: COLORS.BLACK_TERTIARY,
 
-    // shadowColor: "#ffffffbb",
-    // shadowOffset: {
-    //     width: 0,
-    //     height: 4,
-    // },
-    // shadowOpacity: 0.30,
-    // shadowRadius: 4.65,
-    // elevation: 8,
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#fff4",
 
     flexDirection: 'row',
     justifyContent: 'space-between',

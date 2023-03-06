@@ -50,7 +50,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
             toValue: index * tabWidth,
             duration: 150,
             easing: EasingNode.inOut(EasingNode.bounce),
-            useNativeDriver: true   
+            useNativeDriver: true
         }).start()
     }
 
@@ -68,8 +68,8 @@ const TabBar = ({ state, descriptors, navigation }) => {
 
                     const onPress = () => {
                         const event = navigation.emit({
-                        type: 'tabPress',
-                        target: route.key,
+                            type: 'tabPress',
+                            target: route.key,
                         })
             
                         if (!isFocused && !event.defaultPrevented) {
@@ -88,6 +88,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
 
                     return (
                         <TouchableOpacity
+                            activeOpacity={0.5}
                             accessibilityRole='button'
                             accessibilityState={isFocused ? { selected: true } : {}}
                             accessibilityLabel={options.tabBarAccessibilityLabel}
@@ -97,7 +98,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
                             key={index}
                         >
                             <View  style={[styles.tabContainer]}>
-                                    <View style={[styles.icon, { backgroundColor: isFocused ? COLORS.RED : "transparent" }]}>
+                                    <View style={[styles.icon, { backgroundColor: isFocused ? "#4987C066" : "transparent" }]}>
                                         <Icon
                                             name={tab.activeIcon}
                                             type={tab.type}
@@ -113,9 +114,9 @@ const TabBar = ({ state, descriptors, navigation }) => {
                 })}
             </View>
 
-            <View style={styles.slidingTabContainer}>
+            {/* <View style={styles.slidingTabContainer}>
                 <Animated.View style={[styles.slidingTab, { transform: [{translateX}] }]} />
-            </View>
+            </View> */}
         </View>
     )
 }

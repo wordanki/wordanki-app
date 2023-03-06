@@ -38,7 +38,7 @@ export default function App() {
     <>
       <StatusBar 
         style='light' 
-        translucent
+        // translucent
         backgroundColor={COLORS.TRANSPARENT}
       />
 

@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
         elevation: 0,
         shadowOpacity: 0,
         height: 70,
-        borderTopWidth: 0
+        borderTopWidth: 0,
     },
     tabBarItemStyle: {
         flexDirection: 'row',
@@ -27,11 +27,15 @@ export const styles = StyleSheet.create({
         marginLeft: 16
     },
     globalTabContainer: {
-        backgroundColor: COLORS.BLACK_TERTIARY
+        backgroundColor: "#2F2F35",
+        position: "absolute",
+        bottom: 0,
     },
     tabsContainer: {
         flexDirection: 'row',
-        backgroundColor: COLORS.BLACK_TERTIARY
+        // backgroundColor: COLORS.BLACK_TERTIARY,
+        borderTopWidth: 0.5,
+        borderTopColor: "#fff4",
     },
     tabContainer: {
         justifyContent: 'center', 
@@ -41,17 +45,22 @@ export const styles = StyleSheet.create({
     },
     slidingTabContainer: {
         // ...StyleSheet.absoluteFillObject,
-        width: windowWidth / 4
+        width: windowWidth / 4,
+        alignItems: "center",
     },
     slidingTab: {
-        height: 2,
-        backgroundColor: COLORS.RED
+        height: 4,
+        width: 4,
+        borderRadius: 2,
+        backgroundColor: "#ffffff88",
+        marginBottom: 8
     },  
     icon: {
-        borderRadius: 15,
+        borderRadius: 20,
         width: "50%",
-        justifyContent: 'center', 
-        alignItems: 'center'
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 4,
     },
     buttonAdd: {
         height: 70,
@@ -79,6 +88,6 @@ export const styles = StyleSheet.create({
         color: COLORS.WHITE, 
         textAlign: 'center',
         fontSize: 12, 
-        marginTop: 5
+        marginTop: 2
     }
 })

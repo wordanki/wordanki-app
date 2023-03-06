@@ -15,7 +15,7 @@ export default function Home({ route }) {
             <AllWords/>
             <Topics/>
             <EnglishCourse/>
-            <View style={{height: 40}}></View>
+            <View style={{height: 20}}></View>
         </ScrollView>
     )
 }
