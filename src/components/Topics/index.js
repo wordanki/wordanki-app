@@ -1,7 +1,8 @@
 import React from 'react';
 import { Text, View, TouchableHighlight, ImageBackground, ScrollView } from 'react-native';
 
-import TopicContainer from '../topicContainer'
+import TopicContainer from '../topicContainer';
+import TopicContainer2 from '../topicContainer2';
 
 import { styles } from './styles';
 
@@ -15,8 +16,12 @@ export default function Topics() {
             </View>
         </View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.topics}>
-            <TopicContainer topic={'Trabalho'} width={300} marginTop={10} marginLeft={20} bgcolor={'444B55'}/>
-            <TopicContainer topic={'Escola'} width={300} marginTop={10} marginLeft={20} bgcolor={'444B55'}/>
+            {/* <TopicContainer topic={'Trabalho'} width={300} marginTop={10} marginLeft={20} bgcolor={'444B55'}/>
+            <TopicContainer topic={'Escola'} width={300} marginTop={10} marginLeft={20} bgcolor={'444B55'}/> */}
+            <TopicContainer2/>
+            <TopicContainer2/>
+            <TopicContainer2/>
+            <TopicContainer2/>
         </ScrollView>
         </>
     );
