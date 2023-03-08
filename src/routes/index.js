@@ -1,8 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import Question from '../screens/Question'
-
 import Profile from '../screens/Profile'
+import Welcome from '../screens/Welcome'
+import Login from '../screens/Login'
 
 import { Drawer } from './drawer'
 
@@ -12,7 +13,9 @@ const Stack = createNativeStackNavigator()
 
 export const Routes = () => {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator
+            initialRouteName='Welcome'
+        >
             <Stack.Screen 
                 name='Main' 
                 component={Drawer}
@@ -34,6 +37,22 @@ export const Routes = () => {
                 component={Profile}
                 options={{
                     header: () => <NavBar isBackScreen title='Perfil'></NavBar>
+                }} 
+            />
+
+            <Stack.Screen 
+                name='Welcome' 
+                component={Welcome}
+                options={{
+                    headerShown: false
+                }} 
+            />
+
+            <Stack.Screen 
+                name='Login' 
+                component={Login}
+                options={{
+                    headerShown: false
                 }} 
             />
         </Stack.Navigator>
