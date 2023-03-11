@@ -68,18 +68,23 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: 40,
     },
-    changeWord: {
-        width: "60%",
+    next: {
+        width: "100%",
+        height: "100%",
+        borderRadius: 100,
+    },
+    nextContainer: {
+        width: "100%",
         height: "100%",
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#ffffff22",
+        backgroundColor: "#434348",
         borderRadius: 100,
-        paddingHorizontal: 20,
     },
     textChangeWord: {
         fontSize: 20,
-        color: "#dddddd"
+        color: "#dddddd",
+        marginRight: 10,
     }
 })

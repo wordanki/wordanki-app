@@ -14,7 +14,7 @@ const Stack = createNativeStackNavigator()
 export const Routes = () => {
     return (
         <Stack.Navigator
-            initialRouteName='Welcome'
+            initialRouteName='Main'
         >
             <Stack.Screen 
                 name='Main' 

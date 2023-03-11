@@ -3,7 +3,7 @@ import { COLORS, FONTS } from "../../theme"
 
 export const styles = StyleSheet.create({
     container: {
-        width: 240,
+        width: 220,
         height: "auto",
         marginLeft: 20,
         marginTop: 10,
@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     },
     image: {
         width: "100%",
-        height: 125,
+        height: 120,
     },
     infoContainer: {
         width: "100%",
