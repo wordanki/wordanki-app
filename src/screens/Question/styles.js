@@ -37,12 +37,16 @@ export const styles = StyleSheet.create({
     answerButton: {
         width: "100%",
         height: 50,
+        borderRadius: 15,
+        marginBottom: 20,
+    },
+    answerButtonContainer: {
+        width: "100%",
+        height: "100%",
         borderWidth: 2,
         borderRadius: 15,
-        paddingVertical: 10,
         justifyContent: "center",
         alignItems: 'center',
-        marginBottom: 20,
     },
     answerText: {
         color: "#dddddd",
@@ -86,5 +90,14 @@ export const styles = StyleSheet.create({
         fontSize: 20,
         color: "#dddddd",
         marginRight: 10,
+    },
+    progressBar: {
+        height: "100%",
+        backgroundColor: "blue",
+        position: "absolute",
+        left: 0,
+        top: 0,
+        borderTopLeftRadius: 100,
+        borderBottomLeftRadius: 100,
     }
 })

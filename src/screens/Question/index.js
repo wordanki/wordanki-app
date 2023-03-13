@@ -16,102 +16,112 @@ export default function Profile({ route }) {
     const [answers, setAnswers] = useState([{name: "2"}]);
     const [correctWord, setCorrectWord] = useState({});
     const [isRender, setIsRender] = useState(false);
+    // const [wordSelected, setWordSelected] = useState();
+    let wordSelected;
+    const [nextWord, setNextWord] = useState(false);
     let options = [];
     let correctWordPosition;
+    let timeout;
 
-    const handleSound = () => {
+    function getTimeLeft(timeout) {
+        return Math.ceil((timeout._idleStart + timeout._idleTimeout - Date.now()));
+    }
+
+    let timeoutText;
+
+    const handleSound = (phrase) => {
         Speech.stop();
-        Speech.speak(sentence, {
+        Speech.speak(phrase, {
             language: 'en'
         });
     }
 
     const words = [
         {
-            word: "beliave",
+            word: "believe",
             translatedWord: "acredito0",
-            phrase: "I don't beliave in ghosts at all.0",
+            phrase: "I don't believe in ghosts at all.0",
             translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.0",
             nextRepetition: 0,
             acertos: 0,
             classe: 2,
         },
         {
-            word: "beliave",
+            word: "believe",
             translatedWord: "acredito1",
-            phrase: "I don't beliave in ghosts at all.1",
+            phrase: "I don't believe in ghosts at all.1",
             translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.1",
             nextRepetition: 0,
             acertos: 0,
             classe: 1,
         },
         {
-            word: "beliave",
+            word: "believe",
             translatedWord: "acredito2",
-            phrase: "I don't beliave in ghosts at all.2",
+            phrase: "I don't believe in ghosts at all.2",
             translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.2",
             nextRepetition: 0,
             acertos: 0,
             classe: 1,
         },
         {
-            word: "beliave",
+            word: "believe",
             translatedWord: "acredito3",
-            phrase: "I don't beliave in ghosts at all.3",
+            phrase: "I don't believe in ghosts at all.3",
             translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.3",
             nextRepetition: 0,
             acertos: 0,
             classe: 2,
         },
         {
-            word: "beliave",
+            word: "believe",
             translatedWord: "acredito4",
-            phrase: "I don't beliave in ghosts at all.4",
+            phrase: "I don't believe in ghosts at all.4",
             translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.4",
             nextRepetition: 0,
             acertos: 0,
             classe: 2,
         },
         {
-            word: "beliave",
+            word: "believe",
             translatedWord: "acredito5",
-            phrase: "I don't beliave in ghosts at all.5",
+            phrase: "I don't believe in ghosts at all.5",
             translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.5",
             nextRepetition: 0,
             acertos: 0,
             classe: 1,
         },
         {
-            word: "beliave",
+            word: "believe",
             translatedWord: "acredito6",
-            phrase: "I don't beliave in ghosts at all.6",
+            phrase: "I don't believe in ghosts at all.6",
             translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.6",
             nextRepetition: 0,
             acertos: 0,
             classe: 1,
         },
         {
-            word: "beliave",
+            word: "believe",
             translatedWord: "acredito7",
-            phrase: "I don't beliave in ghosts at all.7",
+            phrase: "I don't believe in ghosts at all.7",
             translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.7",
             nextRepetition: 0,
             acertos: 0,
             classe: 2,
         },
         {
-            word: "beliave",
+            word: "believe",
             translatedWord: "acredito8",
-            phrase: "I don't beliave in ghosts at all.8",
+            phrase: "I don't believe in ghosts at all.8",
             translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.8",
             nextRepetition: 0,
             acertos: 0,
             classe: 1,
         },
         {
-            word: "beliave",
+            word: "believe",
             translatedWord: "acredito9",
-            phrase: "I don't beliave in ghosts at all.9",
+            phrase: "I don't believe in ghosts at all.9",
             translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.9",
             nextRepetition: 0,
             acertos: 0,
@@ -149,10 +159,12 @@ export default function Profile({ route }) {
 
     useEffect(() => {
         setIsRender(false);
+        setIsSelectedWord(false);
+        // setNextWord(false);
         // setIsSelectedWord(false);
 
         let indexWord = generateWord();
-        setWord(indexWord)
+        setWord(indexWord);
         let classePalavra = words[indexWord].classe;
         let wordsOptions = [];
 
@@ -178,24 +190,33 @@ export default function Profile({ route }) {
         }
 
         setCorrectWord(options[correctWordPosition]);
+        setSentence(options[correctWordPosition].phrase);
         setAnswers(options);
         setIsRender(true);
+        handleSound(options[correctWordPosition].phrase);
 
         // for(let i=0; i<4; i++) {
         //     setAnswers([...answers, options[i]]);
         // }
-    }, [isSelectedWord]);
+    }, [nextWord]);
+
+    function nextWordTimer() {
+        timeout = setTimeout(() => {
+            setNextWord(!nextWord);
+        }, 3000);
+        timeoutText = `${timeout/3000}%`;
+    }
 
     return (
         <View style={styles.container}>
             <View style={styles.questionContainer}>
-                <TouchableHighlight onPress={handleSound} style={styles.soundButton}>
+                {isRender && <TouchableHighlight onPress={() => {}} style={styles.soundButton}>
                     <AntDesign 
                         name="sound" 
                         size={30} 
                         color={Speech.isSpeakingAsync ? COLORS.GRAY_SECONDARY : "red"} 
                     />
-                </TouchableHighlight>
+                </TouchableHighlight>}
                 <Text style={styles.question}>
                     {/* {sentence.split(' ', ',', '.').forEach(element => {
                         element === word ? (<Text styles={styles.word}>{element}</Text>) : element
@@ -212,31 +233,39 @@ export default function Profile({ route }) {
             </View>
 
             <View>
-                {isRender && answers.map(answer => (
+                {isRender && answers.map((answer, index) => (
                     <TouchableHighlight 
                         key={answer.translatedWord}
-                        style={{
-                            ...styles.answerButton, 
-                            backgroundColor: isSelectedWord === answer  ? "#30B956" : "#31313E",
-                            borderColor: isSelectedWord === answer ? "#38D664" : "#414153",
-                        }} 
-                        onPress={() => setIsSelectedWord(!isSelectedWord)}
+                        disabled={isSelectedWord}
+                        style={styles.answerButton}
+                        onPress={() => {nextWordTimer(); setIsSelectedWord(true); wordSelected = index;}}
                     >
-                        <Text style={styles.answerText}>
-                            {answer.translatedWord}
-                        </Text>
+                        <View style={{
+                            ...styles.answerButtonContainer,
+                            backgroundColor: isSelectedWord ? (wordSelected === correctWordPosition ? "#30B956" : "red") : "#31313E",
+                            borderColor: isSelectedWord ? (wordSelected === correctWordPosition ? "#38D664" : "red") : "#414153",
+                        }}>
+                            <Text style={styles.answerText}>
+                                {answer.translatedWord}
+                            </Text>
+                        </View>
                     </TouchableHighlight>
                 ))}
                 <TouchableHighlight 
                     key={"Não sei"}
                     style={{
                         ...styles.answerButton,
-                        backgroundColor: "#145C7E",
-                        borderColor: "#0E79A9",
+
                     }} 
                     onPress={() => setIsSelectedWord(!isSelectedWord)} 
                 >
-                    <Text style={styles.answerText}>Não sei</Text>
+                    <View style={{
+                        ...styles.answerButtonContainer,
+                        backgroundColor: "#145C7E",
+                        borderColor: "#0E79A9",
+                    }}>
+                        <Text style={styles.answerText}>Não sei</Text>
+                    </View>
                 </TouchableHighlight>
             </View>
 
@@ -255,11 +284,12 @@ export default function Profile({ route }) {
             )}
 
             <View style={styles.buttonsContainer}>
-                {isSelectedWord && <TouchableHighlight style={styles.next} onPress={() => {}}>
+                {isSelectedWord && <TouchableHighlight style={styles.next} onPress={() => {clearTimeout(timeout); setNextWord(!nextWord)}}>
                     <View style={styles.nextContainer}>
                         <Text style={styles.textChangeWord}>Próxima</Text>
                         {/* <FontAwesome5 name="arrow-right" size={24} color="#dddddd"/> */}
                         <AntDesign name="arrowright" size={25} color="#dddddd" />
+                        <View style={[styles.progressBar, { width: timeoutText }]}></View>
                     </View>
                 </TouchableHighlight>}
             </View>
