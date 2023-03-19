@@ -93,7 +93,7 @@ export const styles = StyleSheet.create({
     },
     progressBar: {
         height: "100%",
-        backgroundColor: "blue",
+        backgroundColor: "#ffffff22",
         position: "absolute",
         left: 0,
         top: 0,

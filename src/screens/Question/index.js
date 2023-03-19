@@ -10,24 +10,21 @@ import { styles } from "./styles"
 
 export default function Profile({ route }) {
     const [isSelectedWord, setIsSelectedWord] = useState(false);
-    const [word, setWord] = useState();
+    // const [word, setWord] = useState();
     const [position, setPosition] = useState(0);
-    const [sentence, setSentence] = useState("I don't believe in ghosts at all.");
-    const [answers, setAnswers] = useState([{name: "2"}]);
-    const [correctWord, setCorrectWord] = useState({});
+    const [sentence, setSentence] = useState();
+    const [answers, setAnswers] = useState();
+    const [correctWord, setCorrectWord] = useState();
     const [isRender, setIsRender] = useState(false);
-    // const [wordSelected, setWordSelected] = useState();
-    let wordSelected;
+    const [wordSelected, setWordSelected] = useState();
     const [nextWord, setNextWord] = useState(false);
-    let options = [];
-    let correctWordPosition;
-    let timeout;
+    const [timeoutNext, setTimeoutNext] = useState();
 
     function getTimeLeft(timeout) {
         return Math.ceil((timeout._idleStart + timeout._idleTimeout - Date.now()));
     }
 
-    let timeoutText;
+    // let timeoutText;
 
     const handleSound = (phrase) => {
         Speech.stop();
@@ -164,7 +161,6 @@ export default function Profile({ route }) {
         // setIsSelectedWord(false);
 
         let indexWord = generateWord();
-        setWord(indexWord);
         let classePalavra = words[indexWord].classe;
         let wordsOptions = [];
 
@@ -175,13 +171,13 @@ export default function Profile({ route }) {
             wordsOptions.push(otherWord);
         }
 
-        correctWordPosition = Math.floor(Math.random() * 4);
-        setPosition(correctWordPosition);
+        let wordPosition = Math.floor(Math.random() * 4);
+        setPosition(wordPosition);
 
-        options = [];
+        let options = [];
         let j = 0;
         for(let i=0; i<4; i++) {
-            if(i != correctWordPosition) {
+            if(i != position) {
                 options.push(words[wordsOptions[j]]);
                 j++;
             } else {
@@ -189,11 +185,13 @@ export default function Profile({ route }) {
             }
         }
 
-        setCorrectWord(options[correctWordPosition]);
-        setSentence(options[correctWordPosition].phrase);
         setAnswers(options);
+        console.log(answers);
+        setCorrectWord(options[wordPosition]);
+        setSentence(options[wordPosition].phrase);
+        console.log(sentence);
         setIsRender(true);
-        handleSound(options[correctWordPosition].phrase);
+        handleSound(options[wordPosition].phrase);
 
         // for(let i=0; i<4; i++) {
         //     setAnswers([...answers, options[i]]);
@@ -201,63 +199,59 @@ export default function Profile({ route }) {
     }, [nextWord]);
 
     function nextWordTimer() {
-        timeout = setTimeout(() => {
-            setNextWord(!nextWord);
-        }, 3000);
-        timeoutText = `${timeout/3000}%`;
+        setTimeoutNext(
+            setTimeout(() => {
+                setNextWord(!nextWord);
+            }, 3000)
+        );
+        // timeoutText = `${timeoutNext/3000}%`;
     }
 
-    return (
+    return isRender && (
         <View style={styles.container}>
             <View style={styles.questionContainer}>
-                {isRender && <TouchableHighlight onPress={() => {}} style={styles.soundButton}>
+                <TouchableHighlight onPress={() => handleSound(sentence)} style={styles.soundButton}>
                     <AntDesign 
                         name="sound" 
                         size={30} 
                         color={Speech.isSpeakingAsync ? COLORS.GRAY_SECONDARY : "red"} 
                     />
-                </TouchableHighlight>}
+                </TouchableHighlight>
                 <Text style={styles.question}>
-                    {/* {sentence.split(' ', ',', '.').forEach(element => {
-                        element === word ? (<Text styles={styles.word}>{element}</Text>) : element
-                    })} */}
-                    {/* {splitPhrase(answers[indexWord].phrase, answers[indexWord].word).map(string => {
-                        <Text></Text>
-                    })} */}
-                    
-                    {isRender && splitPhrase(correctWord.phrase, correctWord.word)[0]}
+                    {splitPhrase(correctWord.phrase, correctWord.word)[0]}
                     <Text style={styles.word}>{(isRender && correctWord.phrase.includes(correctWord.word)) && correctWord.word}</Text>
-                    { isRender && splitPhrase(correctWord.phrase, correctWord.word)[1]}
-                    {/* I don't <Text style={styles.word}>believe</Text> in ghosts at all. */}
+                    {splitPhrase(correctWord.phrase, correctWord.word)[1]}
                 </Text>
             </View>
 
             <View>
-                {isRender && answers.map((answer, index) => (
-                    <TouchableHighlight 
-                        key={answer.translatedWord}
-                        disabled={isSelectedWord}
-                        style={styles.answerButton}
-                        onPress={() => {nextWordTimer(); setIsSelectedWord(true); wordSelected = index;}}
-                    >
-                        <View style={{
-                            ...styles.answerButtonContainer,
-                            backgroundColor: isSelectedWord ? (wordSelected === correctWordPosition ? "#30B956" : "red") : "#31313E",
-                            borderColor: isSelectedWord ? (wordSelected === correctWordPosition ? "#38D664" : "red") : "#414153",
-                        }}>
-                            <Text style={styles.answerText}>
-                                {answer.translatedWord}
-                            </Text>
-                        </View>
-                    </TouchableHighlight>
-                ))}
+                {answers.map((answer, index) => {
+                    return (
+                        <TouchableHighlight 
+                            key={index}
+                            disabled={isSelectedWord}
+                            style={styles.answerButton}
+                            onPress={() => {nextWordTimer(); setIsSelectedWord(true); setWordSelected(index); console.log(wordSelected)}}
+                        >
+                            <View style={{
+                                ...styles.answerButtonContainer,
+                                backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == position ? "#30B956" : "red") : "#31313E",
+                                borderColor: isSelectedWord && (position == index || wordSelected == index) ? (position == index ? "#38D664" : "red") : "#414153"
+                            }}>
+                                <Text style={styles.answerText}>
+                                    {answer.translatedWord}
+                                </Text>
+                            </View>
+                        </TouchableHighlight>
+                    )
+                })}
                 <TouchableHighlight 
                     key={"Não sei"}
                     style={{
                         ...styles.answerButton,
 
                     }} 
-                    onPress={() => setIsSelectedWord(!isSelectedWord)} 
+                    onPress={() => {nextWordTimer(), setIsSelectedWord(!isSelectedWord), setWordSelected(null)}} 
                 >
                     <View style={{
                         ...styles.answerButtonContainer,
@@ -272,7 +266,9 @@ export default function Profile({ route }) {
             {isSelectedWord ? (
                 <View style={{...styles.translation, borderColor: "#0E79A9"}}>
                     <Text style={styles.translationText}>
-                        Eu não <Text style={styles.word}>acredito</Text> em fantasmas de jeito nenhum.
+                        {splitPhrase(correctWord.translatedPhrase, correctWord.translatedWord)[0]}
+                        <Text style={styles.word}>{correctWord.translatedPhrase.includes(correctWord.translatedWord) && correctWord.translatedWord}</Text>
+                        {splitPhrase(correctWord.translatedPhrase, correctWord.translatedWord)[1]}
                     </Text>
                 </View>
             ) : (
@@ -284,12 +280,12 @@ export default function Profile({ route }) {
             )}
 
             <View style={styles.buttonsContainer}>
-                {isSelectedWord && <TouchableHighlight style={styles.next} onPress={() => {clearTimeout(timeout); setNextWord(!nextWord)}}>
+                {isSelectedWord && <TouchableHighlight style={styles.next} onPress={() => {clearTimeout(timeoutNext); setNextWord(!nextWord)}}>
                     <View style={styles.nextContainer}>
                         <Text style={styles.textChangeWord}>Próxima</Text>
                         {/* <FontAwesome5 name="arrow-right" size={24} color="#dddddd"/> */}
                         <AntDesign name="arrowright" size={25} color="#dddddd" />
-                        <View style={[styles.progressBar, { width: timeoutText }]}></View>
+                        <View style={[styles.progressBar, { width: "10%" }]}></View>
                     </View>
                 </TouchableHighlight>}
             </View>
