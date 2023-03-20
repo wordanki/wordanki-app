@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
         width: "100%",
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 40,
+        marginBottom: 30,
     },
     soundButton: {
         marginRight: 20,
@@ -38,12 +38,12 @@ export const styles = StyleSheet.create({
         width: "100%",
         height: 50,
         borderRadius: 15,
-        marginBottom: 20,
+        marginBottom: 15,
     },
     answerButtonContainer: {
         width: "100%",
         height: "100%",
-        borderWidth: 2,
+        borderWidth: 3,
         borderRadius: 15,
         justifyContent: "center",
         alignItems: 'center',
@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
         fontSize: 22,
     },
     translation: {
-        marginTop: 20,
+        marginTop: 15,
         borderWidth: 3,
         width: "100%",
         borderColor: "#58585B",
@@ -62,15 +62,19 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 15, 
     },
     translationText: {
-        fontSize: 22,
+        fontSize: 20,
         color: COLORS.WHITE,
+    },
+    translationWord: {
+        color: "#383842",
+        fontWeight: 'bold'
     },
     buttonsContainer: {
         width: "100%",
         height: 45,
         flexDirection: "row",
         justifyContent: "center",
-        marginTop: 40,
+        marginTop: 30,
     },
     next: {
         width: "100%",

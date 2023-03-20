@@ -1,9 +1,17 @@
-import { View, Text, ScrollView } from 'react-native'
+import React, { useState } from 'react';
+import { View, Text, ScrollView, TouchableHighlight, Dimensions } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
+import { LineChart } from "react-native-chart-kit";
 
 import { styles } from "./styles"
 
 export default function Profile({ route }) {
+    const [viewedWords, setViewedWords] = useState(true);
+    const [revisedWords, setRevisedWords] = useState(true);
+
+    const [viewedWordsData, setViewedWordsData] = useState([50, 100, 60, 120, 60, 20, 0, 2, 40, 50, 70, 20, 30, 40, 80, 90, 110, 130, 50, 60, 80, 20, 30, 15, 12, 10, 30, 40, 20, 70]);
+    const [revisedWordsData, setRevisedWordsData] = useState([120, 30, 30, 60, 160, 20, 30, 40, 50, 80, 90, 70, 20, 30, 50, 80, 90, 100, 120, 70, 10, 30, 30, 80, 120, 130, 0, 10, 20, 80]);
+
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <View style={styles.profileContainer}>
@@ -15,16 +23,69 @@ export default function Profile({ route }) {
             </View>
             <View style={styles.statisticContainer}>
                 <Text style={styles.title}>Estatísticas</Text>
-                <View style={styles.graphic}></View>
+                <View style={styles.graphic}>
+
+                <LineChart
+                    data={{
+                        labels: ["January", "February", "March", "April", "May", "June"],
+                        datasets: [{
+                            data: viewedWordsData
+                        },
+                        {
+                            data: revisedWordsData
+                        }],
+                    }}
+                    width={Dimensions.get("window").width} // from react-native
+                    height={160}
+                    // withHorizontalLines={false}
+                    yAxisInterval={10}
+                    yLabelsOffset={10}
+                    xLabelsOffset={-5}
+                    withVerticalLines={false}
+                    chartConfig = {{
+                        backgroundGradientFrom: "#1E2923",
+                        backgroundGradientFromOpacity: 0,
+                        backgroundGradientTo: "#08130D",
+                        backgroundGradientToOpacity: 0,
+                        decimalPlaces: 0,
+                        color: (opacity = 1) => `rgba(20, 220, 40, ${opacity})`,
+                        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        strokeWidth: 2, // optional, default 3
+                        barPercentage: 0.5,
+                        useShadowColorFromDataset: false, // optional
+                        style: {
+
+                        },
+                        propsForDots: {
+                            r: "2",
+                        }
+                    }}
+                    bezier
+                    style={{
+                        borderRadius: 15,
+                    }}
+                />
+
+                </View>
                 <View style={styles.descriptionContainer}>
-                    <View style={styles.description}>
-                        <View style={[styles.dot, {backgroundColor: "#14DC28"}]}></View>
-                        <Text style={styles.descriptionText}>Plavras vistas</Text>
-                    </View>
-                    <View style={styles.description}>
-                        <View style={[styles.dot, {backgroundColor: "#00B2FF"}]}></View>
-                        <Text style={styles.descriptionText}>Revisões feitas</Text>
-                    </View>
+                    <TouchableHighlight
+                        style={[styles.descriptionButton, {marginRight: 20}]}
+                        onPress={() => setViewedWords(!viewedWords)}
+                    >
+                        <View style={[styles.description, {backgroundColor: viewedWords ? "#4E4E53" : "#38383E"}]}>
+                            <View style={[styles.dot, {borderColor: "#14DC28", backgroundColor: viewedWords ? "#14DC28" : "transparent"}]}></View>
+                            <Text style={styles.descriptionText}>Plavras vistas</Text>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={styles.descriptionButton}
+                        onPress={() => setRevisedWords(!revisedWords)}
+                    >
+                        <View style={[styles.description, {backgroundColor: revisedWords ? "#4E4E53" : "#38383E"}]}>
+                            <View style={[styles.dot, {borderColor: "#00B2FF", backgroundColor: revisedWords ? "#00B2FF" : "transparent"}]}></View>
+                            <Text style={styles.descriptionText}>Palavras revisadas</Text>
+                        </View>
+                    </TouchableHighlight>
                 </View>
             </View>
             <View style={styles.topicsContainer}>

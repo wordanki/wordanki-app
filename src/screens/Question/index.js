@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { View, Text, TouchableHighlight } from 'react-native'
+import { View, Text, TouchableHighlight, ScrollView } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'
 import * as Speech from 'expo-speech';
@@ -186,12 +186,10 @@ export default function Profile({ route }) {
         }
 
         setAnswers(options);
-        console.log(answers);
         setCorrectWord(options[wordPosition]);
         setSentence(options[wordPosition].phrase);
-        console.log(sentence);
-        setIsRender(true);
         handleSound(options[wordPosition].phrase);
+        setIsRender(true);
 
         // for(let i=0; i<4; i++) {
         //     setAnswers([...answers, options[i]]);
@@ -208,7 +206,7 @@ export default function Profile({ route }) {
     }
 
     return isRender && (
-        <View style={styles.container}>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <View style={styles.questionContainer}>
                 <TouchableHighlight onPress={() => handleSound(sentence)} style={styles.soundButton}>
                     <AntDesign 
@@ -231,12 +229,12 @@ export default function Profile({ route }) {
                             key={index}
                             disabled={isSelectedWord}
                             style={styles.answerButton}
-                            onPress={() => {nextWordTimer(); setIsSelectedWord(true); setWordSelected(index); console.log(wordSelected)}}
+                            onPress={() => {nextWordTimer(); setIsSelectedWord(true); setWordSelected(index)}}
                         >
                             <View style={{
                                 ...styles.answerButtonContainer,
-                                backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == position ? "#30B956" : "red") : "#31313E",
-                                borderColor: isSelectedWord && (position == index || wordSelected == index) ? (position == index ? "#38D664" : "red") : "#414153"
+                                backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == position ? "#30B956" : "#C63030") : "#393948",
+                                borderColor: isSelectedWord && (position == index || wordSelected == index) ? (position == index ? "#30B956" : "#C63030") : "#393948"
                             }}>
                                 <Text style={styles.answerText}>
                                     {answer.translatedWord}
@@ -247,16 +245,16 @@ export default function Profile({ route }) {
                 })}
                 <TouchableHighlight 
                     key={"Não sei"}
+                    disabled={isSelectedWord}
                     style={{
                         ...styles.answerButton,
-
                     }} 
                     onPress={() => {nextWordTimer(), setIsSelectedWord(!isSelectedWord), setWordSelected(null)}} 
                 >
                     <View style={{
                         ...styles.answerButtonContainer,
                         backgroundColor: "#145C7E",
-                        borderColor: "#0E79A9",
+                        borderColor: "#145C7E",
                     }}>
                         <Text style={styles.answerText}>Não sei</Text>
                     </View>
@@ -267,7 +265,7 @@ export default function Profile({ route }) {
                 <View style={{...styles.translation, borderColor: "#0E79A9"}}>
                     <Text style={styles.translationText}>
                         {splitPhrase(correctWord.translatedPhrase, correctWord.translatedWord)[0]}
-                        <Text style={styles.word}>{correctWord.translatedPhrase.includes(correctWord.translatedWord) && correctWord.translatedWord}</Text>
+                        <Text style={styles.translationWord}>{correctWord.translatedPhrase.includes(correctWord.translatedWord) && correctWord.translatedWord}</Text>
                         {splitPhrase(correctWord.translatedPhrase, correctWord.translatedWord)[1]}
                     </Text>
                 </View>
@@ -289,6 +287,6 @@ export default function Profile({ route }) {
                     </View>
                 </TouchableHighlight>}
             </View>
-        </View>
+        </ScrollView>
     )
 }
