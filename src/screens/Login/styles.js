@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: "100%",
-        backgroundColor: COLORS.BLACK_PRIMARY,
+        backgroundColor: COLORS.BGCOLOR_DARK,
         justifyContent: "flex-end"
     },
     logoContainer: {
@@ -28,13 +28,13 @@ export const styles = StyleSheet.create({
         padding: defaultSpacing * 2,
         borderTopLeftRadius: borderRadius,
         borderTopRightRadius: borderRadius,
-        backgroundColor: COLORS.BLACK_TERTIARY
+        backgroundColor: COLORS.BGCOLOR_DARK
     },
     spacing: {
         marginBottom: defaultSpacing
     },
     forgotPassword: {
-        alignItems: 'flex-end',
+        alignItems: 'center',
         marginTop: -(defaultSpacing / 4),
         marginBottom: defaultSpacing * 2
     },

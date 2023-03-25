@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: "100%",
-        backgroundColor: COLORS.BLACK_PRIMARY,
+        backgroundColor: COLORS.BGCOLOR_DARK,
         justifyContent: "flex-end"
     },
     logoContainer: {
@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
         // alignSelf: "flex-end",
         paddingHorizontal: defaultSpacing * 1.5,
         paddingVertical: defaultSpacing / 2,
-        backgroundColor: COLORS.BLUE
+        backgroundColor: COLORS.GREEN_PRIMARY
     }, 
     buttonText: {
         color: COLORS.WHITE

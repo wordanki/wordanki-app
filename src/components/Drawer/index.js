@@ -6,6 +6,8 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
+import { useAuthentication } from '../../hooks/auth'
+
 import {
     DrawerContentScrollView,
     DrawerItemList,
@@ -19,6 +21,8 @@ import { COLORS } from '../../theme'
 import { styles } from './styles'
 
 export const Drawer = props => {
+    const { user, signOut } = useAuthentication()
+    
     const handleShare = async () => {
         try {
             const result = await Share.share({
@@ -37,8 +41,8 @@ export const Drawer = props => {
         } catch (error) { }
     }
 
-    const handleLogout = () => {
-
+    const handleLogout = async () => {
+        await signOut()
     }
 
     return (
@@ -49,15 +53,15 @@ export const Drawer = props => {
                 contentContainerStyle={{ backgroundColor: COLORS.BLACK_TERTIARY }}>
 
                 <ImageBackground style={styles.profileContainer}>
-                    <UserPhoto size='HIGHER' />
+                    <UserPhoto imageUri={user?.photoURL} size='HIGHER' />
 
                     <Text style={styles.username}>
-                        Anderson Barbosa
+                        {user?.displayName}
                     </Text>
 
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={styles.usermail}>
-                            anderson@gmail.com
+                            {user?.email}
                         </Text>
                     </View>
                 </ImageBackground>

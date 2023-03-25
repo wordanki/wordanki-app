@@ -1,60 +1,9 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { useAuthentication } from '../hooks/auth'
 
-import Question from '../screens/Question'
-import Profile from '../screens/Profile'
-import Welcome from '../screens/Welcome'
-import Login from '../screens/Login'
-
-import { Drawer } from './drawer'
-
-import { NavBar } from '../components/NavBar'
-
-const Stack = createNativeStackNavigator()
+import { AuthRoutes, UserRoutes } from './stack'
 
 export const Routes = () => {
-    return (
-        <Stack.Navigator
-            initialRouteName='Main'
-        >
-            <Stack.Screen 
-                name='Main' 
-                component={Drawer}
-                options={{
-                    headerShown: false
-                }} 
-            />
+    const { user } = useAuthentication()
 
-            <Stack.Screen 
-                name='Question' 
-                component={Question}
-                options={{
-                    header: () => <NavBar isBackScreen title='Todas'></NavBar>
-                }} 
-            />
-
-            <Stack.Screen 
-                name='Profile' 
-                component={Profile}
-                options={{
-                    header: () => <NavBar isBackScreen title='Perfil'></NavBar>
-                }} 
-            />
-
-            <Stack.Screen 
-                name='Welcome' 
-                component={Welcome}
-                options={{
-                    headerShown: false
-                }} 
-            />
-
-            <Stack.Screen 
-                name='Login' 
-                component={Login}
-                options={{
-                    headerShown: false
-                }} 
-            />
-        </Stack.Navigator>
-    )
+    return user ? <UserRoutes /> : <AuthRoutes />;
 }

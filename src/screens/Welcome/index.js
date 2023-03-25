@@ -33,7 +33,7 @@ export default function Welcome({ route }) {
                         <AntDesign 
                             name="right" 
                             size={15} 
-                            color={COLORS.GRAY_SECONDARY} 
+                            color={COLORS.WHITE} 
                         />
                     </View>
                 </TouchableOpacity>

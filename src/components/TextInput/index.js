@@ -14,7 +14,13 @@ import { COLORS } from "../../theme"
 import { styles } from './styles'
 
 export const TextInput = ({ 
-    isSecure, label, placeholder, fontAwesomeIconName 
+    isSecure, 
+    label, 
+    value, 
+    placeholder, 
+    fontAwesomeIconName, 
+    onChangeText,
+    ...rest
 }) => {
     const [isShown, setIsShown] = useState(false)
 
@@ -37,7 +43,10 @@ export const TextInput = ({
                     style={styles.textInput}
                     secureTextEntry={isSecure && !isShown}
                     placeholder={placeholder}
+                    value={value}
                     placeholderTextColor={COLORS.GRAY_PRIMARY}
+                    onChangeText={onChangeText}
+                    {...rest}
                 />
 
                 {isSecure && (

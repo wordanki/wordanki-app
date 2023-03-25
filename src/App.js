@@ -7,6 +7,8 @@ import { useFonts, Roboto_400Regular, Roboto_700Bold  } from "@expo-google-fonts
 import { StatusBar } from 'expo-status-bar'
 import * as SplashScreen from 'expo-splash-screen';
 
+import './config/firebase'
+
 import { Routes } from './routes'
 import { COLORS } from './theme'
 
@@ -38,7 +40,6 @@ export default function App() {
     <>
       <StatusBar 
         style='light' 
-        // translucent
         backgroundColor={COLORS.TRANSPARENT}
       />
 
