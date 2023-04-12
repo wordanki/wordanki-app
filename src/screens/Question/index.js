@@ -177,7 +177,7 @@ export default function Profile({ route }) {
         let options = [];
         let j = 0;
         for(let i=0; i<4; i++) {
-            if(i != position) {
+            if(i != wordPosition) { // position
                 options.push(words[wordsOptions[j]]);
                 j++;
             } else {

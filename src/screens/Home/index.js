@@ -5,14 +5,14 @@ import { useNavigation } from '@react-navigation/native'
 import Topic from '../../components/Topic'
 import EnglishCourse from '../../components/EnglishCourse'
 
-import Word from '../../database/models/Word'
+// import Word from '../../database/models/Word'
 // import Phrase from '../../database/models/Phrase'
 
 import { styles } from "./styles"
 import { useEffect } from 'react'
 
 export default function Home({ route }) {
-    const navigation = useNavigation()
+    const navigation = useNavigation();
 
     const handleStudy = async () => {
         try {
@@ -27,25 +27,50 @@ export default function Home({ route }) {
             //     word_id: 1
             // })
         } catch(error) {
-            console.log(error)
+            console.log(error);
         }
 
-        // navigation.navigate('Question')
+        navigation.navigate('Question');
     }
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        (async () => {
-            try {
-                console.log('oie')
-                const words = await Word.findAll()
-                console.log('tchau')
-                console.log(words)
-            } catch(error) {
-                console.log(error)
-            }
-        })()
-    }, [])
+    //     (async () => {
+    //         try {
+    //             console.log('oie')
+    //             const words = await Word.findAll()
+    //             console.log('tchau')
+    //             console.log(words)
+    //         } catch(error) {
+    //             console.log(error)
+    //         }
+    //     })()
+    // }, [])
+
+    const topics = [
+        {
+            title: "Viagens",
+            img: require("../../assets/img_topics/Viagens.png")
+        },
+        {
+            title: "Escola",
+            img: require("../../assets/img_topics/Escola.png")
+        },
+        {
+            title: "Trabalho",
+            img: require("../../assets/img_topics/Trabalho.png")
+        },
+        {
+            title: "Tecnologia",
+            img: require("../../assets/img_topics/Tecnologia.png")
+        }
+    ];
+
+    const renderTopics = () => {
+        return topics.map((topic, index) => {
+            return (<Topic key={index} ima={topic.img} title={topic.title} navigation={navigation}/>)
+        })
+    }
 
     return (
         <ScrollView style={styles.container}>
@@ -96,10 +121,7 @@ export default function Home({ route }) {
                     showsHorizontalScrollIndicator={false} 
                     style={styles.topics}
                 >
-                    <Topic />
-                    <Topic />
-                    <Topic />
-                    <Topic />
+                    {renderTopics()}
                 </ScrollView>
             </View>
 

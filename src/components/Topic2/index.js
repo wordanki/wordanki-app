@@ -5,10 +5,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { styles } from './styles';
 
+import { AntDesign } from '@expo/vector-icons';
+
 export default function TopicContainer( props ) {
 
     // const img = `../../assets/img_topics/${props.topic}.png`;
     const img = props.ima;
+    // const img = `../../assets/img_topics/Viagens.png`;
+
     return (
         <TouchableHighlight 
             onPress={() => {
@@ -23,17 +27,20 @@ export default function TopicContainer( props ) {
                     style={styles.image}
                 />
                 <View style={styles.infoContainer}>
-                    <Text style={styles.title}>Viagens</Text>
-                    <View style={styles.textContainer}>
-                        <View style={[styles.dot, {backgroundColor: "#14DC28"}]}></View>
-                        <Text style={styles.text}>Palavras vistas: 256</Text>
-                    </View>
-                    <View style={styles.textContainer}>
-                        <View style={[styles.dot, {backgroundColor: "#00B2FF"}]}></View>
-                        <Text style={styles.text}>Revisões pendentes: 64</Text>
+                    <View style={styles.leftSide}>
+                        <Text style={styles.title}>{props.title}</Text>
+                        <View style={styles.textContainer}>
+                            <View style={[styles.dot, {backgroundColor: "#14DC28"}]}></View>
+                            <Text style={styles.text}>Palavras vistas: 256</Text>
+                        </View>
+                        <View style={styles.textContainer}>
+                            <View style={[styles.dot, {backgroundColor: "#00B2FF"}]}></View>
+                            <Text style={styles.text}>Revisões pendentes: 64</Text>
+                        </View>
                     </View>
                     <View style={styles.button}>
-                        <Text style={styles.textButton}>Estudar</Text>
+                        <AntDesign name="caretright" size={25} color="#fff" />
+                        {/* <Text style={styles.textButton}>Estudar</Text> */}
                     </View>
                 </View>
             </View>

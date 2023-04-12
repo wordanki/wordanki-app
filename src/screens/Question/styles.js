@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
         width: "100%",
         height: 50,
         borderRadius: 15,
-        marginBottom: 15,
+        marginBottom: 20,
     },
     answerButtonContainer: {
         width: "100%",

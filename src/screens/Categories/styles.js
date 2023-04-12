@@ -11,13 +11,13 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     containerSearchTopic: {
+        height: 50,
         flexDirection: "row",
-        justifyContent: "space-between",
         alignItems: "center",
         marginTop: 20,
-        marginBottom: 10,
+        marginBottom: 20,
         backgroundColor: "#ffffff22",
-        borderRadius: 20,
+        borderRadius: 25,
     },
     title: {
         color: COLORS.WHITE,
@@ -27,7 +27,6 @@ export const styles = StyleSheet.create({
         flex: 1,
         fontSize: 20,
         color: "#ffffff",
-        paddingVertical: 5,
         paddingHorizontal: 15,
     }
 })
