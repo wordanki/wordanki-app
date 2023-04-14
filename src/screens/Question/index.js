@@ -9,7 +9,10 @@ import { COLORS } from "../../theme"
 import { styles } from "./styles"
 
 export default function Profile({ route }) {
+    const [level, setLevel] = useState(90);
+    const [newWord, setNewWord] = useState(true);
     const [isSelectedWord, setIsSelectedWord] = useState(false);
+    const [indexGenerated, setIndexGenerated] = useState();
     // const [word, setWord] = useState();
     const [position, setPosition] = useState(0);
     const [sentence, setSentence] = useState();
@@ -19,10 +22,120 @@ export default function Profile({ route }) {
     const [wordSelected, setWordSelected] = useState();
     const [nextWord, setNextWord] = useState(false);
     const [timeoutNext, setTimeoutNext] = useState();
+    const [wordsState, setWordsState] = useState([
+        {
+            word: "believe",
+            translatedWord: "acredito0",
+            phrase: "I don't believe in ghosts at all.0",
+            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.0",
+            nextRepetition: 0,
+            previousRepetition: 0,
+            acertos: 0,
+            classe: 2,
+        },
+        {
+            word: "believe",
+            translatedWord: "acredito1",
+            phrase: "I don't believe in ghosts at all.1",
+            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.1",
+            nextRepetition: 0,
+            previousRepetition: 0,
+            acertos: 0,
+            classe: 1,
+        },
+        {
+            word: "believe",
+            translatedWord: "acredito2",
+            phrase: "I don't believe in ghosts at all.2",
+            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.2",
+            nextRepetition: 0,
+            previousRepetition: 0,
+            acertos: 0,
+            classe: 1,
+        },
+        {
+            word: "believe",
+            translatedWord: "acredito3",
+            phrase: "I don't believe in ghosts at all.3",
+            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.3",
+            nextRepetition: 0,
+            previousRepetition: 0,
+            acertos: 0,
+            classe: 2,
+        },
+        {
+            word: "believe",
+            translatedWord: "acredito4",
+            phrase: "I don't believe in ghosts at all.4",
+            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.4",
+            nextRepetition: 0,
+            previousRepetition: 0,
+            acertos: 0,
+            classe: 2,
+        },
+        {
+            word: "believe",
+            translatedWord: "acredito5",
+            phrase: "I don't believe in ghosts at all.5",
+            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.5",
+            nextRepetition: 0,
+            previousRepetition: 0,
+            acertos: 0,
+            classe: 1,
+        },
+        {
+            word: "believe",
+            translatedWord: "acredito6",
+            phrase: "I don't believe in ghosts at all.6",
+            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.6",
+            nextRepetition: 0,
+            previousRepetition: 0,
+            acertos: 0,
+            classe: 1,
+        },
+        {
+            word: "believe",
+            translatedWord: "acredito7",
+            phrase: "I don't believe in ghosts at all.7",
+            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.7",
+            nextRepetition: 0,
+            previousRepetition: 0,
+            acertos: 0,
+            classe: 2,
+        },
+        {
+            word: "believe",
+            translatedWord: "acredito8",
+            phrase: "I don't believe in ghosts at all.8",
+            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.8",
+            nextRepetition: 0,
+            previousRepetition: 0,
+            acertos: 0,
+            classe: 1,
+        },
+        {
+            word: "believe",
+            translatedWord: "acredito9",
+            phrase: "I don't believe in ghosts at all.9",
+            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.9",
+            nextRepetition: 0,
+            previousRepetition: 0,
+            acertos: 0,
+            classe: 2,
+        },
+    ]);
 
-    function getTimeLeft(timeout) {
-        return Math.ceil((timeout._idleStart + timeout._idleTimeout - Date.now()));
-    }
+    let words;
+
+    const classes = [
+        [],
+        [1, 2, 5, 6, 8],
+        [0, 3, 4, 7, 9],
+    ];
+
+    // function getTimeLeft(timeout) {
+    //     return Math.ceil((timeout._idleStart + timeout._idleTimeout - Date.now()));
+    // }
 
     // let timeoutText;
 
@@ -33,108 +146,107 @@ export default function Profile({ route }) {
         });
     }
 
-    const words = [
-        {
-            word: "believe",
-            translatedWord: "acredito0",
-            phrase: "I don't believe in ghosts at all.0",
-            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.0",
-            nextRepetition: 0,
-            acertos: 0,
-            classe: 2,
-        },
-        {
-            word: "believe",
-            translatedWord: "acredito1",
-            phrase: "I don't believe in ghosts at all.1",
-            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.1",
-            nextRepetition: 0,
-            acertos: 0,
-            classe: 1,
-        },
-        {
-            word: "believe",
-            translatedWord: "acredito2",
-            phrase: "I don't believe in ghosts at all.2",
-            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.2",
-            nextRepetition: 0,
-            acertos: 0,
-            classe: 1,
-        },
-        {
-            word: "believe",
-            translatedWord: "acredito3",
-            phrase: "I don't believe in ghosts at all.3",
-            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.3",
-            nextRepetition: 0,
-            acertos: 0,
-            classe: 2,
-        },
-        {
-            word: "believe",
-            translatedWord: "acredito4",
-            phrase: "I don't believe in ghosts at all.4",
-            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.4",
-            nextRepetition: 0,
-            acertos: 0,
-            classe: 2,
-        },
-        {
-            word: "believe",
-            translatedWord: "acredito5",
-            phrase: "I don't believe in ghosts at all.5",
-            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.5",
-            nextRepetition: 0,
-            acertos: 0,
-            classe: 1,
-        },
-        {
-            word: "believe",
-            translatedWord: "acredito6",
-            phrase: "I don't believe in ghosts at all.6",
-            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.6",
-            nextRepetition: 0,
-            acertos: 0,
-            classe: 1,
-        },
-        {
-            word: "believe",
-            translatedWord: "acredito7",
-            phrase: "I don't believe in ghosts at all.7",
-            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.7",
-            nextRepetition: 0,
-            acertos: 0,
-            classe: 2,
-        },
-        {
-            word: "believe",
-            translatedWord: "acredito8",
-            phrase: "I don't believe in ghosts at all.8",
-            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.8",
-            nextRepetition: 0,
-            acertos: 0,
-            classe: 1,
-        },
-        {
-            word: "believe",
-            translatedWord: "acredito9",
-            phrase: "I don't believe in ghosts at all.9",
-            translatedPhrase: "Eu não acredito em fantasmas de jeito nenhum.9",
-            nextRepetition: 0,
-            acertos: 0,
-            classe: 2,
-        },
-    ];
+    function generateIndexWord(level) {
+        let somatorio = 0;
+        let maximo = 100;
+    
+        for(let i=0; i<100; i++) {
+            somatorio += (maximo - Math.abs(level - i)) * 50;
+        }
+    
+        let sort = Math.floor(Math.random() * somatorio);
+    
+        let current = 0;
+        let wordIndex;
+        
+        let i = 0;
+        do {
+            current += maximo - Math.abs(level - Math.floor(i / 50));
+    
+            if(sort < current) {
+                wordIndex = i;
+            }
+            i++;
+        } while(i < 5000 && sort >= current);
 
-    const classes = [
-        [],
-        [1, 2, 5, 6, 8],
-        [0, 3, 4, 7, 9],
-    ];
+        while(words[Math.floor(wordIndex/500)].nextRepetition != 0) {
+            if(wordIndex == 4999)
+                wordIndex = 0;
+            else
+                wordIndex++;
+        }
+
+        return wordIndex;
+    }
 
     function generateWord() {
-        let index = Math.floor(Math.random()*10);
-        return index;
+        let index = generateIndexWord(level);
+        // console.log(index);
+        return Math.floor(index / 500);
+    }
+
+    function generateRepetition() {
+        let d = new Date();
+        let time = d.getTime();
+
+        let minTimeRepetition = time;
+        let wordToRepeat = -1;
+        for(let i=0; i<10; i++) {
+            if(words[i].nextRepetition != 0 && words[i].nextRepetition < time && words[i].nextRepetition < minTimeRepetition) {
+                minTimeRepetition = words[i].nextRepetition;
+                wordToRepeat = i;
+            }
+        }
+
+        return wordToRepeat;
+    }
+
+    function spacedRepetition(indexWord, right) {
+        let date = new Date();
+        let currentTime = date.getTime();
+    
+        // let secondInMiliseconds = 1000;
+        let minuteInMiliseconds = 1000; // 60 * 1000
+        // let hourInMiliseconds = 60 * 60 * 1000;
+        let dayInMiliSeconds = 24 * 1000; // 24 * 60 * 60 * 1000
+    
+        let milisecondsAdded;
+        let milisecondsToAdd;
+    
+        if(words[indexWord].acertos == 0) {
+            if(right) {
+                // adicione 1 dia no wordsWord[index].nextRepetition
+                milisecondsToAdd = (0.9 + Math.random() * 0.2) * dayInMiliSeconds;
+                words[indexWord].acertos += 1;
+            } else {
+                // adicione 10 minutos no wordsWord[index].nextRepetition
+                milisecondsToAdd = (0.9 + Math.random() * 0.2) * (minuteInMiliseconds * 10);
+            }
+        } else {
+            milisecondsAdded = words[indexWord].nextRepetition - words[indexWord].previousRepetition;
+    
+            if(right) {
+                // adiciona uma quantidade de milisegundos de acordo com a quantidade de acertos
+                if(words[indexWord].acertos == 1) {
+                    milisecondsToAdd = (0.9 + Math.random() * 0.2) * (dayInMiliSeconds * 7);
+                } else if(words[indexWord].acertos == 2) {
+                    milisecondsToAdd = (0.9 + Math.random() * 0.2) * (dayInMiliSeconds * 30);
+                } else if(words[indexWord].acertos == 3) {
+                    milisecondsToAdd = (0.9 + Math.random() * 0.2) * (dayInMiliSeconds * 90);
+                } else if(words[indexWord].acertos == 4) {
+                    milisecondsToAdd = (0.9 + Math.random() * 0.2) * (dayInMiliSeconds * 180);
+                } else {
+                    milisecondsToAdd = (0.9 + Math.random() * 0.2) * (milisecondsAdded * 2);
+                }
+                words[indexWord].acertos += 1;
+            } else {
+                // adiciona a mesma quantidade de milisegundos de antes
+                milisecondsToAdd = (0.9 + Math.random() * 0.2) * milisecondsAdded;
+            }
+        }
+    
+        words[indexWord].previousRepetition = currentTime;
+        words[indexWord].nextRepetition = currentTime + milisecondsToAdd;
     }
 
     function splitPhrase(phrase, word) {
@@ -154,13 +266,46 @@ export default function Profile({ route }) {
         return phrase.split(word);
     }
 
+    function nextWordTimer() {
+        setTimeoutNext(
+            setTimeout(() => {
+                setNextWord(!nextWord);
+            }, 3000)
+        );
+        // timeoutText = `${timeoutNext/3000}%`;
+    }
+
+    function answerEvent(selected) {
+        setIsSelectedWord(true);
+        setWordSelected(selected);
+
+        let right = position == selected;
+        words = wordsState;
+        spacedRepetition(indexGenerated, right);
+
+        setWordsState(words);
+
+        nextWordTimer();
+    };
+
     useEffect(() => {
         setIsRender(false);
         setIsSelectedWord(false);
-        // setNextWord(false);
-        // setIsSelectedWord(false);
+        words = wordsState;
+        // console.log(words);
 
-        let indexWord = generateWord();
+        let indexWord;
+        let repeatWord = generateRepetition();
+        // console.log(repeatWord);
+
+        if(newWord || repeatWord == -1) {
+            indexWord = generateWord();
+        } else {
+            indexWord = repeatWord;
+        }
+        setNewWord(!newWord);
+        setIndexGenerated(indexWord);
+
         let classePalavra = words[indexWord].classe;
         let wordsOptions = [];
 
@@ -196,15 +341,6 @@ export default function Profile({ route }) {
         // }
     }, [nextWord]);
 
-    function nextWordTimer() {
-        setTimeoutNext(
-            setTimeout(() => {
-                setNextWord(!nextWord);
-            }, 3000)
-        );
-        // timeoutText = `${timeoutNext/3000}%`;
-    }
-
     return isRender && (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <View style={styles.questionContainer}>
@@ -229,7 +365,7 @@ export default function Profile({ route }) {
                             key={index}
                             disabled={isSelectedWord}
                             style={styles.answerButton}
-                            onPress={() => {nextWordTimer(); setIsSelectedWord(true); setWordSelected(index)}}
+                            onPress={() => {answerEvent(index)}}
                         >
                             <View style={{
                                 ...styles.answerButtonContainer,
@@ -249,7 +385,7 @@ export default function Profile({ route }) {
                     style={{
                         ...styles.answerButton,
                     }} 
-                    onPress={() => {nextWordTimer(), setIsSelectedWord(!isSelectedWord), setWordSelected(null)}} 
+                    onPress={() => {answerEvent(-1)}}
                 >
                     <View style={{
                         ...styles.answerButtonContainer,
