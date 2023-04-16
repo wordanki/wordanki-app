@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { View, Text, TouchableHighlight, ScrollView } from 'react-native'
+import { View, Text, TouchableHighlight, ScrollView, Animated } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'
 import * as Speech from 'expo-speech';
@@ -9,7 +9,7 @@ import { COLORS } from "../../theme"
 import { styles } from "./styles"
 
 export default function Profile({ route }) {
-    const [level, setLevel] = useState(90);
+    const [level, setLevel] = useState(0);
     const [newWord, setNewWord] = useState(true);
     const [isSelectedWord, setIsSelectedWord] = useState(false);
     const [indexGenerated, setIndexGenerated] = useState();
@@ -282,6 +282,17 @@ export default function Profile({ route }) {
         let right = position == selected;
         words = wordsState;
         spacedRepetition(indexGenerated, right);
+        
+        if(!newWord) {
+            let levelWord = indexGenerated * 10;
+            if(right && levelWord > level) {
+                setLevel(level+1);
+            } else if(!right && levelWord < level) {
+                setLevel(level-1);
+            }
+        }
+
+        console.log(level);
 
         setWordsState(words);
 
@@ -295,15 +306,20 @@ export default function Profile({ route }) {
         // console.log(words);
 
         let indexWord;
-        let repeatWord = generateRepetition();
+        let repeatWord = -1;
         // console.log(repeatWord);
 
-        if(newWord || repeatWord == -1) {
+        if(!newWord) {
+            repeatWord = generateRepetition();
+        }
+        if(repeatWord == -1) {
             indexWord = generateWord();
+            setNewWord(false);
         } else {
             indexWord = repeatWord;
+            setNewWord(true);
         }
-        setNewWord(!newWord);
+        
         setIndexGenerated(indexWord);
 
         let classePalavra = words[indexWord].classe;

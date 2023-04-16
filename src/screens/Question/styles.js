@@ -20,10 +20,10 @@ export const styles = StyleSheet.create({
         width: "100%",
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 30,
+        marginBottom: 25,
     },
     soundButton: {
-        marginRight: 20,
+        marginRight: 15,
     },
     question: {
         flex: 1,
@@ -36,9 +36,9 @@ export const styles = StyleSheet.create({
     },
     answerButton: {
         width: "100%",
-        height: 50,
+        height: 45,
         borderRadius: 15,
-        marginBottom: 20,
+        marginBottom: 18,
     },
     answerButtonContainer: {
         width: "100%",
@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
         fontSize: 22,
     },
     translation: {
-        marginTop: 15,
+        marginTop: 7,
         borderWidth: 3,
         width: "100%",
         borderColor: "#58585B",
@@ -74,7 +74,7 @@ export const styles = StyleSheet.create({
         height: 45,
         flexDirection: "row",
         justifyContent: "center",
-        marginTop: 30,
+        marginTop: 25,
     },
     next: {
         width: "100%",
