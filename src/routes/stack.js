@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import Question from '../screens/Question'
 import Profile from '../screens/Profile'
+import DownloadPhrases from '../screens/DownloadPhrases'
 
 import Welcome from '../screens/Welcome'
 import Signup from '../screens/Signup'
@@ -40,6 +41,14 @@ export const UserRoutes = () => {
                 component={Profile}
                 options={{
                     header: () => <NavBar isBackScreen title='Perfil'></NavBar>
+                }} 
+            />
+
+            <Stack.Screen 
+                name='DownloadPhrases' 
+                component={DownloadPhrases}
+                options={{
+                    headerShown: false
                 }} 
             />
         </Stack.Navigator>

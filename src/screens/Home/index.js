@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import Topic from '../../components/Topic'
 import EnglishCourse from '../../components/EnglishCourse'
 
-// import Word from '../../database/models/Word'
+import Word from '../../database/models/Word'
 // import Phrase from '../../database/models/Phrase'
 
 import { styles } from "./styles"
@@ -16,36 +16,13 @@ export default function Home({ route }) {
 
     const handleStudy = async () => {
         try {
-            // await Word.create({
-            //     english: 'of',
-            //     portuguese: 'de'
-            // })
+            const data = await Word.findAll()
 
-            // await Phrase.create({
-            //     english: 'State of SP', 
-            //     portuguese: 'Estado de SP',
-            //     word_id: 1
-            // })
+            navigation.navigate(data.length ? "Question" : "DownloadPhrases")
         } catch(error) {
             console.log(error);
-        }
-
-        navigation.navigate('Question');
+        }   
     }
-
-    // useEffect(() => {
-
-    //     (async () => {
-    //         try {
-    //             console.log('oie')
-    //             const words = await Word.findAll()
-    //             console.log('tchau')
-    //             console.log(words)
-    //         } catch(error) {
-    //             console.log(error)
-    //         }
-    //     })()
-    // }, [])
 
     const topics = [
         {

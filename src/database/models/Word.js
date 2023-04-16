@@ -6,14 +6,17 @@ const PHRASE_TABLE_NAME = 'phrases'
 export const TABLE_NAME = 'words'
 
 db.transaction(tx => {
-    console.log("TEST")
     // tx.executeSql(`DROP TABLE ${TABLE_NAME};`)
 
     tx.executeSql(
         `CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
             id INTEGER PRIMARY KEY AUTOINCREMENT, 
-            english varchar(255), 
-            portuguese varchar(255)
+            english varchar(255) NOT NULL, 
+            portuguese varchar(255) NOT NULL,
+            next_repetition int NOT NULL DEFAULT 0,
+            previous_repetition int NOT NULL DEFAULT 0,
+            hits int NOT NULL DEFAULT 0,
+            class int NOT NULL
         );`
     )
 })
@@ -22,8 +25,8 @@ export default {
     create: data => new Promise((resolve, reject) => {
         db.transaction(tx => {
             tx.executeSql(
-                `INSERT INTO ${TABLE_NAME} (english, portuguese) values (?, ?);`,
-                [data.english, data.portuguese],
+                `INSERT INTO ${TABLE_NAME} (english, portuguese, class) values (?, ?, ?);`,
+                [data.english, data.portuguese, data.class],
                 (_, { rowsAffected, insertId }) => {
                     if (rowsAffected > 0) return resolve(insertId)
     
@@ -68,6 +71,7 @@ export default {
                     ${TABLE_NAME}.id as word_id,
                     ${TABLE_NAME}.english as word_english,
                     ${TABLE_NAME}.portuguese as word_portuguese,
+                    ${TABLE_NAME}.class as word_class,
                     ${PHRASE_TABLE_NAME}.id as phrase_id,
                     ${PHRASE_TABLE_NAME}.english as phrase_english,
                     ${PHRASE_TABLE_NAME}.portuguese as phrase_portuguese
@@ -76,32 +80,31 @@ export default {
                 ON ${PHRASE_TABLE_NAME}.word_id = ${TABLE_NAME}.id;`,
                 [],
                 (_, { rows: { _array } }) => {
-                    console.log("VAGA")
-                    // const rows = []
+                    const rows = []
 
-                    // _array.forEach(item => {
-                    //   const index = rows.findIndex(word => word.find(wordItem => wordItem.id === item.id))
+                    _array.forEach(item => {
+                      const index = rows.findIndex(word => word.find(wordItem => wordItem.word_id === item.word_id))
                 
-                    //   if (index === -1) {
-                    //     rows.push([item])
+                      if (index === -1) {
+                        rows.push([item])
                 
-                    //     return
-                    //   }
+                        return
+                      }
                 
-                    //   rows[index].push(item)
-                    // })
+                      rows[index].push(item)
+                    })
                 
-                    // const rowsFormatted = rows.map(row => ({
-                    //     english: row[0].word_english,
-                    //     portuguese: row[0].word_portuguese,
-                    //     phrases:  row.map(item => ({
-                    //         english: item.phrase_english,
-                    //         portuguese: item.phrase_portuguese
-                    //     }))
-                    // }))
+                    const rowsFormatted = rows.map(row => ({
+                        english: row[0].word_english,
+                        portuguese: row[0].word_portuguese,
+                        class: row[0].word_class,
+                        phrases:  row.map(item => ({
+                            english: item.phrase_english,
+                            portuguese: item.phrase_portuguese
+                        }))
+                    }))
                     
-                    // resolve(rowsFormatted)
-                    resolve([])
+                    resolve(rowsFormatted)
                 },
                 (_, error) => reject(error) 
             )
