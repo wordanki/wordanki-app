@@ -25,13 +25,16 @@ export default function Profile({ route }) {
     const [nextWord, setNextWord] = useState(false);
     const [timeoutNext, setTimeoutNext] = useState();
     const [wordsState, setWordsState] = useState([]);
+    // const [isSpeaking, setIsSpeaking] = useState();
+    const [wordsLoad, setWordsLoad] = useState(false);
 
     let words;
 
     const classes = [
         [],
-        [1, 2, 5, 6, 8],
-        [0, 3, 4, 7, 9],
+        [1, 2, 5, 6],
+        [0, 3, 4, 7],
+        [8, 9, 10, 11]
     ];
 
     // function getTimeLeft(timeout) {
@@ -40,12 +43,44 @@ export default function Profile({ route }) {
 
     // let timeoutText;
 
+    useEffect(() => {
+        setWordsLoad(false);
+        Word.findAll().then((data => {
+            // console.log("HEYYY")
+            const formattedData = data.map(word => ({
+                word: word.english,
+                translatedWord: word.portuguese,
+                phrase: word.phrases[0].english,
+                translatedPhrase: word.phrases[0].portuguese,
+                nextRepetition: 0,
+                previousRepetition: 0,
+                acertos: 0,
+                classe: word.class,
+            }));
+        
+            setWordsState(formattedData);
+            setWordsLoad(true);
+        }));
+    }, []);
+
     const handleSound = (phrase) => {
         Speech.stop();
+
         Speech.speak(phrase, {
-            language: 'en'
+            language: 'en',
+            // onStart: console.log("Start"),
+            // onDone: console.log("Done")
         });
+
+        // setIsSpeaking(Speech.isSpeakingAsync);
     }
+
+    // async function speaking() {
+    //     let speaking = await Speech.isSpeakingAsync();
+    //     console.log(speaking);
+    //     setIsSpeaking(speaking);
+    // }
+
 
     function generateIndexWord(level) {
         let somatorio = 0;
@@ -107,7 +142,7 @@ export default function Profile({ route }) {
         let currentTime = date.getTime();
 
         // let secondInMiliseconds = 1000;
-        let minuteInMiliseconds = 1000; // 60 * 1000
+        let minuteInMiliseconds = 100; // 60 * 1000
         // let hourInMiliseconds = 60 * 60 * 1000;
         let dayInMiliSeconds = 24 * 1000; // 24 * 60 * 60 * 1000
 
@@ -170,6 +205,7 @@ export default function Profile({ route }) {
         let right = position == selected;
         words = wordsState;
         spacedRepetition(indexGenerated, right);
+        setWordsState(words);
 
         if (!newWord) {
             let levelWord = indexGenerated * 10;
@@ -179,37 +215,16 @@ export default function Profile({ route }) {
                 setLevel(level - 1);
             }
         }
-
-        console.log(level);
-
-        setWordsState(words);
-
+        // console.log(level);
         nextWordTimer();
     };
 
     useEffect(() => {
-        Word.findAll().then((data => {
-
-            console.log("HEYYY")
-
-            const formattedData = data.map(word => ({
-                word: word.english,
-                translatedWord: word.portuguese,
-                phrase: word.phrases[0].english,
-                translatedPhrase: word.phrases[0].portuguese,
-                nextRepetition: 0,
-                previousRepetition: 0,
-                acertos: 0,
-                classe: word.class,
-            }))
-            
-            setWordsState(formattedData)
-
-
+        if(wordsLoad) {
             setIsRender(false);
             setIsSelectedWord(false);
-            words = formattedData;
-            // console.log(words);
+            words = wordsState;
+            console.log(words);
 
             let indexWord;
             let repeatWord = -1;
@@ -261,8 +276,8 @@ export default function Profile({ route }) {
             // for(let i=0; i<4; i++) {
             //     setAnswers([...answers, options[i]]);
             // }
-        }))
-    }, [nextWord]);
+        }
+    }, [nextWord, wordsLoad]);
 
     return isRender && (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -271,7 +286,7 @@ export default function Profile({ route }) {
                     <AntDesign
                         name="sound"
                         size={30}
-                        color={Speech.isSpeakingAsync ? COLORS.GRAY_SECONDARY : "red"}
+                        color={"#dddddd"}
                     />
                 </TouchableHighlight>
                 <Text style={styles.question}>
@@ -287,13 +302,16 @@ export default function Profile({ route }) {
                         <TouchableHighlight
                             key={index}
                             disabled={isSelectedWord}
-                            style={styles.answerButton}
+                            style={{
+                                ...styles.answerButton,
+                                backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == position ? "#2BAA4F" : "#9B3D42") : "#444855",
+                            }}
                             onPress={() => { answerEvent(index) }}
                         >
                             <View style={{
                                 ...styles.answerButtonContainer,
-                                backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == position ? "#30B956" : "#C63030") : "#393948",
-                                borderColor: isSelectedWord && (position == index || wordSelected == index) ? (position == index ? "#30B956" : "#C63030") : "#393948"
+                                backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == position ? "#2BAA4F" : "#9B3D42") : "#444855",
+                                borderColor: isSelectedWord && (position == index || wordSelected == index) ? (position == index ? "#2BAA4F" : "#9B3D42") : "#444855"
                             }}>
                                 <Text style={styles.answerText}>
                                     {answer.translatedWord}
@@ -307,13 +325,14 @@ export default function Profile({ route }) {
                     disabled={isSelectedWord}
                     style={{
                         ...styles.answerButton,
+                        backgroundColor: "#0A7CB1"
                     }}
                     onPress={() => { answerEvent(-1) }}
                 >
                     <View style={{
                         ...styles.answerButtonContainer,
-                        backgroundColor: "#145C7E",
-                        borderColor: "#145C7E",
+                        backgroundColor: "#0A7CB1",
+                        borderColor: "#0A7CB1",
                     }}>
                         <Text style={styles.answerText}>Não sei</Text>
                     </View>
@@ -321,16 +340,16 @@ export default function Profile({ route }) {
             </View>
 
             {isSelectedWord ? (
-                <View style={{ ...styles.translation, borderColor: "#0E79A9" }}>
-                    <Text style={styles.translationText}>
+                <View style={{ ...styles.translation, borderColor: "#0A7CB1bb", fontSize: 40 }}>
+                    <Text style={{ ...styles.translationText, fontSize: 25 }}>
                         {splitPhrase(correctWord.translatedPhrase, correctWord.translatedWord)[0]}
                         <Text style={styles.translationWord}>{correctWord.translatedPhrase.includes(correctWord.translatedWord) && correctWord.translatedWord}</Text>
                         {splitPhrase(correctWord.translatedPhrase, correctWord.translatedWord)[1]}
                     </Text>
                 </View>
             ) : (
-                <View style={{ ...styles.translation, borderColor: "#383842" }}>
-                    <Text style={{ ...styles.translationText, color: "#aaaaaa", }}>
+                <View style={styles.translation}>
+                    <Text style={{ ...styles.translationText, color: "#bbbbbb", }}>
                         A tradução da frase irá aparecer aqui depois que você clicar na resposta
                     </Text>
                 </View>

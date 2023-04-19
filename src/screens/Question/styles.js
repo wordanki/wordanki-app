@@ -20,10 +20,11 @@ export const styles = StyleSheet.create({
         width: "100%",
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 25,
+        marginBottom: 40,
+        // backgroundColor: "#fff4"
     },
     soundButton: {
-        marginRight: 15,
+        marginRight: 10,
     },
     question: {
         flex: 1,
@@ -32,13 +33,14 @@ export const styles = StyleSheet.create({
     },
     word: {
         color: "#30B956",
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        textDecorationLine: 'underline',
     },
     answerButton: {
         width: "100%",
         height: 45,
         borderRadius: 15,
-        marginBottom: 18,
+        marginBottom: 20,
     },
     answerButtonContainer: {
         width: "100%",
@@ -53,28 +55,31 @@ export const styles = StyleSheet.create({
         fontSize: 22,
     },
     translation: {
-        marginTop: 7,
+        marginTop: 20,
         borderWidth: 3,
         width: "100%",
-        borderColor: "#58585B",
+        borderColor: "#444855",
         borderRadius: 15,
         paddingVertical: 10,
-        paddingHorizontal: 15, 
+        paddingHorizontal: 15,
+        minHeight: 100,
+        justifyContent: "center"
     },
     translationText: {
         fontSize: 20,
-        color: COLORS.WHITE,
+        color: "#dddddd",
     },
     translationWord: {
-        color: "#383842",
-        fontWeight: 'bold'
+        color: "#2C9ED2",
+        fontWeight: 'bold',
+        textDecorationLine: 'underline',
     },
     buttonsContainer: {
         width: "100%",
         height: 45,
         flexDirection: "row",
         justifyContent: "center",
-        marginTop: 25,
+        marginTop: 40,
     },
     next: {
         width: "100%",
