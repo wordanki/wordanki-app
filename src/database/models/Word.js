@@ -36,6 +36,19 @@ export default {
             )
         })
     }),
+    delete: data => new Promise((resolve, reject) => {
+        db.transaction(tx => {
+            tx.executeSql(
+                `DELETE FROM ${TABLE_NAME};`,
+                (_, { rowsAffected, insertId }) => {
+                    if (rowsAffected > 0) return resolve(insertId)
+    
+                    reject("Error inserting data: " + JSON.stringify(data))
+                },
+                (_, error) => reject(error) 
+            )
+        })
+    }),
     update: (id, data) => new Promise((resolve, reject) => {
         db.transaction(tx => {
             tx.executeSql(

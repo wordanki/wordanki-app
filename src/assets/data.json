@@ -1,148 +1,10 @@
 [
     [
         {
-            "class": 1,
+            "class": 2,
             "phrases": {
-                "english": "The sun is shining brightly.",
-                "portuguese": "O sol está brilhando intensamente."
-            },
-            "words": {
-                "english": "the",
-                "portuguese": " o"
-            }
-        },
-        {
-            "class": 1,
-            "phrases": {
-                "english": "The cat is sleeping.",
-                "portuguese": "O gato está dormindo."
-            },
-            "words": {
-                "english": "the",
-                "portuguese": " o"
-            }
-        },
-        {
-            "class": 1,
-            "phrases": {
-                "english": "The wind is blowing.",
-                "portuguese": "O vento está soprando."
-            },
-            "words": {
-                "english": "the",
-                "portuguese": " o"
-            }
-        },
-        {
-            "class": 1,
-            "phrases": {
-                "english": "The sky is blue.",
-                "portuguese": "O céu é azul."
-            },
-            "words": {
-                "english": "the",
-                "portuguese": " o"
-            }
-        }
-    ],
-    [
-        {
-            "class": 1,
-            "phrases": {
-                "english": "He spoke of his dreams.",
-                "portuguese": "Ele falou de seus sonhos."
-            },
-            "words": {
-                "english": "of",
-                "portuguese": " de"
-            }
-        },
-        {
-            "class": 1,
-            "phrases": {
-                "english": "She was full of joy.",
-                "portuguese": "Ela estava cheia de alegria."
-            },
-            "words": {
-                "english": "of",
-                "portuguese": " de"
-            }
-        },
-        {
-            "class": 1,
-            "phrases": {
-                "english": "They were made of steel.",
-                "portuguese": "Eles eram feitos de aço."
-            },
-            "words": {
-                "english": "of",
-                "portuguese": " de"
-            }
-        },
-        {
-            "class": 1,
-            "phrases": {
-                "english": "He was proud of his work.",
-                "portuguese": "Ele estava orgulhoso de seu trabalho."
-            },
-            "words": {
-                "english": "of",
-                "portuguese": " de"
-            }
-        }
-    ],
-    [
-        {
-            "class": 1,
-            "phrases": {
-                "english": "She sang and danced all night.",
-                "portuguese": "Ela cantou e dançou a noite toda."
-            },
-            "words": {
-                "english": "and",
-                "portuguese": " e"
-            }
-        },
-        {
-            "class": 1,
-            "phrases": {
-                "english": "He ate and drank too much.",
-                "portuguese": "Ele comeu e bebeu demais."
-            },
-            "words": {
-                "english": "and",
-                "portuguese": " e"
-            }
-        },
-        {
-            "class": 1,
-            "phrases": {
-                "english": "We laughed and cried together.",
-                "portuguese": "Rimos e choramos juntos."
-            },
-            "words": {
-                "english": "and",
-                "portuguese": " e"
-            }
-        },
-        {
-            "class": 1,
-            "phrases": {
-                "english": "They ran and jumped in the park.",
-                "portuguese": "Eles correram e saltaram no parque."
-            },
-            "words": {
-                "english": "and",
-                "portuguese": " e"
-            }
-        }
-    ],
-    [
-        {
-            "class": 1,
-            "phrases": {
-                "english": "I'm going to school.",
-                "portuguese": "-> Vou para a escola."
+                "english": "I'm going [to] school.",
+                "portuguese": "Vou [para] a escola."
             },
             "words": {
                 "english": "to",
@@ -150,10 +12,10 @@
             }
         },
         {
-            "class": 1,
+            "class": 2,
             "phrases": {
-                "english": "She's going to the store.",
-                "portuguese": "-> Ela vai para a loja."
+                "english": "She's going [to] the store.",
+                "portuguese": "Ela vai [para] a loja."
             },
             "words": {
                 "english": "to",
@@ -161,10 +23,10 @@
             }
         },
         {
-            "class": 1,
+            "class": 2,
             "phrases": {
-                "english": "We're going to the beach.",
-                "portuguese": "-> Vamos para a praia."
+                "english": "We're going [to] the beach.",
+                "portuguese": "Vamos [para] a praia."
             },
             "words": {
                 "english": "to",
@@ -172,10 +34,10 @@
             }
         },
         {
-            "class": 1,
+            "class": 2,
             "phrases": {
-                "english": "He's going to the park.",
-                "portuguese": "-> Ele vai para o parque."
+                "english": "He's going [to] the park.",
+                "portuguese": "Ele vai [para] o parque."
             },
             "words": {
                 "english": "to",
@@ -187,8 +49,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "She's in the garden.",
-                "portuguese": "Ela está no jardim."
+                "english": "She's [in] the garden.",
+                "portuguese": "Ela está [no] jardim."
             },
             "words": {
                 "english": "in",
@@ -198,8 +60,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "He's in the car.",
-                "portuguese": "Ele está no carro."
+                "english": "He's [in] the car.",
+                "portuguese": "Ele está [no] carro."
             },
             "words": {
                 "english": "in",
@@ -209,8 +71,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "They're in the house.",
-                "portuguese": "Eles estão na casa."
+                "english": "They're [in] the house.",
+                "portuguese": "Eles estão [na] casa."
             },
             "words": {
                 "english": "in",
@@ -220,8 +82,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "We're in the park.",
-                "portuguese": "Nós estamos no parque."
+                "english": "We're [in] the park.",
+                "portuguese": "Nós estamos [no] parque."
             },
             "words": {
                 "english": "in",
@@ -233,8 +95,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "He worked hard for success.",
-                "portuguese": " Ele trabalhou duro para o sucesso."
+                "english": "He worked hard [for] success.",
+                "portuguese": " Ele trabalhou duro [para] o sucesso."
             },
             "words": {
                 "english": "for",
@@ -244,8 +106,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "She searched for answers.",
-                "portuguese": "Ela procurou por respostas."
+                "english": "She searched [for] answers.",
+                "portuguese": "Ela procurou [por] respostas."
             },
             "words": {
                 "english": "for",
@@ -255,8 +117,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "We waited for hours.",
-                "portuguese": "Nós esperamos por horas."
+                "english": "We waited [for] hours.",
+                "portuguese": "Nós esperamos [por] horas."
             },
             "words": {
                 "english": "for",
@@ -266,8 +128,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "They prepared for the test.",
-                "portuguese": "Eles se prepararam para o teste."
+                "english": "They prepared [for] the test.",
+                "portuguese": "Eles se prepararam [para] o teste."
             },
             "words": {
                 "english": "for",
@@ -279,8 +141,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "He is my best friend.",
-                "portuguese": "Ele é meu melhor amigo."
+                "english": "He [is] my best friend.",
+                "portuguese": "Ele [é] meu melhor amigo."
             },
             "words": {
                 "english": "is",
@@ -290,8 +152,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "She is my teacher.",
-                "portuguese": "Ela é minha professora."
+                "english": "She [is] my teacher.",
+                "portuguese": "Ela [é] minha professora."
             },
             "words": {
                 "english": "is",
@@ -301,8 +163,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "It is a beautiful day.",
-                "portuguese": "É um lindo dia."
+                "english": "It [is] a beautiful day.",
+                "portuguese": "[É] um lindo dia."
             },
             "words": {
                 "english": "is",
@@ -312,8 +174,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "That is my house.",
-                "portuguese": "Essa é minha casa."
+                "english": "That [is] my house.",
+                "portuguese": "Essa [é] minha casa."
             },
             "words": {
                 "english": "is",
@@ -325,8 +187,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "He was on the roof.",
-                "portuguese": "Ele estava sobre o telhado."
+                "english": "He was [on] the roof.",
+                "portuguese": "Ele estava [sobre] o telhado."
             },
             "words": {
                 "english": "on",
@@ -336,8 +198,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "She put it on the table.",
-                "portuguese": "Ela colocou-o sobre a mesa."
+                "english": "She put it [on] the table.",
+                "portuguese": "Ela colocou-o [sobre] a mesa."
             },
             "words": {
                 "english": "on",
@@ -347,8 +209,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "He was standing on the chair.",
-                "portuguese": "Ele estava em pé sobre a cadeira."
+                "english": "He was standing [on] the chair.",
+                "portuguese": "Ele estava em pé [sobre] a cadeira."
             },
             "words": {
                 "english": "on",
@@ -358,8 +220,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "She put the book on the shelf.",
-                "portuguese": "Ela colocou o livro na prateleira."
+                "english": "She put the book [on] the shelf.",
+                "portuguese": "Ela colocou o livro [na] prateleira."
             },
             "words": {
                 "english": "on",
@@ -371,8 +233,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "That's all I need.",
-                "portuguese": "- Isso é tudo o que eu preciso."
+                "english": "[That]'s all I need.",
+                "portuguese": "Isso é tudo o [que] eu preciso."
             },
             "words": {
                 "english": "that",
@@ -382,8 +244,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "That's what I said.",
-                "portuguese": "- É isso que eu disse."
+                "english": "[That]'s what I said.",
+                "portuguese": "É isso [que] eu disse."
             },
             "words": {
                 "english": "that",
@@ -393,8 +255,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "That's what I meant.",
-                "portuguese": "- É isso que eu quis dizer."
+                "english": "[That]'s what I meant.",
+                "portuguese": "É isso [que] eu quis dizer."
             },
             "words": {
                 "english": "that",
@@ -404,8 +266,8 @@
         {
             "class": 2,
             "phrases": {
-                "english": "That's what I wanted.",
-                "portuguese": "- É isso que eu queria."
+                "english": "[That]'s what I wanted.",
+                "portuguese": "É isso [que] eu queria."
             },
             "words": {
                 "english": "that",
@@ -417,8 +279,8 @@
         {
             "class": 3,
             "phrases": {
-                "english": "He was driven by ambition.",
-                "portuguese": "Ele foi guiado pela ambição."
+                "english": "He was driven [by] ambition.",
+                "portuguese": "Ele foi guiado [pela] ambição."
             },
             "words": {
                 "english": "by",
@@ -428,8 +290,8 @@
         {
             "class": 3,
             "phrases": {
-                "english": "She was inspired by nature.",
-                "portuguese": "Ela foi inspirada pela natureza."
+                "english": "She was inspired [by] nature.",
+                "portuguese": "Ela foi inspirada [pela] natureza."
             },
             "words": {
                 "english": "by",
@@ -439,8 +301,8 @@
         {
             "class": 3,
             "phrases": {
-                "english": "He was motivated by success.",
-                "portuguese": "Ele foi motivado pelo sucesso."
+                "english": "He was motivated [by] success.",
+                "portuguese": "Ele foi motivado [pelo] sucesso."
             },
             "words": {
                 "english": "by",
@@ -450,8 +312,8 @@
         {
             "class": 3,
             "phrases": {
-                "english": "They were guided by faith.",
-                "portuguese": "Eles foram guiados pela fé."
+                "english": "They were guided [by] faith.",
+                "portuguese": "Eles foram guiados [pela] fé."
             },
             "words": {
                 "english": "by",
@@ -463,8 +325,8 @@
         {
             "class": 3,
             "phrases": {
-                "english": "This is my home.",
-                "portuguese": "- Isso é minha casa."
+                "english": "[This] is my home.",
+                "portuguese": "[Esse] é minha casa."
             },
             "words": {
                 "english": "this",
@@ -474,8 +336,8 @@
         {
             "class": 3,
             "phrases": {
-                "english": "This is my car.",
-                "portuguese": "- Isso é meu carro."
+                "english": "[This] is my car.",
+                "portuguese": "[Esse] é minha casa."
             },
             "words": {
                 "english": "this",
@@ -485,8 +347,8 @@
         {
             "class": 3,
             "phrases": {
-                "english": "This is my job.",
-                "portuguese": "- Isso é meu trabalho."
+                "english": "[This] is my job.",
+                "portuguese": "[Esse] é meu trabalho."
             },
             "words": {
                 "english": "this",
@@ -496,8 +358,8 @@
         {
             "class": 3,
             "phrases": {
-                "english": "This is my life.",
-                "portuguese": "- Isso é minha vida."
+                "english": "[This] is my life.",
+                "portuguese": "[Esse] é minha vida."
             },
             "words": {
                 "english": "this",
@@ -509,8 +371,8 @@
         {
             "class": 3,
             "phrases": {
-                "english": "She went to the store with her friends.",
-                "portuguese": "-> Ela foi à loja com seus amigos."
+                "english": "She went to the store [with] her friends.",
+                "portuguese": "Ela foi à loja [com] seus amigos."
             },
             "words": {
                 "english": "with",
@@ -520,8 +382,8 @@
         {
             "class": 3,
             "phrases": {
-                "english": "He cooked dinner with his family.",
-                "portuguese": "-> Ele cozinhou o jantar com sua família."
+                "english": "He cooked dinner [with] his family.",
+                "portuguese": "Ele cozinhou o jantar [com] sua família."
             },
             "words": {
                 "english": "with",
@@ -531,8 +393,8 @@
         {
             "class": 3,
             "phrases": {
-                "english": "We went to the beach with our dog.",
-                "portuguese": "-> Fomos à praia com nosso cachorro."
+                "english": "We went to the beach [with] our dog.",
+                "portuguese": "Fomos à praia [com] nosso cachorro."
             },
             "words": {
                 "english": "with",
@@ -542,8 +404,8 @@
         {
             "class": 3,
             "phrases": {
-                "english": "They went to the park with their kids.",
-                "portuguese": "-> Eles foram ao parque com seus filhos."
+                "english": "They went to the park [with] their kids.",
+                "portuguese": "Eles foram ao parque [com] seus filhos."
             },
             "words": {
                 "english": "with",
@@ -555,8 +417,8 @@
         {
             "class": 3,
             "phrases": {
-                "english": "I am happy to be here.",
-                "portuguese": "- Eu estou feliz por estar aqui."
+                "english": "[I] am happy to be here.",
+                "portuguese": "[Eu] estou feliz por estar aqui."
             },
             "words": {
                 "english": "i",
@@ -566,8 +428,8 @@
         {
             "class": 3,
             "phrases": {
-                "english": "I will go to the store.",
-                "portuguese": "- Eu irei à loja."
+                "english": "[I] will go to the store.",
+                "portuguese": "[Eu] irei à loja."
             },
             "words": {
                 "english": "i",
@@ -577,8 +439,8 @@
         {
             "class": 3,
             "phrases": {
-                "english": "I need help with this.",
-                "portuguese": "- Eu preciso de ajuda com isso."
+                "english": "[I] need help with this.",
+                "portuguese": "[Eu] preciso de ajuda com isso."
             },
             "words": {
                 "english": "i",
@@ -588,8 +450,8 @@
         {
             "class": 3,
             "phrases": {
-                "english": "I will do my best.",
-                "portuguese": "- Eu farei o meu melhor."
+                "english": "[I] will do my best.",
+                "portuguese": "[Eu] farei o meu melhor."
             },
             "words": {
                 "english": "i",

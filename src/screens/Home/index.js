@@ -16,9 +16,9 @@ export default function Home({ route }) {
 
     const handleStudy = async () => {
         try {
-            const data = await Word.findAll()
+            const data = await Word.findAll();
 
-            navigation.navigate(data.length ? "Question" : "DownloadPhrases")
+            navigation.navigate(data.length ? "Question" : "DownloadPhrases");
         } catch(error) {
             console.log(error);
         }   

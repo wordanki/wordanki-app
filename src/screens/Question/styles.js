@@ -94,6 +94,7 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#434348",
         borderRadius: 100,
+        overflow: "hidden",
     },
     textChangeWord: {
         fontSize: 20,
@@ -102,11 +103,9 @@ export const styles = StyleSheet.create({
     },
     progressBar: {
         height: "100%",
-        backgroundColor: "#ffffff22",
+        backgroundColor: "#ffffff11",
         position: "absolute",
         left: 0,
         top: 0,
-        borderTopLeftRadius: 100,
-        borderBottomLeftRadius: 100,
     }
 })

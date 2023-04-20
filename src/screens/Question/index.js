@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { View, Text, TouchableHighlight, ScrollView, Animated } from 'react-native'
+import { View, Text, TouchableHighlight, ScrollView, Animated, Easing } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'
 import * as Speech from 'expo-speech';
@@ -18,6 +18,7 @@ export default function Profile({ route }) {
     // const [word, setWord] = useState();
     const [position, setPosition] = useState(0);
     const [sentence, setSentence] = useState();
+    const [sentenceTranslation, setSentenceTranslation] = useState();
     const [answers, setAnswers] = useState();
     const [correctWord, setCorrectWord] = useState();
     const [isRender, setIsRender] = useState(false);
@@ -27,6 +28,20 @@ export default function Profile({ route }) {
     const [wordsState, setWordsState] = useState([]);
     // const [isSpeaking, setIsSpeaking] = useState();
     const [wordsLoad, setWordsLoad] = useState(false);
+    const [phraseEnglish, setPhraseEnglish] = useState();
+    const [progressNextWord, setProgressNextWord] = useState(new Animated.Value(0));
+
+    progressNextWord.interpolate({
+        inputRange: [0, 100],
+        outputRange: ["0%", "100%"]
+    });
+
+    const anime = Animated.timing(progressNextWord, {
+        toValue: 350,
+        duration: 6000,
+        useNativeDriver: false,
+        easing: Easing.linear
+    });
 
     let words;
 
@@ -185,15 +200,21 @@ export default function Profile({ route }) {
         words[indexWord].nextRepetition = currentTime + milisecondsToAdd;
     }
 
-    function splitPhrase(phrase, word) {
-        return phrase.split(word.toLowerCase())
+    function splitPhrase(phrase) {
+        let phraseSplited = [];
+        phraseSplited[0] = phrase.slice(0, phrase.indexOf("["));
+        phraseSplited[1] = phrase.slice(phrase.indexOf("[")+1, phrase.indexOf("]"));
+        phraseSplited[2] = phrase.slice(phrase.indexOf("]")+1);
+
+        return phraseSplited;
+        // return phrase.split(word.toLowerCase());
     }
 
     function nextWordTimer() {
         setTimeoutNext(
             setTimeout(() => {
                 setNextWord(!nextWord);
-            }, 3000)
+            }, 6000)
         );
         // timeoutText = `${timeoutNext/3000}%`;
     }
@@ -217,6 +238,9 @@ export default function Profile({ route }) {
         }
         // console.log(level);
         nextWordTimer();
+        // setProgressNextWord(setValue(0));
+        progressNextWord.setValue(0);
+        anime.start();
     };
 
     useEffect(() => {
@@ -224,7 +248,7 @@ export default function Profile({ route }) {
             setIsRender(false);
             setIsSelectedWord(false);
             words = wordsState;
-            console.log(words);
+            // console.log(words);
 
             let indexWord;
             let repeatWord = -1;
@@ -269,7 +293,8 @@ export default function Profile({ route }) {
 
             setAnswers(options);
             setCorrectWord(options[wordPosition]);
-            setSentence(options[wordPosition].phrase);
+            setSentence(splitPhrase(options[wordPosition].phrase));
+            setSentenceTranslation(splitPhrase(options[wordPosition].translatedPhrase));
             handleSound(options[wordPosition].phrase);
             setIsRender(true);
 
@@ -282,17 +307,17 @@ export default function Profile({ route }) {
     return isRender && (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <View style={styles.questionContainer}>
-                <TouchableHighlight onPress={() => handleSound(sentence)} style={styles.soundButton}>
+                <TouchableHighlight onPress={() => handleSound(sentence.join(''))} style={styles.soundButton}>
                     <AntDesign
                         name="sound"
                         size={30}
-                        color={"#dddddd"}
+                        color={"#2C9ED2"}
                     />
                 </TouchableHighlight>
                 <Text style={styles.question}>
-                    {splitPhrase(correctWord.phrase, correctWord.word)[0]}
-                    <Text style={styles.word}>{(isRender && correctWord.phrase.includes(correctWord.word)) && correctWord.word}</Text>
-                    {splitPhrase(correctWord.phrase, correctWord.word)[1]}
+                    {sentence[0]}
+                    <Text style={styles.word}>{sentence[1]}</Text>
+                    {sentence[2]}
                 </Text>
             </View>
 
@@ -342,9 +367,9 @@ export default function Profile({ route }) {
             {isSelectedWord ? (
                 <View style={{ ...styles.translation, borderColor: "#0A7CB1bb", fontSize: 40 }}>
                     <Text style={{ ...styles.translationText, fontSize: 25 }}>
-                        {splitPhrase(correctWord.translatedPhrase, correctWord.translatedWord)[0]}
-                        <Text style={styles.translationWord}>{correctWord.translatedPhrase.includes(correctWord.translatedWord) && correctWord.translatedWord}</Text>
-                        {splitPhrase(correctWord.translatedPhrase, correctWord.translatedWord)[1]}
+                        {sentenceTranslation[0]}
+                        <Text style={styles.translationWord}>{sentenceTranslation[1]}</Text>
+                        {sentenceTranslation[2]}
                     </Text>
                 </View>
             ) : (
@@ -361,7 +386,7 @@ export default function Profile({ route }) {
                         <Text style={styles.textChangeWord}>Próxima</Text>
                         {/* <FontAwesome5 name="arrow-right" size={24} color="#dddddd"/> */}
                         <AntDesign name="arrowright" size={25} color="#dddddd" />
-                        <View style={[styles.progressBar, { width: "10%" }]}></View>
+                        <Animated.View style={[styles.progressBar, { width: progressNextWord }]}></Animated.View>
                     </View>
                 </TouchableHighlight>}
             </View>

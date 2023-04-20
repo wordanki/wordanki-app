@@ -27,6 +27,9 @@ export default function DownloadPhrases({ route }) {
 
             console.log(words.length, wordss.length)
 
+            Word.delete();
+            Phrase.delete();
+
             let counter = 0;
 
             for (let index = 0; index < data.length; index++) {
