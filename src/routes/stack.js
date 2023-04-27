@@ -18,7 +18,7 @@ const Stack = createNativeStackNavigator()
 export const UserRoutes = () => {
     return (
         <Stack.Navigator
-            initialRouteName='Main'
+            initialRouteName='Welcome'
         >
             <Stack.Screen 
                 name='Main' 
@@ -47,6 +47,14 @@ export const UserRoutes = () => {
             <Stack.Screen 
                 name='DownloadPhrases' 
                 component={DownloadPhrases}
+                options={{
+                    headerShown: false
+                }} 
+            />
+
+            <Stack.Screen 
+                name='Welcome' 
+                component={Welcome} 
                 options={{
                     headerShown: false
                 }} 

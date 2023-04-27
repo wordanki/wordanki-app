@@ -12,7 +12,7 @@ export default function Welcome({ route }) {
     const navigation = useNavigation()
 
     const handleStartApp = () => {
-        navigation.navigate('Login')
+        navigation.navigate('Main')
     }
 
     return (

@@ -22,34 +22,35 @@ export default function DownloadPhrases({ route }) {
 
     useEffect(() => {
         (async () => {
-            const words = await Word.findAll()
-            const wordss = await Phrase.findAll()
-
-            console.log(words.length, wordss.length)
-
-            Word.delete();
-            Phrase.delete();
-
-            let counter = 0;
-
-            for (let index = 0; index < data.length; index++) {
-                const id = await Word.create({
-                    english: data[index][0].words.english,
-                    portuguese: data[index][0].words.portuguese,
-                    class: data[index][0].class
-                })
-
-                for (let jindex = 0; jindex < data[index].length; jindex++) {
-                    await Phrase.create({
-                        english: data[index][jindex].phrases.english,
-                        portuguese: data[index][jindex].phrases.portuguese,
-                        word_id: id
-                    })
-
-                    counter++;
-
-                    setProgress(counter * 100 / (data.length * data[0].length))
-                }
+            try {
+                const words = await Word.findAll()
+                const wordss = await Phrase.findAll()
+    
+                console.log(words.length, wordss.length)
+    
+                let counter = 0;
+    
+                // for (let index = 0; index < data.length; index++) {
+                //     const id = await Word.create({
+                //         english: data[index][0].words.english,
+                //         portuguese: data[index][0].words.portuguese,
+                //         class: data[index][0].class
+                //     })
+    
+                //     for (let jindex = 0; jindex < data[index].length; jindex++) {
+                //         await Phrase.create({
+                //             english: data[index][jindex].phrases.english,
+                //             portuguese: data[index][jindex].phrases.portuguese,
+                //             word_id: id
+                //         })
+    
+                //         counter++;
+    
+                //         setProgress(counter * 100 / (data.length * data[0].length))
+                //     }
+                // }
+            } catch(error) {
+                console.log(error)
             }
 
             setIsCompleted(true)

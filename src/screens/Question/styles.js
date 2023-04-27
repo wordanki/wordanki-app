@@ -41,6 +41,7 @@ export const styles = StyleSheet.create({
         height: 45,
         borderRadius: 15,
         marginBottom: 20,
+        backgroundColor: "#0A7CB1"
     },
     answerButtonContainer: {
         width: "100%",

@@ -123,9 +123,9 @@ const TabBar = ({ state, descriptors, navigation }) => {
 
 export const Tabs = () => (
     <Tab.Navigator
-        tabBar={props => <TabBar {...props} />}
+        tabBar={props => <View/>}
         screenOptions={{
-            headerShown: false
+            headerShown: false,
         }}
     >
         {TabsContent.map((tab, index) => (
