@@ -27,6 +27,11 @@ const handleSound = (phrase) => {
     });
 }
 
+function nextWordTimer() {
+;
+    // timeoutText = `${timeoutNext/3000}%`;
+}
+
 export default function Profile() {
     const [level, setLevel] = useState(0);
     const [newWord, setNewWord] = useState(true);
@@ -34,7 +39,8 @@ export default function Profile() {
     const [wordSelected, setWordSelected] = useState();
     const [nextWord, setNextWord] = useState(false);
 
-    const [progressNextWord] = useState(new Animated.Value(0))
+    const [timeoutNext, setTimeoutNext] = useState();
+    const [progressNextWord, setProgressNextWord] = useState(new Animated.Value(0))
 
     const [isSelectedWord, setIsSelectedWord] = useState(false);
 
@@ -51,6 +57,15 @@ export default function Profile() {
         useNativeDriver: false,
         easing: Easing.linear
     });
+
+    function splitPhrase(phrase) {
+        let phraseSplited = [];
+        phraseSplited[0] = phrase.slice(0, phrase.indexOf("["));
+        phraseSplited[1] = phrase.slice(phrase.indexOf("[")+1, phrase.indexOf("]"));
+        phraseSplited[2] = phrase.slice(phrase.indexOf("]")+1);
+
+        return phraseSplited;
+    }
 
     async function answerEvent(right, index) {
         try {
@@ -80,8 +95,12 @@ export default function Profile() {
                         }
                 }
             }
-    
-            setTimeout(() => setNextWord(!nextWord), 6000)
+            
+            setTimeoutNext(
+                setTimeout(() => {
+                    setNextWord(!nextWord);
+                }, 6000)
+            )
     
             progressNextWord.setValue(0)
             anime.start()
@@ -94,6 +113,7 @@ export default function Profile() {
     useEffect(() => {
         (async () => {
             const word = await Word.findOneByNextReview()
+            console.log(word);
 
             setIsSelectedWord(false);
 
@@ -126,8 +146,8 @@ export default function Profile() {
                 next: word.next_repetition,
                 previous: word.previous_repetition,
                 phrase: {
-                    english: word.phrases[0].english,
-                    portuguese: word.phrases[0].portuguese
+                    english: splitPhrase(word.phrases[0].english),
+                    portuguese: splitPhrase(word.phrases[0].portuguese)
                 },
                 answers: options.map((option, index) => ({
                     answer: option.portuguese,
@@ -142,7 +162,7 @@ export default function Profile() {
     return data && (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <View style={styles.questionContainer}>
-                <TouchableHighlight onPress={() => handleSound(data.phrase.english)} style={styles.soundButton}>
+                <TouchableHighlight onPress={() => handleSound(data.phrase.english.join())} style={styles.soundButton}>
                     <AntDesign
                         name="sound"
                         size={30}
@@ -151,7 +171,9 @@ export default function Profile() {
                 </TouchableHighlight>
 
                 <Text style={styles.question}>
-                    {data.phrase.english}
+                    {data.phrase.english[0]}
+                    <Text style={styles.word}>{data.phrase.english[1]}</Text>
+                    {data.phrase.english[2]}
                 </Text>
             </View>
 
@@ -196,7 +218,9 @@ export default function Profile() {
             {isSelectedWord ? (
                 <View style={{ ...styles.translation, borderColor: "#0A7CB1bb", fontSize: 40 }}>
                     <Text style={{ ...styles.translationText, fontSize: 25 }}>
-                        {data.phrase.portuguese}
+                        {data.phrase.portuguese[0]}
+                        <Text style={styles.translationWord}>{data.phrase.portuguese[1]}</Text>
+                        {data.phrase.portuguese[2]}
                     </Text>
                 </View>
             ) : (
@@ -209,7 +233,7 @@ export default function Profile() {
 
             <View style={styles.buttonsContainer}>
                 {isSelectedWord && (
-                    <TouchableHighlight style={styles.next}>
+                    <TouchableHighlight style={styles.next} onPress={() => { clearTimeout(timeoutNext); setNextWord(!nextWord) }}>
                         <View style={styles.nextContainer}>
                             <Text style={styles.textChangeWord}>Próxima</Text>
 

@@ -169,7 +169,7 @@ export default {
     findByClassRandomlyWithLimit: (classWord, limit) => new Promise((resolve, reject) => {
         db.transaction((tx) => {
             tx.executeSql(
-                `SELECT * FROM ${TABLE_NAME} 
+                `SELECT * FROM ${TABLE_NAME}
                 WHERE ${TABLE_NAME}.class = '${classWord}' 
                 ORDER BY RANDOM() LIMIT ${limit};`,
                 [],
