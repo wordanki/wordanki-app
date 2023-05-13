@@ -5,14 +5,14 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { useFonts, Roboto_400Regular, Roboto_700Bold  } from "@expo-google-fonts/roboto"
 
 import { StatusBar } from 'expo-status-bar'
-import * as SplashScreen from 'expo-splash-screen';
+import * as SplashScreen from 'expo-splash-screen'
 
 import './config/firebase'
 
 import { Routes } from './routes'
 import { COLORS } from './theme'
 
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync()
 
 export default function App() {
   const [fontsLoaded] = useFonts({

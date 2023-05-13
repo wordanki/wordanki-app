@@ -11,6 +11,8 @@ import Phrase from '../../database/models/Phrase'
 
 import data from '../../assets/data.json'
 
+import { wordClassIndex } from '../../utils/wordClassIndex'
+
 import { styles } from "./styles"
 import { COLORS } from '../../theme'
 
@@ -25,31 +27,35 @@ export default function DownloadPhrases({ route }) {
             try {
                 const words = await Word.findAll()
                 const wordss = await Phrase.findAll()
-    
+
+                const data1 = []
+                const data2 = []
+
                 console.log(words.length, wordss.length)
-    
+
                 let counter = 0;
-    
+
                 // for (let index = 0; index < data.length; index++) {
                 //     const id = await Word.create({
-                //         english: data[index][0].words.english,
-                //         portuguese: data[index][0].words.portuguese,
-                //         class: data[index][0].class
+                //         english: data[index].english,
+                //         portuguese: data[index].portuguese,
+                //         frequency: data[index].frequency,
+                //         class: wordClassIndex(data[index].class)
                 //     })
-    
-                //     for (let jindex = 0; jindex < data[index].length; jindex++) {
+
+                //     for (let jindex = 0; jindex < data[index].phrases.length; jindex++) {  
                 //         await Phrase.create({
-                //             english: data[index][jindex].phrases.english,
-                //             portuguese: data[index][jindex].phrases.portuguese,
+                //             english: data[index].phrases[jindex].english,
+                //             portuguese: data[index].phrases[jindex].portuguese,
                 //             word_id: id
                 //         })
-    
+
                 //         counter++;
-    
-                //         setProgress(counter * 100 / (data.length * data[0].length))
+
+                //         setProgress(counter * 100 / (data.length * data[0].phrases.length))
                 //     }
                 // }
-            } catch(error) {
+            } catch (error) {
                 console.log(error)
             }
 

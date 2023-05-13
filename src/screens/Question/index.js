@@ -1,248 +1,96 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
-import {
-    View, Text, TouchableHighlight,
-    ScrollView, Animated, Easing
-} from 'react-native'
+import { View, FlatList, Dimensions } from 'react-native'
 
-import { AntDesign } from '@expo/vector-icons'
 import * as Speech from 'expo-speech';
+
+import { Issue } from '../../components/Issue'
 
 import Word from '../../database/models/Word';
 
-import { spacedRepetition } from '../../utils/spacedRepetition'
+import { styles } from './styles'
 
-import { styles } from "./styles"
+import { splitedPhrase } from '../../utils/splitedPhrase'
 
-const handleSpeechResults = (a, results) => {
-    console.log(results);
-  };
-
-const handleSound = (phrase) => {
-    Speech.stop();
-
-    Speech.speak(phrase, {
-        language: 'en',
-        onBoundary: handleSpeechResults,
-    });
-}
-
-function nextWordTimer() {
-;
-    // timeoutText = `${timeoutNext/3000}%`;
-}
-
-export default function Profile() {
-    const [level, setLevel] = useState(0);
-    const [newWord, setNewWord] = useState(true);
-
-    const [wordSelected, setWordSelected] = useState();
-    const [nextWord, setNextWord] = useState(false);
-
-    const [timeoutNext, setTimeoutNext] = useState();
-    const [progressNextWord, setProgressNextWord] = useState(new Animated.Value(0))
-
-    const [isSelectedWord, setIsSelectedWord] = useState(false);
-
-    const [data, setData] = useState()
-
-    progressNextWord.interpolate({
-        inputRange: [0, 100],
-        outputRange: ["0%", "100%"]
-    });
-
-    const anime = Animated.timing(progressNextWord, {
-        toValue: 350,
-        duration: 6000,
-        useNativeDriver: false,
-        easing: Easing.linear
-    });
-
-    function splitPhrase(phrase) {
-        let phraseSplited = [];
-        phraseSplited[0] = phrase.slice(0, phrase.indexOf("["));
-        phraseSplited[1] = phrase.slice(phrase.indexOf("[")+1, phrase.indexOf("]"));
-        phraseSplited[2] = phrase.slice(phrase.indexOf("]")+1);
-
-        return phraseSplited;
-    }
-
-    async function answerEvent(right, index) {
-        try {
-            setIsSelectedWord(true)
-            setWordSelected(index)
-    
-            const { hits, next, previous } = spacedRepetition(right, data.hits, data.next_repetition, data.previous_repetition)
-
-            await Word.update(data.id, {
-                hits,
-                next_repetition: new Date(next).toISOString(),
-                previous_repetition: new Date(previous).toISOString(),
-            })
-    
-            if (!newWord) {
-                const levelWord = data.indexGenerated * 10
-
-                switch(right) {
-                    case true:
-                        if (levelWord > level) {
-                            setLevel(level + 1)
-                            break;
-                        }
-                    default:
-                        if (levelWord < level) {
-                            setLevel(level - 1)
-                        }
-                }
-            }
-            
-            setTimeoutNext(
-                setTimeout(() => {
-                    setNextWord(!nextWord);
-                }, 6000)
-            )
-    
-            progressNextWord.setValue(0)
-            anime.start()
-        } catch(error) {
-            console.log('kkk')
-            console.log(error)
-        }
-    };
+export default function Profile({ navigation }) {
+    const [nextWord, setNextWord] = useState(false)
+    const [data, setData] = useState([])
 
     useEffect(() => {
         (async () => {
-            const word = await Word.findOneByNextReview()
-            console.log(word);
+            const word = await Word.findOneByNextReview() || await Word.findOneByNext()
 
-            setIsSelectedWord(false);
-
-            let indexWord;
-            
-            let repeatWord;
-
-            if (!newWord) repeatWord = await Word.findOne()
-
-            if (!repeatWord) {
-                indexWord = await Word.finddd() //generateIndexWord(level, words);
-            } else {
-                indexWord = repeatWord
-            }
-
-            setNewWord(!repeatWord)
+            const options = await Word
+                .findByClassRandomlyAndDifferentOfTranslationWithLimit(word.class, word.portuguese, 3)
 
             const wordPosition = Math.floor(Math.random() * 4)
 
-            const options = await Word
-                .findByClassRandomlyWithLimit(word.class, 3)
-
-            options.splice(wordPosition, 0, {english: word.english, portuguese: word.portuguese})
-
-            setData({
-                indexGenerated: indexWord,
-                position: wordPosition,
-                id: word.id,
-                hits: word.hits,
-                next: word.next_repetition,
-                previous: word.previous_repetition,
-                phrase: {
-                    english: splitPhrase(word.phrases[0].english),
-                    portuguese: splitPhrase(word.phrases[0].portuguese)
-                },
-                answers: options.map((option, index) => ({
-                    answer: option.portuguese,
-                    isCorrect: index === wordPosition
-                }))
+            options.splice(wordPosition, 0, {
+                english: word.english,
+                portuguese: word.portuguese
             })
 
-            handleSound(word.phrases[0].english)
+            setData([...data, {
+                id: word.id,
+                hits: word.hits,
+                next_repetition: word.next_repetition,
+                previous_repetition: word.previous_repetition,
+                correctAsnwerIndex: wordPosition,
+                answers: options.map(option => option.portuguese),
+                phrase: splitedPhrase(word.phrases[0].english),
+                translatedPhrase: splitedPhrase(word.phrases[0].portuguese)
+            }])
         })()
     }, [nextWord])
 
-    return data && (
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-            <View style={styles.questionContainer}>
-                <TouchableHighlight onPress={() => handleSound(data.phrase.english.join())} style={styles.soundButton}>
-                    <AntDesign
-                        name="sound"
-                        size={30}
-                        color={"#2C9ED2"}
-                    />
-                </TouchableHighlight>
+    useEffect(() => {
+        navigation.addListener('beforeRemove', () => Speech.stop())
+    },
+        [navigation])
 
-                <Text style={styles.question}>
-                    {data.phrase.english[0]}
-                    <Text style={styles.word}>{data.phrase.english[1]}</Text>
-                    {data.phrase.english[2]}
-                </Text>
-            </View>
+    const mediaRefs = useRef([])
 
-            <View>
-                {data.answers.map((answer, index) => (
-                    <TouchableHighlight
-                        key={index}
-                        disabled={isSelectedWord}
-                        style={{
-                            ...styles.answerButton,
-                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.position ? "#2BAA4F" : "#9B3D42") : "#444855",
-                        }}
-                        onPress={() => answerEvent(answer.isCorrect, index)}
-                    >
-                        <View style={{
-                            ...styles.answerButtonContainer,
-                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.position ? "#2BAA4F" : "#9B3D42") : "#444855",
-                            borderColor: isSelectedWord && (data.position == index || wordSelected == index) ? (data.position == index ? "#2BAA4F" : "#9B3D42") : "#444855"
-                        }}>
-                            <Text style={styles.answerText}>
-                                {answer.answer}
-                            </Text>
-                        </View>
-                    </TouchableHighlight>
-                ))}
+    const onViewableItemsChanged = useRef(({ changed }) => {
+        changed.forEach(element => {
+            const cell = mediaRefs.current[element.key]
 
-                <TouchableHighlight
-                    disabled={isSelectedWord}
-                    style={styles.answerButton}
-                    onPress={() => { answerEvent(false, -1) }}
-                >
-                    <View style={{
-                        ...styles.answerButtonContainer,
-                        backgroundColor: "#0A7CB1",
-                        borderColor: "#0A7CB1",
-                    }}>
-                        <Text style={styles.answerText}>Não sei</Text>
+            console.log(element)
+            if (cell) {
+                if (element.isViewable) {
+                    cell.play()
+                } else {
+                    cell.stop()
+                }
+            }
+        })
+    })
+
+    return (
+        <View style={{ backgroundColor: "#222228" }}>
+            <FlatList
+                data={data}
+                windowSize={10}
+                initialNumToRender={0}
+                maxToRenderPerBatch={2}
+                viewabilityConfig={{
+                    itemVisiblePercentThreshold: 0
+                }}
+                renderItem={({ item, index }) => (
+                    <View style={styles.container}>
+                        <Issue
+                            key={item.id}
+                            data={item}
+                            nextWord={nextWord}
+                            setNextWord={setNextWord}
+                            ref={IssueRef => (mediaRefs.current[item.id] = IssueRef)}
+                        />
                     </View>
-                </TouchableHighlight>
-            </View>
-
-            {isSelectedWord ? (
-                <View style={{ ...styles.translation, borderColor: "#0A7CB1bb", fontSize: 40 }}>
-                    <Text style={{ ...styles.translationText, fontSize: 25 }}>
-                        {data.phrase.portuguese[0]}
-                        <Text style={styles.translationWord}>{data.phrase.portuguese[1]}</Text>
-                        {data.phrase.portuguese[2]}
-                    </Text>
-                </View>
-            ) : (
-                <View style={styles.translation}>
-                    <Text style={{ ...styles.translationText, color: "#bbbbbb", }}>
-                        A tradução da frase irá aparecer aqui depois que você clicar na resposta
-                    </Text>
-                </View>
-            )}
-
-            <View style={styles.buttonsContainer}>
-                {isSelectedWord && (
-                    <TouchableHighlight style={styles.next} onPress={() => { clearTimeout(timeoutNext); setNextWord(!nextWord) }}>
-                        <View style={styles.nextContainer}>
-                            <Text style={styles.textChangeWord}>Próxima</Text>
-
-                            <AntDesign name="arrowright" size={25} color="#dddddd" />
-                            <Animated.View style={[styles.progressBar, { width: progressNextWord }]}></Animated.View>
-                        </View>
-                    </TouchableHighlight>
                 )}
-            </View>
-        </ScrollView>
+                pagingEnabled
+                keyExtractor={item => item.id}
+                decelerationRate={'normal'}
+                onViewableItemsChanged={onViewableItemsChanged.current}
+            />
+        </View>
     )
 }

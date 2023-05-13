@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 
 import { View, Text, ScrollView, TouchableHighlight } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useIsFocused } from '@react-navigation/native'
 
 import Topic from '../../components/Topic'
-import EnglishCourse from '../../components/EnglishCourse'
+import LinkCard from '../../components/LinkCard'
 
 import Word from '../../database/models/Word'
 
@@ -38,18 +38,23 @@ export default function Home({ route }) {
     })
 
     const navigation = useNavigation()
+    const isFocused = useIsFocused()
 
     useEffect(() => {
+        if (!isFocused) return
+
         (async () => {
-            const data = await Word.getQuantity()
+            const all = await Word.getQuantity()
+            const seen = await Word.getNoSeenQuantity()
+            const reviews = await Word.getReviewsQuantity()
 
             setWordData({
-                all: data,
-                seen: 0,
-                reviews: 0
+                all,
+                seen,
+                reviews
             })
         })()
-    }, [])
+    }, [isFocused])
 
     return (
         <ScrollView style={styles.container}>
@@ -111,7 +116,12 @@ export default function Home({ route }) {
                 </ScrollView>
             </View> */}
 
-            <EnglishCourse />
+            <LinkCard 
+                title="Sua opinião"
+                img="google-forms.png"
+                colors={['#b5a', '#a5a']}
+                text="Nos dê sua opinião e ajude a melhorar o nosso app!" 
+            />
 
             <View style={{ height: 20 }} />
         </ScrollView>

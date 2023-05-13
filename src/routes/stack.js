@@ -1,5 +1,10 @@
+import { useEffect } from 'react'
+
+import { useNavigation } from '@react-navigation/native'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Question from '../screens/Question'
 import Profile from '../screens/Profile'
@@ -16,9 +21,21 @@ import { NavBar } from '../components/NavBar'
 const Stack = createNativeStackNavigator()
 
 export const UserRoutes = () => {
+    const navigation = useNavigation()
+
+    // useEffect(() => {
+    //     (async () => {
+    //         const isNotFirstTime = await AsyncStorage.getItem("@settings/not-first-time")
+
+    //         if (isNotFirstTime) {
+    //             navigation.navigate("Main")
+    //         }
+    //     })()
+    // }, [])
+
     return (
         <Stack.Navigator
-            initialRouteName='Welcome'
+            initialRouteName={'Welcome'}
         >
             <Stack.Screen 
                 name='Main' 

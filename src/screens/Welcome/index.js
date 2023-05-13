@@ -2,6 +2,8 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons'
 
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 import { Logo } from '../../components/Logo'
 
 import { COLORS } from "../../theme"
@@ -11,8 +13,14 @@ import { styles } from "./styles"
 export default function Welcome({ route }) {
     const navigation = useNavigation()
 
-    const handleStartApp = () => {
-        navigation.navigate('Main')
+    const handleStartApp = async () => {
+        const isNotFirstTime = await AsyncStorage.getItem("@settings/not-first-time")
+
+        // if (isNotFirstTime) {
+            navigation.navigate("Main")
+        // } else {
+            // navigation.navigate('DownloadPhrases')
+        // }
     }
 
     return (

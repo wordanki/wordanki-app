@@ -22,7 +22,7 @@ import { styles } from './styles'
 
 export const Drawer = props => {
     const { user, signOut } = useAuthentication()
-    
+
     const handleShare = async () => {
         try {
             const result = await Share.share({
@@ -52,7 +52,7 @@ export const Drawer = props => {
 
                 contentContainerStyle={{ backgroundColor: COLORS.BLACK_TERTIARY }}>
 
-                <ImageBackground style={styles.profileContainer}>
+                {/* <ImageBackground style={styles.profileContainer}>
                     <UserPhoto imageUri={user?.photoURL} size='HIGHER' />
 
                     <Text style={styles.username}>
@@ -64,14 +64,29 @@ export const Drawer = props => {
                             {user?.email}
                         </Text>
                     </View>
-                </ImageBackground>
+                </ImageBackground> */}
 
                 <View style={styles.drawerListContainer}>
-                    <DrawerItemList {...props} />
+                    {/* <DrawerItemList {...props} /> */}
+
+                    <TouchableOpacity onPress={handleShare} style={styles.footerButtonContainer}>
+                        <View style={styles.footerButton}>
+                            <Icon
+                                name="share-social-outline"
+                                type={IconType.Ionicons}
+                                size={20}
+                                color={COLORS.WHITE}
+                            />
+
+                            <Text style={styles.footerButtonText}>
+                                Convide um amigo
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </DrawerContentScrollView>
 
-            <View style={styles.footer}>
+            {/* <View style={styles.footer}>
                 <TouchableOpacity onPress={handleShare} style={styles.footerButtonContainer}>
                     <View style={styles.footerButton}>
                         <Icon
@@ -101,7 +116,7 @@ export const Drawer = props => {
                         </Text>
                     </View>
                 </TouchableOpacity>
-            </View>
+            </View> */}
         </View>
     );
 };

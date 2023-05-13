@@ -41,6 +41,7 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.BLACK_TERTIARY
   },
   footerButtonContainer: {
+    paddingHorizontal: 20,
     paddingVertical: 15
   },
   footerButton: {
@@ -50,7 +51,7 @@ export const styles = StyleSheet.create({
   footerButtonText: {
     fontSize: 15,
     fontFamily: 'Roboto',
-    marginLeft: 5,
+    marginLeft: 10,
     color: COLORS.WHITE
   }
 })
