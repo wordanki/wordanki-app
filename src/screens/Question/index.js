@@ -30,7 +30,7 @@ export default function Profile({ navigation }) {
                 portuguese: word.portuguese
             })
 
-            setData([...data, {
+            const newData = [...data, {
                 id: word.id,
                 hits: word.hits,
                 next_repetition: word.next_repetition,
@@ -39,7 +39,13 @@ export default function Profile({ navigation }) {
                 answers: options.map(option => option.portuguese),
                 phrase: splitedPhrase(word.phrases[0].english),
                 translatedPhrase: splitedPhrase(word.phrases[0].portuguese)
-            }])
+            }];
+
+            if(newData.length > 10) {
+                newData.shift();
+            }
+
+            setData(newData);
         })()
     }, [nextWord])
 
@@ -71,7 +77,7 @@ export default function Profile({ navigation }) {
                 data={data}
                 windowSize={10}
                 initialNumToRender={0}
-                maxToRenderPerBatch={2}
+                maxToRenderPerBatch={10}
                 viewabilityConfig={{
                     itemVisiblePercentThreshold: 0
                 }}

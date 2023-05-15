@@ -32,11 +32,11 @@ export default function Welcome({ route }) {
             <View style={styles.content}>
                 <Text style={styles.title}>Junte-se a nós!</Text>
                 <Text style={styles.obsText}>* Aplicação com foco apenas em falantes do português.</Text>
-                <Text style={styles.subTitle}>Entrar com a minha conta</Text>
+                {/* <Text style={styles.subTitle}>Entrar com a minha conta</Text> */}
 
                 <TouchableOpacity onPress={handleStartApp} style={styles.button}>
                     <View style={styles.buttonContent}>
-                        <Text style={styles.buttonText}>Iniciar sessão</Text>
+                        <Text style={styles.buttonText}>Entrar no App</Text>
 
                         <AntDesign 
                             name="right" 

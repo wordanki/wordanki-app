@@ -1,11 +1,22 @@
 const randomValueInInterval = () => (0.9 + Math.random() * 0.2)
 
 export const spacedRepetition = (right, hits, next, previous) => {
-    const minuteInMiliseconds = 100
-    const dayInMiliSeconds = 24 * 1000
+    const minuteInMiliseconds = 1000 * 60;
+    const dayInMiliSeconds = 24 * 60 * 60 * 1000;
 
     let milisecondsAdded;
     let milisecondsToAdd;
+
+    if(!next) {
+        next = 0;
+    } else {
+        next = new Date(next).getTime();
+    }
+    if(!previous) {
+        previous = 0;
+    } else {
+        previous = new Date(previous).getTime();
+    }
 
     if (hits == 0) {
         if (right) {
@@ -37,5 +48,6 @@ export const spacedRepetition = (right, hits, next, previous) => {
         }
     }
 
+    console.log("Miliseconds: " + milisecondsAdded);
     return { next_repetition: new Date().getTime() + milisecondsToAdd }
 }

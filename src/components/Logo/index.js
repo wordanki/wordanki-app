@@ -5,7 +5,7 @@ import logoImg from '../../assets/logo.png'
 const SIZES = {
     SMALL: 28,
     NORMAL: 30,
-    HIGHER: 200
+    HIGHER: 280
 }
 
 export const Logo = ({ size = 'NORMAL' }) => {

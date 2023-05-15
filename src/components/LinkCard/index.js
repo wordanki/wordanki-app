@@ -4,7 +4,7 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 
 import ImageCourseImg from '../../assets/image-course.png'
-import GoogleFormsImg from '../../assets/google-forms.png'
+import Feedback from '../../assets/feedback.png'
 
 import { styles } from './styles'
 
@@ -14,8 +14,8 @@ const images = [
         img: ImageCourseImg
     },
     {
-        name: "google-forms.png",
-        img: GoogleFormsImg
+        name: "feedback.png",
+        img: Feedback
     }
 ]
 
@@ -26,7 +26,7 @@ export default function LinkCard({ title, text, img, colors }) {
         <View>
             <Text style={styles.title}>{title}</Text>
 
-            <TouchableHighlight onPress={() => Linking.openURL('https://reactnative.dev')} style={styles.container}>
+            <TouchableHighlight onPress={() => Linking.openURL('https://forms.gle/QmV6CNqEfdBDJvjF8')} style={styles.container}>
                 <LinearGradient
                     style={styles.gradient}
                     colors={colors}

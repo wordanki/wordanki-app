@@ -19,11 +19,11 @@ export const styles = StyleSheet.create({
     },
     content: {
         width: "100%",
-        height: "45%",
+        height: "35%",
         padding: defaultSpacing * 2,
-        borderTopLeftRadius: borderRadius,
-        borderTopRightRadius: borderRadius,
-        backgroundColor: COLORS.BLACK_TERTIARY
+        borderTopLeftRadius: borderRadius / 1.5,
+        borderTopRightRadius: borderRadius / 1.5,
+        backgroundColor: "#fff1"
     },
     title: {
         fontSize: 30,
@@ -36,21 +36,27 @@ export const styles = StyleSheet.create({
         color: COLORS.GRAY_PRIMARY
     },
     obsText: {
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: "bold",
-        color: COLORS.RED,
-        marginTop: defaultSpacing / 5
+        color: "#fff8",
+        marginTop: defaultSpacing
     }, 
     button: {
+        // marginTop: 40,
+        width: "100%",
         borderRadius,
-        maxWidth: "60%",
+        position: "absolute",
+        bottom: 40,
+        left: 40,
+        // maxWidth: "60%",
         // alignSelf: "flex-end",
-        paddingHorizontal: defaultSpacing * 1.5,
+        paddingHorizontal: defaultSpacing * 0.5,
         paddingVertical: defaultSpacing / 2,
-        backgroundColor: COLORS.GREEN_PRIMARY
+        backgroundColor: COLORS.GREEN_PRIMARY + "bb"
     }, 
     buttonText: {
-        color: COLORS.WHITE
+        color: COLORS.WHITE,
+        fontSize: 20,
     },
     buttonContent: {
         flexDirection: "row",

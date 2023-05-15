@@ -118,9 +118,9 @@ export default function Home({ route }) {
 
             <LinkCard 
                 title="Sua opinião"
-                img="google-forms.png"
-                colors={['#b5a', '#a5a']}
-                text="Nos dê sua opinião e ajude a melhorar o nosso app!" 
+                img="feedback.png"
+                colors={['#84e', '#94b']}
+                text="Nos dê um feedback sobre o aplicativo para que possamos melhorá-lo!" 
             />
 
             <View style={{ height: 20 }} />
