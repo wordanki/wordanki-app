@@ -19,14 +19,14 @@ const images = [
     }
 ]
 
-export default function LinkCard({ title, text, img, colors }) {
+export default function LinkCard({ title, text, img, link, colors }) {
     const image = images.find(image => image.name === img).img
 
     return (
         <View>
             <Text style={styles.title}>{title}</Text>
 
-            <TouchableHighlight onPress={() => Linking.openURL('https://forms.gle/QmV6CNqEfdBDJvjF8')} style={styles.container}>
+            <TouchableHighlight onPress={() => Linking.openURL(link)} style={styles.container}>
                 <LinearGradient
                     style={styles.gradient}
                     colors={colors}

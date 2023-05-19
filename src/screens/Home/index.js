@@ -118,6 +118,7 @@ export default function Home({ route }) {
 
             <LinkCard 
                 title="Sua opinião"
+                link="https://forms.gle/QmV6CNqEfdBDJvjF8"
                 img="feedback.png"
                 colors={['#84e', '#94b']}
                 text="Nos dê um feedback sobre o aplicativo para que possamos melhorá-lo!" 
