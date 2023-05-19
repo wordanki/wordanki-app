@@ -35,7 +35,7 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord }, parentRef) => 
         const isSpeaking = await Speech.isSpeakingAsync()
     
         if (isSpeaking) await Speech.stop()
-        console.log(data.phrase.join())
+
         Speech.speak(data.phrase.join(), { language: 'en' })
     }
 
