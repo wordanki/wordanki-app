@@ -39,16 +39,14 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord }, parentRef) => 
         Speech.speak(data.phrase.join(), { language: 'en' })
     }
 
-    const stop = async () => {
-        Speech.stop()
-    }
+    const stop = async () => await Speech.stop()
 
     async function answerEvent(right, index) {
         try {
             setIsSelectedWord(true)
             setWordSelected(index)
 
-            const { next_repetition } = spacedRepetition(right, data.hits, data.next_repetition, data.previous_repetition)
+            const next_repetition = spacedRepetition(right, data.hits, data.next_repetition, data.previous_repetition)
 
             await Word.update(data.id, {
                 hits: right ? data.hits + 1 : data.hits,
@@ -77,8 +75,6 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord }, parentRef) => 
             // )
 
             setNextWord(!nextWord)
-
-            // progressNextWord.setValue(0), anime.start()
         } catch (error) { console.log(error) }
     };
 
@@ -153,19 +149,6 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord }, parentRef) => 
                     </Text>
                 </View>
             )}
-
-            {/* <View style={styles.buttonsContainer}>
-                {isSelectedWord && (
-                    <TouchableHighlight style={styles.next} onPress={() => { clearTimeout(timeoutNext); setNextWord(!nextWord) }}>
-                        <View style={styles.nextContainer}>
-                            <Text style={styles.textChangeWord}>Próxima</Text>
-
-                            <AntDesign name="arrowright" size={25} color="#dddddd" />
-                            <Animated.View style={[styles.progressBar, { width: progressNextWord }]}></Animated.View>
-                        </View>
-                    </TouchableHighlight>
-                )}
-            </View> */}
         </View>
     )
 })

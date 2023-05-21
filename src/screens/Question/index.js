@@ -1,6 +1,8 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 
 import { View, FlatList, Dimensions } from 'react-native'
+
+import { SwiperFlatList } from 'react-native-swiper-flatlist'
 
 import * as Speech from 'expo-speech';
 
@@ -15,6 +17,9 @@ import { splitedPhrase } from '../../utils/splitedPhrase'
 export default function Profile({ navigation }) {
     const [nextWord, setNextWord] = useState(false)
     const [data, setData] = useState([])
+
+    const flatListRef = useRef()
+    const issueRefs = useRef([])
 
     useEffect(() => {
         (async () => {
@@ -39,62 +44,60 @@ export default function Profile({ navigation }) {
                 answers: options.map(option => option.portuguese),
                 phrase: splitedPhrase(word.phrases[0].english),
                 translatedPhrase: splitedPhrase(word.phrases[0].portuguese)
-            }];
+            }]
 
             if(newData.length > 10) {
-                newData.shift();
+                newData.shift()
             }
 
-            setData(newData);
+            setData(newData)
         })()
     }, [nextWord])
 
     useEffect(() => {
         navigation.addListener('beforeRemove', () => Speech.stop())
     },
-        [navigation])
+    [navigation])
 
-    const mediaRefs = useRef([])
+    useEffect(() => {
+        if (data.length > 1) {
+            setTimeout(() => {
+                flatListRef.current.scrollToIndex({ 
+                    index: data.length - 1, 
+                    animated: true 
+                })
+            }, 2000)
+        }
+    }, [data])
 
     const onViewableItemsChanged = useRef(({ changed }) => {
         changed.forEach(element => {
-            const cell = mediaRefs.current[element.key]
+            const cell = issueRefs.current[element.key]
 
-            console.log(element)
-            if (cell) {
-                if (element.isViewable) {
-                    cell.play()
-                } else {
-                    cell.stop()
-                }
-            }
+            if (cell) element.isViewable ? cell.play() : cell.stop()
         })
     })
 
+    const renderItems = ({ item }) => (
+        <View style={styles.container}>
+            <Issue
+                key={item.id}
+                data={item}
+                nextWord={nextWord}
+                setNextWord={setNextWord}
+                ref={IssueRef => (issueRefs.current[item.id] = IssueRef)}
+            />
+        </View>
+    )
+
     return (
         <View style={{ backgroundColor: "#222228" }}>
-            <FlatList
+            <SwiperFlatList
+                ref={flatListRef}
+                vertical={true}
                 data={data}
-                windowSize={10}
-                initialNumToRender={0}
-                maxToRenderPerBatch={10}
-                viewabilityConfig={{
-                    itemVisiblePercentThreshold: 0
-                }}
-                renderItem={({ item, index }) => (
-                    <View style={styles.container}>
-                        <Issue
-                            key={item.id}
-                            data={item}
-                            nextWord={nextWord}
-                            setNextWord={setNextWord}
-                            ref={IssueRef => (mediaRefs.current[item.id] = IssueRef)}
-                        />
-                    </View>
-                )}
-                pagingEnabled
+                renderItem={renderItems}
                 keyExtractor={item => item.id}
-                decelerationRate={'normal'}
                 onViewableItemsChanged={onViewableItemsChanged.current}
             />
         </View>

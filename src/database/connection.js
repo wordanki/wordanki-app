@@ -3,26 +3,24 @@ import * as SQLite from 'expo-sqlite'
 
 import { Asset } from 'expo-asset'
 
-const databases = [
-    {
-        name: "database.db",
-        db: require('./database.db')
+const database = {
+    name: "database.db",
+    db: require('./database.db')
+}
+
+export async function loadDatabase() {
+    const databaseFolderPath = FileSystem.documentDirectory + 'SQLite'
+    
+    if (!(await FileSystem.getInfoAsync(databaseFolderPath)).exists) {
+        await FileSystem.makeDirectoryAsync(databaseFolderPath)
+            
+        await FileSystem.downloadAsync(
+            Asset.fromModule(database.db).uri,
+            FileSystem.documentDirectory + `SQLite/${database.name}`
+        )
     }
-]
+}
 
-export async function openDatabase(databaseName) {
-    const database = databases.find(database => database.name === databaseName)
-
-    if (!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite')).exists) {
-        await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'SQLite')
-    }
-
-    await FileSystem.downloadAsync(
-        Asset.fromModule(database.db).uri,
-        FileSystem.documentDirectory + `SQLite/${database.name}`
-    )
-
-    const connection = SQLite.openDatabase('./database.db')
-
-    return connection
+export function openDatabase() {
+    return SQLite.openDatabase(database.name)
 }

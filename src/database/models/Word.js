@@ -5,7 +5,7 @@ import { TABLE_NAME as PHRASE_TABLE_NAME } from './Phrase'
 export const TABLE_NAME = 'words'
 class Word {
     constructor() {
-        openDatabase("database.db").then(db => this.db = db)
+        this.db = openDatabase()
     }
 
     async create(data) {

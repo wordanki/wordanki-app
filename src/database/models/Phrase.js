@@ -3,17 +3,8 @@ import { openDatabase } from "../connection";
 export const TABLE_NAME = 'phrases'
 class Phrase {
     constructor() {
-        openDatabase("database.db").then(db => this.db = db)
+        this.db = openDatabase()
     }
-
-    async getDatabase() {
-        return new Promise(resolve => {
-            openDatabase("database.db").then(db => {
-                resolve(db)
-            })
-        })
-    }
-
 
     async create(data) {
         return new Promise((resolve, reject) => {
