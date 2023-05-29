@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     imageCourse: {
-        width: 100,
+        width: 80,
     },
     textCourse: {
         width: "45%",

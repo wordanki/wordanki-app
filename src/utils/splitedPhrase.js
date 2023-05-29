@@ -1,6 +1,6 @@
-export const splitedPhrase = (phrase) => {
+export const splitedPhrase = (phrase, review) => {
     return [
-        phrase.slice(0, phrase.indexOf("[")),
+        (review ? "*" : "") + phrase.slice(0, phrase.indexOf("[")),
         phrase.slice(phrase.indexOf("[") + 1, phrase.indexOf("]")),
         phrase.slice(phrase.indexOf("]") + 1)
     ]

@@ -16,13 +16,14 @@ import { spacedRepetition } from '../../utils/spacedRepetition'
 import { COLORS } from '../../theme'
 import { styles } from './styles'
 
-export const Issue = forwardRef(({ data, nextWord, setNextWord }, parentRef) => {
+export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, review }, parentRef) => {
     const [level, setLevel] = useState(0);
     const [newWord, setNewWord] = useState(true);
     const [wordSelected, setWordSelected] = useState(false);
 
     const [timeoutNext, setTimeoutNext] = useState();
-    const [progressNextWord] = useState(new Animated.Value(0))
+    const [progressNextWord, setProgressNextWord] = useState(new Animated.Value(0));
+    const [arrowPosition, setArrowPosition] = useState(new Animated.Value(0));
 
     const [isSelectedWord, setIsSelectedWord] = useState(false);
 
@@ -30,6 +31,28 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord }, parentRef) => 
         play,
         stop
     }))
+
+    const arrowAnime = Animated.loop(
+        Animated.sequence([
+            Animated.timing(arrowPosition, {
+                toValue: 10,
+                duration: 500,
+                useNativeDriver: false,
+            }),
+            Animated.timing(arrowPosition, {
+                toValue: 0,
+                duration: 500,
+                useNativeDriver: false,
+            }),
+        ])
+    ).start();
+
+    const progressBarAnime = Animated.timing(progressNextWord, {
+        toValue: 100,
+        duration: 5000,
+        useNativeDriver: false,
+        easing: Easing.linear
+    });
 
     const play = async () => {
         const isSpeaking = await Speech.isSpeakingAsync()
@@ -45,6 +68,8 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord }, parentRef) => 
         try {
             setIsSelectedWord(true)
             setWordSelected(index)
+            // console.log(review);
+
 
             const next_repetition = spacedRepetition(right, data.hits, data.next_repetition, data.previous_repetition)
 
@@ -74,12 +99,21 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord }, parentRef) => 
             //     setTimeout(() => setNextWord(!nextWord), 6000)
             // )
 
+            progressNextWord.setValue(0);
+            progressBarAnime.start();
+
             setNextWord(!nextWord)
         } catch (error) { console.log(error) }
     };
 
     return (
-        <View style={styles.container}>
+        <View style={{...styles.container, backgroundColor: bgColor}}>
+            {/* {review && (
+                <View style={styles.reviewContainer}>
+                    <Text style={styles.reviewText}>Revisão</Text>
+                </View>
+            )} */}
+
             <View style={styles.questionContainer}>
                 <TouchableHighlight onPress={() => play(data.phrase.join())} style={styles.soundButton}>
                     <AntDesign
@@ -149,6 +183,23 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord }, parentRef) => 
                     </Text>
                 </View>
             )}
+
+            {isSelectedWord && (
+                <>
+                <Animated.View style={[styles.arrowContainer, {bottom: arrowPosition}]}>
+                    <AntDesign name="down" size={25} color="#ffffffbb" />
+                </Animated.View>
+                <View style={styles.progressBarContainer}>
+                    <Animated.View style={[styles.progressBar, { 
+                        width: progressNextWord.interpolate({
+                            inputRange: [0, 100],
+                            outputRange: ["0%", "100%"]
+                        })
+                    }]}></Animated.View>
+                </View>
+                </>
+            )}
+            <View style={styles.bottomLine}></View>
         </View>
     )
 })
