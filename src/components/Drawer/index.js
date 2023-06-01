@@ -4,24 +4,27 @@ import {
     ImageBackground,
     Share,
     TouchableOpacity,
-} from 'react-native';
+} from 'react-native'
+
+import Icon, { IconType } from "react-native-dynamic-vector-icons"
 
 import { useAuthentication } from '../../hooks/auth'
 
 import {
     DrawerContentScrollView,
     DrawerItemList,
-} from '@react-navigation/drawer';
+} from '@react-navigation/drawer'
 
 import { UserPhoto } from '../UserPhoto'
 
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import { useGlobal } from '../../hooks/global'
 
 import { COLORS } from '../../theme'
 import { styles } from './styles'
 
 export const Drawer = props => {
     const { user, signOut } = useAuthentication()
+    const { informations } = useGlobal()
 
     const handleShare = async () => {
         try {
@@ -85,6 +88,8 @@ export const Drawer = props => {
                     </TouchableOpacity>
                 </View>
             </DrawerContentScrollView>
+
+            <Text style={styles.footerButtonText}>VERSÃO: {informations.version}</Text>
 
             {/* <View style={styles.footer}>
                 <TouchableOpacity onPress={handleShare} style={styles.footerButtonContainer}>

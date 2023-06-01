@@ -7,12 +7,12 @@ class Information {
         this.db = openDatabase()
     }
 
-    async update(id, data) {
+    async updateLevel(level) {
         return new Promise((resolve, reject) => {
             this.db.transaction(tx => {
                 tx.executeSql(
-                    `UPDATE ${TABLE_NAME} SET english=?, portuguese=?, word_id=? WHERE id=?;`,
-                    [data.english, data.portuguese, data.word_id, id],
+                    `UPDATE ${TABLE_NAME} SET level=?;`,
+                    [level],
                     (_, { rowsAffected }) => {
                         if (rowsAffected > 0) return resolve(rowsAffected)
 
@@ -31,7 +31,7 @@ class Information {
                     `SELECT * FROM ${TABLE_NAME};`,
                     [],
                     (_, { rows }) => {
-                        resolve(rows._array)
+                        resolve(rows._array[0])
                     },
                     (_, error) => reject(error)
                 )

@@ -1,4 +1,4 @@
-import { useEffect, useState, forwardRef, useRef, useImperativeHandle } from 'react'
+import { useState, forwardRef, useImperativeHandle } from 'react'
 
 import {
     View, Text, TouchableHighlight,
@@ -9,43 +9,41 @@ import * as Speech from 'expo-speech';
 
 import { AntDesign } from '@expo/vector-icons'
 
-import Word from '../../database/models/Word';
+import Word from '../../database/models/Word'
+import Information from '../../database/models/Information'
 
 import { spacedRepetition } from '../../utils/spacedRepetition'
 
 import { COLORS } from '../../theme'
 import { styles } from './styles'
 
-export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, review }, parentRef) => {
-    const [level, setLevel] = useState(0);
-    const [newWord, setNewWord] = useState(true);
-    const [wordSelected, setWordSelected] = useState(false);
+export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, setLevel }, parentRef) => {
+    const [wordSelected, setWordSelected] = useState(false)
 
-    const [timeoutNext, setTimeoutNext] = useState();
-    const [progressNextWord, setProgressNextWord] = useState(new Animated.Value(0));
-    const [arrowPosition, setArrowPosition] = useState(new Animated.Value(0));
+    const [progressNextWord] = useState(new Animated.Value(0))
+    const [arrowPosition] = useState(new Animated.Value(0))
 
-    const [isSelectedWord, setIsSelectedWord] = useState(false);
+    const [isSelectedWord, setIsSelectedWord] = useState(false)
 
     useImperativeHandle(parentRef, () => ({
         play,
         stop
     }))
 
-    const arrowAnime = Animated.loop(
+    Animated.loop(
         Animated.sequence([
             Animated.timing(arrowPosition, {
                 toValue: 10,
                 duration: 500,
-                useNativeDriver: false,
+                useNativeDriver: false
             }),
             Animated.timing(arrowPosition, {
                 toValue: 0,
                 duration: 500,
-                useNativeDriver: false,
-            }),
+                useNativeDriver: false
+            })
         ])
-    ).start();
+    ).start()
 
     const progressBarAnime = Animated.timing(progressNextWord, {
         toValue: 100,
@@ -68,8 +66,6 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, review 
         try {
             setIsSelectedWord(true)
             setWordSelected(index)
-            // console.log(review);
-
 
             const next_repetition = spacedRepetition(right, data.hits, data.next_repetition, data.previous_repetition)
 
@@ -79,28 +75,22 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, review 
                 previous_repetition: data.next_repetition || new Date().toISOString(),
             })
 
-            // if (!newWord) {
-            //     const levelWord = data.indexGenerated * 10
+            if (data.newWord) {
+                let newLevel = level
 
-            //     switch (right) {
-            //         case true:
-            //             if (levelWord > level) {
-            //                 setLevel(level + 1)
-            //                 break;
-            //             }
-            //         default:
-            //             if (levelWord < level) {
-            //                 setLevel(level - 1)
-            //             }
-            //     }
-            // }
+                if (right && data.level > level) {
+                    newLevel = level + 1
+                } else if (!right && data.level < level) {
+                    newLevel = level - 1
+                }
 
-            // setTimeoutNext(
-            //     setTimeout(() => setNextWord(!nextWord), 6000)
-            // )
+                await Information.updateLevel(newLevel)
 
-            progressNextWord.setValue(0);
-            progressBarAnime.start();
+                setLevel(newLevel)
+            }
+
+            progressNextWord.setValue(0)
+            progressBarAnime.start()
 
             setNextWord(!nextWord)
         } catch (error) { console.log(error) }
@@ -186,19 +176,21 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, review 
 
             {isSelectedWord && (
                 <>
-                <Animated.View style={[styles.arrowContainer, {bottom: arrowPosition}]}>
+                <Animated.View style={[styles.arrowContainer, { bottom: arrowPosition }]}>
                     <AntDesign name="down" size={25} color="#ffffffbb" />
                 </Animated.View>
+
                 <View style={styles.progressBarContainer}>
                     <Animated.View style={[styles.progressBar, { 
                         width: progressNextWord.interpolate({
                             inputRange: [0, 100],
                             outputRange: ["0%", "100%"]
                         })
-                    }]}></Animated.View>
+                    }]}/>
                 </View>
                 </>
             )}
+
             <View style={styles.bottomLine}></View>
         </View>
     )

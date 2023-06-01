@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
@@ -6,6 +6,8 @@ import { useFonts, Roboto_400Regular, Roboto_700Bold  } from "@expo-google-fonts
 
 import { StatusBar } from 'expo-status-bar'
 import * as SplashScreen from 'expo-splash-screen'
+
+import { GlobalProvider } from './hooks/global'
 
 import { loadDatabase } from './database/connection'
 
@@ -17,6 +19,8 @@ import { COLORS } from './theme'
 SplashScreen.preventAutoHideAsync()
 
 export default function App() {
+  const [isLoaded, setIsLoaded] = useState(false)
+
   const [fontsLoaded] = useFonts({
     Roboto_400Regular, 
     Roboto_700Bold
@@ -24,23 +28,25 @@ export default function App() {
 
   useEffect(() => {
     async function prepare() {
-      await loadDatabase()
       await SplashScreen.preventAutoHideAsync()
+      await loadDatabase()
+
+      setIsLoaded(true)
     }
 
-    prepare();
+    prepare()
   }, [])
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
-      await SplashScreen.hideAsync();
+      await SplashScreen.hideAsync()
     }
   }, [fontsLoaded])
 
-  if (!fontsLoaded) return null
+  if (!fontsLoaded || !isLoaded) return null
 
   return (
-    <>
+    <GlobalProvider>
       <StatusBar 
         style='light' 
         backgroundColor={COLORS.TRANSPARENT}
@@ -49,10 +55,10 @@ export default function App() {
       <SafeAreaProvider style={{ backgroundColor: COLORS.BLACK_PRIMARY }}>
         <NavigationContainer
           onReady={onLayoutRootView}
-        >
+        >      
           <Routes />
         </NavigationContainer>
       </SafeAreaProvider>
-    </>
+    </GlobalProvider>
   )
 }

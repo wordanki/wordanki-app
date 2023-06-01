@@ -1,6 +1,4 @@
-const maxLevel = 100
-const wordsQuantiy = 5000
-const wordsQuantiyPer100 = wordsQuantiy / 100
+import { maxLevel, wordsQuantiy, wordsQuantiyPer100 } from '../config/algorithm'
 
 export const generateWordFrequency = level => {
     let levelsSum = 0
