@@ -1,8 +1,8 @@
 import { useEffect, useState, forwardRef, useRef, useImperativeHandle } from 'react'
 
-import { 
-    View, Text, TouchableHighlight, 
-    Animated, Easing 
+import {
+    View, Text, TouchableHighlight,
+    Animated, Easing
 } from 'react-native'
 
 import * as Speech from 'expo-speech';
@@ -56,7 +56,7 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, review 
 
     const play = async () => {
         const isSpeaking = await Speech.isSpeakingAsync()
-    
+
         if (isSpeaking) await Speech.stop()
 
         Speech.speak(data.phrase.join(), { language: 'en' })

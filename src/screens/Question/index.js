@@ -12,6 +12,8 @@ import Word from '../../database/models/Word';
 
 import { styles } from './styles'
 
+import { generateWordFrequency } from '../../utils/generateWordFrequency'
+
 import { splitedPhrase } from '../../utils/splitedPhrase'
 
 let time
@@ -29,6 +31,14 @@ export default function Profile({ navigation }) {
 
     useEffect(() => {
         (async () => {
+
+            const frequency = generateWordFrequency(99)
+
+            const word =
+                await Word.findOneByNextReview() || 
+                await Word.findOneByFrequencyOrNext(frequency) || 
+                await Word.findOneByFrequencyOrBefore(frequency)
+
             // var words
             // if(words = await Word.findOneByNextReview()) {
             //     setReview(true);
@@ -47,6 +57,7 @@ export default function Profile({ navigation }) {
             }
             setRevised(revisedWord);
             // const word = !revised ? await Word.findOneByNextReview() || await Word.findOneByNext() : await Word.findOneByNext();
+
 
 
             const options = await Word
