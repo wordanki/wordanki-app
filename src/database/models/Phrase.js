@@ -1,6 +1,7 @@
-import { openDatabase } from "../connection";
+import { openDatabase } from "../connection"
 
 export const TABLE_NAME = 'phrases'
+
 class Phrase {
     constructor() {
         this.db = openDatabase()
@@ -82,19 +83,6 @@ class Phrase {
                     (_, { rows }) => {
                         resolve(rows._array)
                     },
-                    (_, error) => reject(error)
-                )
-            })
-        })
-    }
-
-    async remove(id) {
-        return new Promise((resolve, reject) => {
-            this.db.transaction(tx => {
-                tx.executeSql(
-                    `DELETE FROM ${TABLE_NAME} WHERE id=?;`,
-                    [id],
-                    (_, { rowsAffected }) => resolve(rowsAffected),
                     (_, error) => reject(error)
                 )
             })

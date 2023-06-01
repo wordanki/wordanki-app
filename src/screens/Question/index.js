@@ -12,6 +12,8 @@ import Word from '../../database/models/Word';
 
 import { styles } from './styles'
 
+import { generateWordFrequency } from '../../utils/generateWordFrequency'
+
 import { splitedPhrase } from '../../utils/splitedPhrase'
 
 export default function Profile({ navigation }) {
@@ -23,7 +25,12 @@ export default function Profile({ navigation }) {
 
     useEffect(() => {
         (async () => {
-            const word = await Word.findOneByNextReview() || await Word.findOneByNext()
+            const frequency = generateWordFrequency(99)
+
+            const word =
+                await Word.findOneByNextReview() || 
+                await Word.findOneByFrequencyOrNext(frequency) || 
+                await Word.findOneByFrequencyOrBefore(frequency)
 
             const options = await Word
                 .findByClassRandomlyAndDifferentOfTranslationWithLimit(word.class, word.portuguese, 3)
