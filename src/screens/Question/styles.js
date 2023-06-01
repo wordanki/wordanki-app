@@ -14,6 +14,6 @@ export const styles = StyleSheet.create({
     container: {
         height,
         flex: 1,
-        backgroundColor: "#222228"
+        backgroundColor: "#ff2228"
     }
 })

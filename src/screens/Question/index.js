@@ -16,21 +16,49 @@ import { generateWordFrequency } from '../../utils/generateWordFrequency'
 
 import { splitedPhrase } from '../../utils/splitedPhrase'
 
+let time
+
 export default function Profile({ navigation }) {
     const [nextWord, setNextWord] = useState(false)
     const [data, setData] = useState([])
+    const [color, setColor] = useState(true);
+    const [timeoutEvent, setTimeoutEvent] = useState();
+    // const [review, setReview] = useState();
+    const [revised, setRevised] = useState(false);
 
     const flatListRef = useRef()
     const issueRefs = useRef([])
 
     useEffect(() => {
         (async () => {
+
             const frequency = generateWordFrequency(99)
 
             const word =
                 await Word.findOneByNextReview() || 
                 await Word.findOneByFrequencyOrNext(frequency) || 
                 await Word.findOneByFrequencyOrBefore(frequency)
+
+            // var words
+            // if(words = await Word.findOneByNextReview()) {
+            //     setReview(true);
+            // } else {
+            //     words = await Word.findOneByNext()
+            //     setReview(false);
+            // }
+            var revisedWord;
+            var word;
+            if(await Word.findOneByNextReview() && !revised) {
+                word = await Word.findOneByNextReview();
+                revisedWord = true;
+            } else {
+                word = await Word.findOneByNext();
+                revisedWord = false;
+            }
+            setRevised(revisedWord);
+            // const word = !revised ? await Word.findOneByNextReview() || await Word.findOneByNext() : await Word.findOneByNext();
+
+
 
             const options = await Word
                 .findByClassRandomlyAndDifferentOfTranslationWithLimit(word.class, word.portuguese, 3)
@@ -49,7 +77,7 @@ export default function Profile({ navigation }) {
                 previous_repetition: word.previous_repetition,
                 correctAsnwerIndex: wordPosition,
                 answers: options.map(option => option.portuguese),
-                phrase: splitedPhrase(word.phrases[0].english),
+                phrase: splitedPhrase(word.phrases[0].english, revisedWord),
                 translatedPhrase: splitedPhrase(word.phrases[0].portuguese)
             }]
 
@@ -58,22 +86,24 @@ export default function Profile({ navigation }) {
             }
 
             setData(newData)
+            setColor(!color)
         })()
     }, [nextWord])
 
     useEffect(() => {
-        navigation.addListener('beforeRemove', () => Speech.stop())
-    },
-    [navigation])
+        navigation.addListener('beforeRemove', () => { Speech.stop(); clearTimeout(time); })
+    }, [navigation])
 
     useEffect(() => {
         if (data.length > 1) {
-            setTimeout(() => {
-                flatListRef.current.scrollToIndex({ 
-                    index: data.length - 1, 
-                    animated: true 
-                })
-            }, 2000)
+            // setTimeoutEvent(
+                time = setTimeout(() => {
+                    flatListRef.current.scrollToIndex({ 
+                        index: data.length - 1, 
+                        animated: true 
+                    })
+                }, 5000)
+            // )
         }
     }, [data])
 
@@ -92,6 +122,8 @@ export default function Profile({ navigation }) {
                 data={item}
                 nextWord={nextWord}
                 setNextWord={setNextWord}
+                bgColor={"#222228"}
+                review={revised}
                 ref={IssueRef => (issueRefs.current[item.id] = IssueRef)}
             />
         </View>
