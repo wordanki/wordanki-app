@@ -1,12 +1,14 @@
 import {
     View,
     Text,
+    Image,
     ImageBackground,
     Share,
     TouchableOpacity,
 } from 'react-native'
 
 import Icon, { IconType } from "react-native-dynamic-vector-icons"
+import ProgressBar from "react-native-animated-progress"
 
 import { useAuthentication } from '../../hooks/auth'
 
@@ -19,12 +21,14 @@ import { UserPhoto } from '../UserPhoto'
 
 import { useGlobal } from '../../hooks/global'
 
+import { maxLevel } from '../../config/algorithm'
+
 import { COLORS } from '../../theme'
 import { styles } from './styles'
 
 export const Drawer = props => {
     const { user, signOut } = useAuthentication()
-    const { informations } = useGlobal()
+    const { informations: { version }, level } = useGlobal()
 
     const handleShare = async () => {
         try {
@@ -55,10 +59,10 @@ export const Drawer = props => {
 
                 contentContainerStyle={{ backgroundColor: COLORS.BLACK_TERTIARY }}>
 
-                {/* <ImageBackground style={styles.profileContainer}>
-                    <UserPhoto imageUri={user?.photoURL} size='HIGHER' />
+                <ImageBackground style={styles.profileContainer}>
+                    {/* <UserPhoto imageUri={user?.photoURL} size='HIGHER' /> */}
 
-                    <Text style={styles.username}>
+                    {/* <Text style={styles.username}>
                         {user?.displayName}
                     </Text>
 
@@ -66,32 +70,29 @@ export const Drawer = props => {
                         <Text style={styles.usermail}>
                             {user?.email}
                         </Text>
+                    </View> */}
+
+                    <View style={styles.levelContainer}>
+                        <Text style={styles.levelText}>Nível {level}/{maxLevel}</Text>
+
+                        {/* <Text style={styles.version}>
+                            {version}
+                        </Text> */}
                     </View>
-                </ImageBackground> */}
 
-                <View style={styles.drawerListContainer}>
-                    {/* <DrawerItemList {...props} /> */}
-
-                    <TouchableOpacity onPress={handleShare} style={styles.footerButtonContainer}>
-                        <View style={styles.footerButton}>
-                            <Icon
-                                name="share-social-outline"
-                                type={IconType.Ionicons}
-                                size={20}
-                                color={COLORS.WHITE}
-                            />
-
-                            <Text style={styles.footerButtonText}>
-                                Convide um amigo
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
+                    <ProgressBar progress={level} backgroundColor={COLORS.GREEN_PRIMARY} />
+                </ImageBackground>
             </DrawerContentScrollView>
 
-            <Text style={styles.footerButtonText}>VERSÃO: {informations.version}</Text>
+            <View style={styles.logoContainer}>
+                <Image
+                    style={styles.logo}
+                    resizeMode='contain'
+                    source={require('../../assets/logo.png')}
+                />
+            </View>
 
-            {/* <View style={styles.footer}>
+            <View style={styles.footer}>
                 <TouchableOpacity onPress={handleShare} style={styles.footerButtonContainer}>
                     <View style={styles.footerButton}>
                         <Icon
@@ -107,21 +108,21 @@ export const Drawer = props => {
                     </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={handleLogout} style={styles.footerButtonContainer}>
+                {/* <TouchableOpacity onPress={handleShare} style={styles.footerButtonContainer}>
                     <View style={styles.footerButton}>
                         <Icon
-                            name="exit-outline"
-                            type={IconType.Ionicons}
+                            name="setting"
+                            type={IconType.AntDesign}
                             size={20}
                             color={COLORS.WHITE}
                         />
 
                         <Text style={styles.footerButtonText}>
-                            Sair
+                            Configurações
                         </Text>
                     </View>
-                </TouchableOpacity>
-            </View> */}
+                </TouchableOpacity> */}
+            </View>
         </View>
     );
 };

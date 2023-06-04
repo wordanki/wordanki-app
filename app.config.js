@@ -9,6 +9,12 @@ module.exports = {
   icon: "./assets/icon.png",
   scheme: "com.wordanki.english",
   entryPoint : "./index.js",
+  androidStatusBar: {
+    backgroundColor: "#222228",
+    barStyle: "light-content",
+    animated: true,
+    translucent: true
+  },
   splash: {
     image: "./assets/splash.png",
     resizeMode: "contain",

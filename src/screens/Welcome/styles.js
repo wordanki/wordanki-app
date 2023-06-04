@@ -6,61 +6,34 @@ const borderRadius = 40
 const defaultSpacing = 20
 
 export const styles = StyleSheet.create({
-    container: {
+    slide: {
         flex: 1,
-        width: "100%",
-        backgroundColor: COLORS.BGCOLOR_DARK,
-        justifyContent: "flex-end"
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-    logoContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
+    image: {
+        width: 320,
+        height: 200,
+        marginVertical: 32
     },
-    content: {
-        width: "100%",
-        height: "35%",
-        padding: defaultSpacing * 2,
-        borderTopLeftRadius: borderRadius / 1.5,
-        borderTopRightRadius: borderRadius / 1.5,
-        backgroundColor: "#fff1"
+    text: {
+        color: 'rgba(255, 255, 255, 0.8)',
+        fontSize: 18,
+        textAlign: 'center',
+        maxWidth: "90%"
     },
     title: {
-        fontSize: 30,
-        fontWeight: "bold",
-        color: COLORS.WHITE
-    }, 
-    subTitle: {
-        fontSize: 15,
-        marginVertical: defaultSpacing * 1.5,
-        color: COLORS.GRAY_PRIMARY
+        fontSize: 26,
+        fontWeight: 'bold',
+        color: 'white',
+        textAlign: 'center'
     },
-    obsText: {
-        fontSize: 16,
-        fontWeight: "bold",
-        color: "#fff8",
-        marginTop: defaultSpacing
-    }, 
-    button: {
-        // marginTop: 40,
-        width: "100%",
-        borderRadius,
-        position: "absolute",
-        bottom: 40,
-        left: 40,
-        // maxWidth: "60%",
-        // alignSelf: "flex-end",
-        paddingHorizontal: defaultSpacing * 0.5,
-        paddingVertical: defaultSpacing / 2,
-        backgroundColor: COLORS.GREEN_PRIMARY + "bb"
-    }, 
-    buttonText: {
-        color: COLORS.WHITE,
-        fontSize: 20,
-    },
-    buttonContent: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        alignItems: "center"
+    buttonCircle: {
+        width: 40,
+        height: 40,
+        backgroundColor: 'rgba(0, 0, 0, .2)',
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })

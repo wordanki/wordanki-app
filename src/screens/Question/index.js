@@ -1,7 +1,9 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 
 import { View } from 'react-native'
 import * as Speech from 'expo-speech'
+
+import { FlashList } from "@shopify/flash-list"
 
 import { SwiperFlatList } from 'react-native-swiper-flatlist'
 
@@ -21,7 +23,7 @@ let time = null
 export default function Profile({ navigation }) {
     const [nextWord, setNextWord] = useState(false)
     const [isNewWord, setIsNewWord] = useState(false)
-    
+
     const [data, setData] = useState([])
     const [color, setColor] = useState(true)
 
@@ -36,9 +38,9 @@ export default function Profile({ navigation }) {
             let frequency = 0
             let newWord = false
 
-            switch(!isNewWord) {
+            switch (!isNewWord) {
                 case true:
-                    word = await Word.findOneByNextReview() 
+                    word = await Word.findOneByNextReview()
 
                     if (word) break
 
@@ -70,12 +72,14 @@ export default function Profile({ navigation }) {
                 previous_repetition: word.previous_repetition,
                 correctAsnwerIndex: wordPosition,
                 answers: options.map(option => option.portuguese),
-                level:  Math.floor(frequency / wordsQuantiyPer100),
+                level: Math.floor(frequency / wordsQuantiyPer100),
                 phrase: splitedPhrase(word.phrases[0].english, isNewWord),
                 translatedPhrase: splitedPhrase(word.phrases[0].portuguese)
             }]
 
-            if(newData.length > 10) newData.shift()
+            // if (newData.length > 3) {
+            //     newData.shift()
+            // }
 
             setData(newData)
             setColor(!color)
@@ -83,18 +87,19 @@ export default function Profile({ navigation }) {
     }, [nextWord])
 
     useEffect(() => {
-        navigation.addListener('beforeRemove', () => { 
+        navigation.addListener('beforeRemove', () => {
             Speech.stop()
-            clearTimeout(time) 
+            clearTimeout(time)
         })
     }, [navigation])
 
     useEffect(() => {
-        if (data.length > 1) {
+
+        if (data.length > 1 && flatListRef) {
             time = setTimeout(() => {
-                flatListRef.current.scrollToIndex({ 
-                    index: data.length - 1, 
-                    animated: true 
+                flatListRef.current.scrollToIndex({
+                    index: data.length - 1,
+                    animated: true
                 })
             }, 5000)
         }
@@ -108,7 +113,7 @@ export default function Profile({ navigation }) {
         })
     })
 
-    const renderItems = ({ item }) => (
+    const renderItems = useCallback(({ item }) => (
         <View style={styles.container}>
             <Issue
                 key={item.id}
@@ -121,18 +126,24 @@ export default function Profile({ navigation }) {
                 ref={IssueRef => (issueRefs.current[item.id] = IssueRef)}
             />
         </View>
-    )
+    ), [data])
 
     if (!data.length) return <View />
 
     return (
-        <View style={{ backgroundColor: "#222228" }}>
-            <SwiperFlatList
+        <View style={styles.container}>
+            <FlashList
                 ref={flatListRef}
-                vertical={true}
                 data={data}
+                vertical={true}
                 renderItem={renderItems}
+                estimatedItemSize={10}
                 keyExtractor={item => item.id}
+                decelerationRate='normal'
+                pagingEnabled
+                viewabilityConfig={{
+                    itemVisiblePercentThreshold: 50
+                }}
                 onViewableItemsChanged={onViewableItemsChanged.current}
             />
         </View>

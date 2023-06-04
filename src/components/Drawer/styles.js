@@ -2,7 +2,7 @@ import { StyleSheet, Dimensions } from 'react-native'
 
 import { COLORS, FONTS } from "../../theme"
 
-const windowWidth = Dimensions.get('window').width
+const windowHeight= Dimensions.get('window').height
 
 const borderRadius = 10
 const defaultSpacing = 20
@@ -13,9 +13,10 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.BLACK_TERTIARY
   },
   profileContainer: {
-    padding: 20, 
-    borderBottomWidth: .5, 
-    borderColor: COLORS.WHITE
+    paddingHorizontal: defaultSpacing, 
+    paddingVertical: defaultSpacing,
+    borderBottomWidth: 1, 
+    borderColor: COLORS.WHITE + '25'
   },
   username: {
     marginTop: 10,
@@ -29,20 +30,42 @@ export const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     marginRight: 5,
   },
+  levelContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: defaultSpacing / 2
+  },  
+  levelText: {
+    color: COLORS.WHITE
+  },
+  version: {
+    fontSize: 12,
+    color: COLORS.WHITE
+  },
   drawerListContainer: {
     flex: 1, 
-    // backgroundColor: '#fff', 
     paddingTop: 10
   },
+  logoContainer: {
+    top: -windowHeight / 4,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  logo: {
+    height: 250,
+    width: 150,
+    opacity: .1
+  },
   footer: {
-    padding: 20, 
-    borderTopWidth: .5, 
-    borderTopColor: '#ccc',
+    borderTopWidth: 1, 
+    borderTopColor: COLORS.WHITE + '25',
+    borderBottomWidth: .5, 
+    borderBottomColor: COLORS.WHITE + '22',
     backgroundColor: COLORS.BLACK_TERTIARY
   },
   footerButtonContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 15
+    paddingHorizontal: defaultSpacing,
+    paddingVertical: defaultSpacing
   },
   footerButton: {
     flexDirection: 'row', 

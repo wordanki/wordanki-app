@@ -11,7 +11,7 @@ export const COLORS = {
 
     TRANSPARENT: 'transparent',
 
-    BLACK_PRIMARY: '#09090A',
+    BLACK_PRIMARY: '#222228',
     BLACK_SECONDARY: '#121214',
     BLACK_TERTIARY: '#222228',
 

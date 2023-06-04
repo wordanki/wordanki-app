@@ -3,6 +3,9 @@ import { StyleSheet, Dimensions } from 'react-native'
 import { COLORS, FONTS } from "../../theme"
 
 const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height - 50
+
+const screenHeight = windowHeight - 40
 
 const borderRadius = 10
 const defaultSpacing = 20
@@ -10,139 +13,92 @@ const defaultSpacing = 20
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
+    height: windowHeight,
     flex: 1,
-    // backgroundColor: "#222228",
-    width: windowWidth,
     padding: 20,
-    // shadowColor: "#fff",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 3.84,
-    
-    // elevation: 5,
+    backgroundColor: COLORS.BLACK_PRIMARY
   },
-  reviewContainer: {
-    width: 80,
+  tagContainer: {
+    width: 30,
     height: 20,
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
-    backgroundColor: "#2C9ED288",
-    borderWidth: 0,
-    borderRightWidth: 0,
-    borderColor: "#2C9ED2",
-    justifyContent: "center",
-    paddingLeft: 10,
-    position: "absolute",
-    top: 10,
-    right: 0,
+    marginBottom: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: "#2C9ED288"
   },
-  reviewText: {
-   fontSize: 13,
+  tagText: {
+   fontSize: 8,
    color: "#ffffff",
   },
   questionContainer: {
-    width: "100%",
+    height: screenHeight * .2,
+    maxHeight: screenHeight * .2,
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 40,
-    // backgroundColor: "#fff4"
-  },
-  soundButton: {
-    marginRight: 10,
+    alignItems: 'center'
   },
   question: {
     flex: 1,
     color: COLORS.WHITE,
     fontSize: 30,
+    marginLeft: defaultSpacing
   },
   word: {
     color: "#30B956",
     fontWeight: 'bold',
     textDecorationLine: 'underline',
   },
-  answerButton: {
-    width: "100%",
-    height: 45,
-    borderRadius: 15,
-    marginBottom: 20,
-    backgroundColor: "#0A7CB1"
-  },
+  answersContainer: {
+    height: screenHeight * .6,
+    maxHeight: screenHeight * .6,
+    justifyContent: 'center'
+  },  
   answerButtonContainer: {
-    width: "100%",
-    height: "100%",
-    borderWidth: 3,
-    borderRadius: 15,
+    borderRadius: borderRadius * 1.5,
     justifyContent: "center",
     alignItems: 'center',
   },
+  answerButton: {
+    height: defaultSpacing * 2.1,
+    borderRadius: borderRadius * 1.5,
+    marginBottom: defaultSpacing,
+    justifyContent: "center",
+    alignItems: 'center',
+    backgroundColor: "#0A7CB1"
+  },
   answerText: {
     color: "#dddddd",
-    fontSize: 22,
+    fontSize: 22
   },
   translation: {
-    marginTop: 20,
-    borderWidth: 3,
-    width: "100%",
-    borderColor: "#444855",
-    borderRadius: 15,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    minHeight: 100,
-    justifyContent: "center"
+    height: screenHeight * .2,
+    maxHeight: screenHeight * .2,
+    borderWidth: .1,
+    borderColor: "#fff1",
+    borderRadius: borderRadius / 1.5,
+    justifyContent: 'center',
+    paddingHorizontal: defaultSpacing / 1.5
   },
   translationText: {
-    fontSize: 20,
-    color: "#dddddd",
+    fontSize: 25,
+    color: "#dddddd"
   },
   translationWord: {
     color: "#2C9ED2",
     fontWeight: 'bold',
-    textDecorationLine: 'underline',
-  },
-  buttonsContainer: {
-    width: "100%",
-    height: 45,
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 40,
-  },
-  next: {
-    width: "100%",
-    height: "100%",
-    borderRadius: 100,
-  },
-  nextContainer: {
-    width: "100%",
-    height: "100%",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#434348",
-    borderRadius: 100,
-    overflow: "hidden",
-  },
-  textChangeWord: {
-    fontSize: 20,
-    color: "#dddddd",
-    marginRight: 10,
+    textDecorationLine: 'underline'
   },
   progressBarContainer: {
+    top: 1,
+    left: 0,
     height: 5,
     width: windowWidth,
-    backgroundColor: "ffffff11",
-    position: "absolute",
-    left: 0,
-    top: 1,
+    backgroundColor: COLORS.WHITE + 11,
+    position: "absolute"
   },
   progressBar: {
     height: "100%",
-    backgroundColor: "#ffffff88",
-    position: "absolute",
-    left: 0,
-    top: 0,
+    backgroundColor: COLORS.WHITE + 88
   },
   arrowContainer: {
     height: 60,
@@ -159,6 +115,6 @@ export const styles = StyleSheet.create({
     left: 0,
     width: windowWidth,
     height: 1,
-    backgroundColor: "#ffffff22",
+    backgroundColor: "red",
   }
 })

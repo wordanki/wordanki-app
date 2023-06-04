@@ -25,10 +25,11 @@ export const styles = StyleSheet.create({
         justifyContent: "space-between",
         paddingHorizontal: 20,
     },
-    imageCourse: {
+    image: {
         width: 80,
+        height: 80
     },
-    textCourse: {
+    text: {
         width: "45%",
         color: "#ffffff",
         fontSize: 16,

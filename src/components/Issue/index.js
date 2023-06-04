@@ -2,12 +2,14 @@ import { useState, forwardRef, useImperativeHandle } from 'react'
 
 import {
     View, Text, TouchableHighlight,
-    Animated, Easing
+    Animated, Easing, ImageBackground
 } from 'react-native'
 
-import * as Speech from 'expo-speech';
+import * as Speech from 'expo-speech'
 
 import { AntDesign } from '@expo/vector-icons'
+
+import { BlurText } from '../../components/BlurText'
 
 import Word from '../../database/models/Word'
 import Information from '../../database/models/Information'
@@ -93,25 +95,38 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
             progressBarAnime.start()
 
             setNextWord(!nextWord)
-        } catch (error) { console.log(error) }
+        } catch (error) {}
     };
 
     return (
-        <View style={{...styles.container, backgroundColor: bgColor}}>
-            {/* {review && (
-                <View style={styles.reviewContainer}>
-                    <Text style={styles.reviewText}>Revisão</Text>
+        <View style={styles.container}>
+            {isSelectedWord && (
+                <View style={styles.progressBarContainer}>
+                    <Animated.View style={[styles.progressBar, {
+                        width: progressNextWord.interpolate({
+                            inputRange: [0, 100],
+                            outputRange: ["0%", "100%"]
+                        })
+                    }]} />
                 </View>
-            )} */}
+            )}
 
             <View style={styles.questionContainer}>
-                <TouchableHighlight onPress={() => play(data.phrase.join())} style={styles.soundButton}>
-                    <AntDesign
-                        name="sound"
-                        size={30}
-                        color={"#2C9ED2"}
-                    />
-                </TouchableHighlight>
+                <View>
+                    {/* {true && (
+                        <View style={styles.tagContainer}>
+                            <Text style={styles.tagText}>Revisão</Text>
+                        </View>
+                    )} */}
+
+                    <TouchableHighlight onPress={() => play(data.phrase.join())}>
+                        <AntDesign
+                            name="sound"
+                            size={30}
+                            color={"#2C9ED2"}
+                        />
+                    </TouchableHighlight>
+                </View>
 
                 <Text style={styles.question}>
                     {data.phrase[0]}
@@ -120,7 +135,7 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
                 </Text>
             </View>
 
-            <View>
+            <View style={styles.answersContainer}>
                 {data.answers.map((answer, index) => (
                     <TouchableHighlight
                         key={index}
@@ -145,7 +160,7 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
 
                 <TouchableHighlight
                     disabled={isSelectedWord}
-                    style={styles.answerButton}
+                    style={[styles.answerButton, { marginBottom: 0 }]}
                     onPress={() => { answerEvent(false, -1) }}
                 >
                     <View style={{
@@ -158,40 +173,26 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
                 </TouchableHighlight>
             </View>
 
-            {isSelectedWord ? (
-                <View style={{ ...styles.translation, borderColor: "#0A7CB1bb", fontSize: 40 }}>
-                    <Text style={{ ...styles.translationText, fontSize: 25 }}>
-                        {data.translatedPhrase[0]}
-                        <Text style={styles.translationWord}>{data.translatedPhrase[1]}</Text>
-                        {data.translatedPhrase[2]}
-                    </Text>
-                </View>
-            ) : (
-                <View style={styles.translation}>
-                    <Text style={{ ...styles.translationText, color: "#bbbbbb", }}>
-                        A tradução da frase irá aparecer aqui depois que você clicar na resposta
-                    </Text>
-                </View>
-            )}
+
+
+            {/* {!isSelectedWord ? ( */}
+            <View style={{ ...styles.translation, borderColor: "#0A7CB1bb" }}>
+                {!isSelectedWord ?
+                    <BlurText text={data.translatedPhrase.join()} />
+                    : (
+                        <Text style={{ ...styles.translationText }}>
+                            {data.translatedPhrase[0]}
+                            <Text style={styles.translationWord}>{data.translatedPhrase[1]}</Text>
+                            {data.translatedPhrase[2]}
+                        </Text>
+                    )}
+            </View>
 
             {isSelectedWord && (
-                <>
                 <Animated.View style={[styles.arrowContainer, { bottom: arrowPosition }]}>
                     <AntDesign name="down" size={25} color="#ffffffbb" />
                 </Animated.View>
-
-                <View style={styles.progressBarContainer}>
-                    <Animated.View style={[styles.progressBar, { 
-                        width: progressNextWord.interpolate({
-                            inputRange: [0, 100],
-                            outputRange: ["0%", "100%"]
-                        })
-                    }]}/>
-                </View>
-                </>
             )}
-
-            <View style={styles.bottomLine}></View>
         </View>
     )
 })
