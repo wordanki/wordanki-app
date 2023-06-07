@@ -7,14 +7,14 @@ const defaultSpacing = 20
 
 export const styles = StyleSheet.create({
     text: {
-        fontSize: 0,
+        fontSize: 25,
         color: "#fff0",
 
         // paddingVertical: 15,
 
         fontWeight: "600",
 
-        textShadowColor: "rgba(255, 255, 255, 0.9   )",
-        textShadowRadius: 15,
+        textShadowColor: "rgba(255, 255, 255, 1)",
+        textShadowRadius: 30,
     }
 })

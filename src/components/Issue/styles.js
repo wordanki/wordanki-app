@@ -19,29 +19,36 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.BLACK_PRIMARY
   },
   tagContainer: {
-    width: 30,
     height: 20,
+    // width: 30,
     marginBottom: 10,
-    borderRadius: 10,
-    alignItems: 'center',
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    // alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: "#2C9ED288"
+    backgroundColor: "#2C9ED288",
+    paddingHorizontal: 8,
+    position: "absolute",
+    top: 10,
+    left: 0,
   },
   tagText: {
-   fontSize: 8,
+   fontSize: 10,
    color: "#ffffff",
   },
   questionContainer: {
-    height: screenHeight * .2,
-    maxHeight: screenHeight * .2,
+    height: "auto",
+    // maxHeight: screenHeight * .2,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 30,
   },
   question: {
     flex: 1,
     color: COLORS.WHITE,
     fontSize: 30,
-    marginLeft: defaultSpacing
+    marginLeft: defaultSpacing,
+    overflow: "scroll",
   },
   word: {
     color: "#30B956",
@@ -49,39 +56,50 @@ export const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   answersContainer: {
-    height: screenHeight * .6,
-    maxHeight: screenHeight * .6,
-    justifyContent: 'center'
+    height: "auto",
+    // maxHeight: screenHeight * .6,
+    justifyContent: 'center',
+    marginBottom: 30,
+    overflow: "scroll",
   },  
   answerButtonContainer: {
-    borderRadius: borderRadius * 1.5,
     justifyContent: "center",
     alignItems: 'center',
   },
   answerButton: {
     height: defaultSpacing * 2.1,
-    borderRadius: borderRadius * 1.5,
+    borderRadius: borderRadius * 1.2,
     marginBottom: defaultSpacing,
     justifyContent: "center",
     alignItems: 'center',
-    backgroundColor: "#0A7CB1"
+    backgroundColor: "#0A7CB1",
+    borderWidth: 2,
   },
   answerText: {
     color: "#dddddd",
     fontSize: 22
   },
   translation: {
-    height: screenHeight * .2,
-    maxHeight: screenHeight * .2,
-    borderWidth: .1,
-    borderColor: "#fff1",
-    borderRadius: borderRadius / 1.5,
+    height: "auto",
+    // maxHeight: screenHeight * .2,
+    borderWidth: 1,
+    borderColor: "#fff2",
+    backgroundColor: "#fff1",
+    borderRadius: borderRadius * 1.2,
     justifyContent: 'center',
-    paddingHorizontal: defaultSpacing / 1.5
+    paddingVertical: defaultSpacing / 1.5,
+    paddingHorizontal: defaultSpacing / 1.5,
+    overflow: "scroll",
+  },
+  translationLabel: {
+    fontSize: 15,
+    color: "#2C9ED2",
+    marginBottom: defaultSpacing / 3,
   },
   translationText: {
     fontSize: 25,
-    color: "#dddddd"
+    color: "#dddddd",
+    height: "auto",
   },
   translationWord: {
     color: "#2C9ED2",

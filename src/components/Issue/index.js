@@ -77,7 +77,7 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
                 previous_repetition: data.next_repetition || new Date().toISOString(),
             })
 
-            if (data.newWord) {
+            if (data.isNewWord) {
                 let newLevel = level
 
                 if (right && data.level > level) {
@@ -99,7 +99,7 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
     };
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, {backgroundColor: bgColor}]}>
             {isSelectedWord && (
                 <View style={styles.progressBarContainer}>
                     <Animated.View style={[styles.progressBar, {
@@ -111,22 +111,20 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
                 </View>
             )}
 
-            <View style={styles.questionContainer}>
-                <View>
-                    {/* {true && (
-                        <View style={styles.tagContainer}>
-                            <Text style={styles.tagText}>Revisão</Text>
-                        </View>
-                    )} */}
-
-                    <TouchableHighlight onPress={() => play(data.phrase.join())}>
-                        <AntDesign
-                            name="sound"
-                            size={30}
-                            color={"#2C9ED2"}
-                        />
-                    </TouchableHighlight>
+            {!data.isNewWord && (
+                <View style={styles.tagContainer}>
+                    <Text style={styles.tagText}>Revisão</Text>
                 </View>
+            )}
+
+            <View style={styles.questionContainer}>
+                <TouchableHighlight onPress={() => play(data.phrase.join())}>
+                    <AntDesign
+                        name="sound"
+                        size={30}
+                        color={"#2C9ED2"}
+                    />
+                </TouchableHighlight>
 
                 <Text style={styles.question}>
                     {data.phrase[0]}
@@ -143,13 +141,13 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
                         style={{
                             ...styles.answerButton,
                             backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#2BAA4F" : "#9B3D42") : "#444855",
+                            borderColor: isSelectedWord && (data.correctAsnwerIndex == index || wordSelected == index) ? (data.correctAsnwerIndex == index ? "#2BAA4F" : "#9B3D42") : "#444855"
                         }}
                         onPress={() => answerEvent(index === data.correctAsnwerIndex, index)}
                     >
                         <View style={{
                             ...styles.answerButtonContainer,
-                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#2BAA4F" : "#9B3D42") : "#444855",
-                            borderColor: isSelectedWord && (data.correctAsnwerIndex == index || wordSelected == index) ? (data.correctAsnwerIndex == index ? "#2BAA4F" : "#9B3D42") : "#444855"
+                            // backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#2BAA4F" : "#9B3D42") : "#444855",
                         }}>
                             <Text style={styles.answerText}>
                                 {answer}
@@ -160,13 +158,15 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
 
                 <TouchableHighlight
                     disabled={isSelectedWord}
-                    style={[styles.answerButton, { marginBottom: 0 }]}
+                    style={[styles.answerButton, { 
+                        marginBottom: 0,
+                        backgroundColor: "#0A7CB1",
+                        borderColor: "#0A7CB1",
+                    }]}
                     onPress={() => { answerEvent(false, -1) }}
                 >
                     <View style={{
                         ...styles.answerButtonContainer,
-                        backgroundColor: "#0A7CB1",
-                        borderColor: "#0A7CB1",
                     }}>
                         <Text style={styles.answerText}>Não sei</Text>
                     </View>
@@ -176,7 +176,8 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
 
 
             {/* {!isSelectedWord ? ( */}
-            <View style={{ ...styles.translation, borderColor: "#0A7CB1bb" }}>
+            <View style={{ ...styles.translation}}>
+                <Text style={styles.translationLabel}>Tradução</Text>
                 {!isSelectedWord ?
                     <BlurText text={data.translatedPhrase.join()} />
                     : (

@@ -41,17 +41,15 @@ export default function Profile({ navigation }) {
             switch (!isNewWord) {
                 case true:
                     word = await Word.findOneByNextReview()
-
                     if (word) break
-
-                    newWord = true
+                    
                 default:
                     frequency = generateWordFrequency(level)
                     word = await Word.findOneByFrequencyOrNext(frequency) || await Word.findOneByFrequencyOrBefore(frequency)
+                    newWord = true
             }
 
             if (!word) return
-
             setIsNewWord(!newWord)
 
             const options = await Word
@@ -65,7 +63,7 @@ export default function Profile({ navigation }) {
             })
 
             const newData = [...data, {
-                newWord,
+                isNewWord,
                 id: word.id,
                 hits: word.hits,
                 next_repetition: word.next_repetition,
@@ -73,8 +71,8 @@ export default function Profile({ navigation }) {
                 correctAsnwerIndex: wordPosition,
                 answers: options.map(option => option.portuguese),
                 level: Math.floor(frequency / wordsQuantiyPer100),
-                phrase: splitedPhrase(word.phrases[0].english, isNewWord),
-                translatedPhrase: splitedPhrase(word.phrases[0].portuguese)
+                phrase: splitedPhrase(word.phrases[0].english, true),
+                translatedPhrase: splitedPhrase(word.phrases[0].portuguese, true)
             }]
 
             // if (newData.length > 3) {
@@ -113,22 +111,23 @@ export default function Profile({ navigation }) {
         })
     })
 
-    const renderItems = useCallback(({ item }) => (
+    const renderItems = useCallback(({ item, index }) => (
         <View style={styles.container}>
             <Issue
                 key={item.id}
                 data={item}
                 level={level}
                 setLevel={setLevel}
-                bgColor={"#222228"}
+                bgColor={index % 2 == 0 ? "#222228" : "#1F1F24"}
                 nextWord={nextWord}
                 setNextWord={setNextWord}
                 ref={IssueRef => (issueRefs.current[item.id] = IssueRef)}
             />
         </View>
     ), [data])
-
+    
     if (!data.length) return <View />
+
 
     return (
         <View style={styles.container}>

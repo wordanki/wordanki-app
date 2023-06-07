@@ -17,21 +17,21 @@ const slides = [
         title: 'Bem-vindo ao Wordanki',
         text: 'Estude de maneira rápida não importa onde esteja.',
         image: require('../../assets/logo.png'),
-        backgroundColor: '#59b2ab',
+        backgroundColor: '#30B956',
     },
     {
         key: 'two',
         title: 'Disponível Offline',
         text: 'Continue estudando mesmo quando não estiver conectado.',
         image: require('../../assets/airplane.png'),
-        backgroundColor: '#febe29',
+        backgroundColor: '#0A7CB1',
     },
     {
         key: 'three',
         title: 'Repetição Espaçada',
         text: 'Aprenda com algortimos eficientes para uma melhor experiência.',
         image: require('../../assets/algorithm.png'),
-        backgroundColor: '#22bcb5',
+        backgroundColor: '#8367D0',
     }
 ]
 
