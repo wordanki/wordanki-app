@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from 'react-native'
 import { COLORS, FONTS } from "../../theme"
 
 const windowWidth = Dimensions.get('window').width
-const windowHeight = Dimensions.get('window').height - 50
+const windowHeight = Dimensions.get('window').height - 51.5
 
 const screenHeight = windowHeight - 40
 
@@ -16,7 +16,8 @@ export const styles = StyleSheet.create({
     height: windowHeight,
     flex: 1,
     padding: 20,
-    backgroundColor: COLORS.BLACK_PRIMARY
+    backgroundColor: COLORS.BLACK_PRIMARY,
+    overflow: "hidden"
   },
   tagContainer: {
     height: 20,
@@ -63,16 +64,17 @@ export const styles = StyleSheet.create({
     overflow: "scroll",
   },  
   answerButtonContainer: {
-    justifyContent: "center",
-    alignItems: 'center',
-  },
-  answerButton: {
     height: defaultSpacing * 2.1,
+    width: "100%",
     borderRadius: borderRadius * 1.2,
     marginBottom: defaultSpacing,
+  },
+  answerButton: {
+    height: "100%",
+    width: "100%",
+    borderRadius: borderRadius * 1.2,
     justifyContent: "center",
     alignItems: 'center',
-    backgroundColor: "#0A7CB1",
     borderWidth: 2,
   },
   answerText: {
@@ -107,7 +109,7 @@ export const styles = StyleSheet.create({
     textDecorationLine: 'underline'
   },
   progressBarContainer: {
-    top: 1,
+    top: 0,
     left: 0,
     height: 5,
     width: windowWidth,
@@ -127,12 +129,12 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  bottomLine: {
+  topLine: {
     position: "absolute",
     top: 0,
     left: 0,
     width: windowWidth,
     height: 1,
-    backgroundColor: "red",
+    backgroundColor: "#fff8",
   }
 })

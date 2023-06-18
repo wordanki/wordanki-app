@@ -26,6 +26,7 @@ export default function Profile({ navigation }) {
 
     const [data, setData] = useState([])
     const [color, setColor] = useState(true)
+    const [clicked, setClicked] = useState([])
 
     const flatListRef = useRef()
     const issueRefs = useRef([])
@@ -62,6 +63,25 @@ export default function Profile({ navigation }) {
                 portuguese: word.portuguese
             })
 
+            setClicked([...clicked, null])
+
+            // let newData = data
+            // newData[data.length].clicked = clicked[data.length]
+
+            // newData.push({
+            //     isNewWord,
+            //     id: word.id,
+            //     hits: word.hits,
+            //     next_repetition: word.next_repetition,
+            //     previous_repetition: word.previous_repetition,
+            //     correctAsnwerIndex: wordPosition,
+            //     answers: options.map(option => option.portuguese),
+            //     level: Math.floor(frequency / wordsQuantiyPer100),
+            //     phrase: splitedPhrase(word.phrases[0].english, true),
+            //     translatedPhrase: splitedPhrase(word.phrases[0].portuguese, true),
+            //     clicked: null,
+            // })
+
             const newData = [...data, {
                 isNewWord,
                 id: word.id,
@@ -72,10 +92,10 @@ export default function Profile({ navigation }) {
                 answers: options.map(option => option.portuguese),
                 level: Math.floor(frequency / wordsQuantiyPer100),
                 phrase: splitedPhrase(word.phrases[0].english, true),
-                translatedPhrase: splitedPhrase(word.phrases[0].portuguese, true)
+                translatedPhrase: splitedPhrase(word.phrases[0].portuguese, true),
             }]
 
-            // if (newData.length > 3) {
+            // if(newData.length >= 3) {
             //     newData.shift()
             // }
 
@@ -95,19 +115,23 @@ export default function Profile({ navigation }) {
 
         if (data.length > 1 && flatListRef) {
             time = setTimeout(() => {
-                flatListRef.current.scrollToIndex({
-                    index: data.length - 1,
-                    animated: true
-                })
+                try {
+                    flatListRef.current.scrollToIndex({
+                        index: data.length - 1,
+                        animated: true
+                    })
+                } catch(error) {}
+                
             }, 5000)
         }
     }, [data])
 
     const onViewableItemsChanged = useRef(({ changed }) => {
+        clearTimeout(time)
         changed.forEach(element => {
             const cell = issueRefs.current[element.key]
 
-            if (cell) element.isViewable ? cell.play() : cell.stop()
+            if (cell) element.isViewable ? cell.play("auto") : cell.isScroll()
         })
     })
 
@@ -118,9 +142,12 @@ export default function Profile({ navigation }) {
                 data={item}
                 level={level}
                 setLevel={setLevel}
-                bgColor={index % 2 == 0 ? "#222228" : "#1F1F24"}
+                bgColor={"#222228"}
                 nextWord={nextWord}
                 setNextWord={setNextWord}
+                clicked={clicked}
+                setClicked={setClicked}
+                indexData={index}
                 ref={IssueRef => (issueRefs.current[item.id] = IssueRef)}
             />
         </View>
@@ -136,7 +163,7 @@ export default function Profile({ navigation }) {
                 data={data}
                 vertical={true}
                 renderItem={renderItems}
-                estimatedItemSize={10}
+                estimatedItemSize={400}
                 keyExtractor={item => item.id}
                 decelerationRate='normal'
                 pagingEnabled

@@ -15,7 +15,7 @@ const slides = [
     {
         key: 'one',
         title: 'Bem-vindo ao Wordanki',
-        text: 'Estude de maneira rápida não importa onde esteja.',
+        text: 'Aprenda inglês de forma rápida e eficiente não importa onde esteja.',
         image: require('../../assets/logo.png'),
         backgroundColor: '#30B956',
     },
@@ -29,7 +29,7 @@ const slides = [
     {
         key: 'three',
         title: 'Repetição Espaçada',
-        text: 'Aprenda com algortimos eficientes para uma melhor experiência.',
+        text: 'Estude com algoritmos eficientes para um melhor aprendizado.',
         image: require('../../assets/algorithm.png'),
         backgroundColor: '#8367D0',
     }

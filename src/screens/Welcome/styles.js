@@ -18,12 +18,12 @@ export const styles = StyleSheet.create({
     },
     text: {
         color: 'rgba(255, 255, 255, 0.8)',
-        fontSize: 18,
+        fontSize: 20,
         textAlign: 'center',
         maxWidth: "90%"
     },
     title: {
-        fontSize: 26,
+        fontSize: 28,
         fontWeight: 'bold',
         color: 'white',
         textAlign: 'center'
