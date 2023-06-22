@@ -19,11 +19,14 @@ import { spacedRepetition } from '../../utils/spacedRepetition'
 import { COLORS } from '../../theme'
 import { styles } from './styles'
 
+const defaultSpacing = 20
+
 export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, setLevel, clicked, setClicked, indexData }, parentRef) => {
     const [wordSelected, setWordSelected] = useState(false)
 
     const [progressNextWord] = useState(new Animated.Value(0))
     const [arrowPosition] = useState(new Animated.Value(0))
+    const [showArrow, setShowArrow] = useState(false)
 
     const [isSelectedWord, setIsSelectedWord] = useState(false)
 
@@ -50,7 +53,7 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
 
     const progressBarAnime = Animated.timing(progressNextWord, {
         toValue: 100,
-        duration: 5000,
+        duration: 6000,
         useNativeDriver: false,
         easing: Easing.linear
     });
@@ -60,13 +63,16 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
         if (isSpeaking) await Speech.stop()
         
         if(clicked[indexData] == null || activation == "button") {
-            Speech.speak(data.phrase.join(), { language: 'en' })
+            Speech.speak(data.phrase.join(''), { language: 'en' })
         }
     }
 
     const stop = async () => await Speech.stop()
 
-    const isScroll = () => progressNextWord.setValue(0)
+    const isScroll = () => {
+        progressNextWord.setValue(0)
+        setShowArrow(false)
+    }
 
     useEffect(() => {
         if(clicked[indexData] != null) {
@@ -83,6 +89,7 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
 
             setIsSelectedWord(true)
             setWordSelected(index)
+            setShowArrow(true)
 
             const next_repetition = spacedRepetition(right, data.hits, data.next_repetition, data.previous_repetition)
 
@@ -113,6 +120,21 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
 
         } catch (error) {}
     };
+
+    function splitWords(phrase) {
+        const phraseSplited = phrase.split(' ');
+        return phraseSplited.map((word, index) => {
+            return (
+                <View key={index} style={{flexDirection: "row"}}>
+                    <View style={styles.containerHiddenWord}>
+                        <View style={styles.innerHiddenWord}></View>
+                        <Text style={styles.hiddenWord}>{word}</Text>
+                    </View>
+                    <Text style={{fontSize: 25}}>{" "}</Text>
+                </View>
+            )
+        })
+    }
 
     // useEffect(() => {
     //     // progressBarAnime.stop();
@@ -145,7 +167,7 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
                     <AntDesign
                         name="sound"
                         size={30}
-                        color={"#2C9ED2"}
+                        color={"#44AEDF"}
                     />
                 </TouchableHighlight>
 
@@ -200,10 +222,10 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
 
 
             {/* {!isSelectedWord ? ( */}
-            <View style={{ ...styles.translation}}>
+            <View style={{ ...styles.translation, paddingRight: isSelectedWord ? (defaultSpacing / 1.5) : (defaultSpacing / 1.5) - 5}}>
                 <Text style={styles.translationLabel}>Tradução</Text>
                 {!isSelectedWord ?
-                    <BlurText text={data.translatedPhrase.join()} />
+                    <Text>{splitWords(data.translatedPhrase.join(''))}</Text>
                     : (
                         <Text style={{ ...styles.translationText }}>
                             {data.translatedPhrase[0]}
@@ -213,7 +235,7 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
                     )}
             </View>
 
-            {isSelectedWord && (
+            {showArrow && (
                 <Animated.View style={[styles.arrowContainer, { bottom: arrowPosition }]}>
                     <AntDesign name="down" size={25} color="#ffffffbb" />
                 </Animated.View>

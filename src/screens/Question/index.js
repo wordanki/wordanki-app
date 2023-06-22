@@ -22,7 +22,7 @@ let time = null
 
 export default function Profile({ navigation }) {
     const [nextWord, setNextWord] = useState(false)
-    const [isNewWord, setIsNewWord] = useState(false)
+    const [isNewWord, setIsNewWord] = useState(true)
 
     const [data, setData] = useState([])
     const [color, setColor] = useState(true)
@@ -37,11 +37,12 @@ export default function Profile({ navigation }) {
         (async () => {
             let word = null
             let frequency = 0
-            let newWord = false
+            let newWord
 
-            switch (!isNewWord) {
+            switch (isNewWord) {
                 case true:
                     word = await Word.findOneByNextReview()
+                    newWord = false
                     if (word) break
                     
                 default:
@@ -51,7 +52,7 @@ export default function Profile({ navigation }) {
             }
 
             if (!word) return
-            setIsNewWord(!newWord)
+            setIsNewWord(newWord)
 
             const options = await Word
                 .findByClassRandomlyAndDifferentOfTranslationWithLimit(word.class, word.portuguese, 3)
@@ -83,7 +84,7 @@ export default function Profile({ navigation }) {
             // })
 
             const newData = [...data, {
-                isNewWord,
+                isNewWord: newWord,
                 id: word.id,
                 hits: word.hits,
                 next_repetition: word.next_repetition,
@@ -122,7 +123,7 @@ export default function Profile({ navigation }) {
                     })
                 } catch(error) {}
                 
-            }, 5000)
+            }, 6000)
         }
     }, [data])
 

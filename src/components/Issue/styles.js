@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
     // alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: "#2C9ED288",
+    backgroundColor: "#44AEDF88",
     paddingHorizontal: 8,
     position: "absolute",
     top: 10,
@@ -90,23 +90,41 @@ export const styles = StyleSheet.create({
     borderRadius: borderRadius * 1.2,
     justifyContent: 'center',
     paddingVertical: defaultSpacing / 1.5,
-    paddingHorizontal: defaultSpacing / 1.5,
+    paddingLeft: defaultSpacing / 1.5,
     overflow: "scroll",
   },
   translationLabel: {
     fontSize: 15,
-    color: "#2C9ED2",
+    color: "#44AEDF",
     marginBottom: defaultSpacing / 3,
   },
   translationText: {
     fontSize: 25,
     color: "#dddddd",
-    height: "auto",
+    lineHeight: 36,
   },
   translationWord: {
-    color: "#2C9ED2",
+    color: "#44AEDF",
     fontWeight: 'bold',
     textDecorationLine: 'underline'
+  },
+  containerHiddenWord: {
+    // height: 10,
+    // position: "relative"
+  },
+  innerHiddenWord: {
+    width: "100%",
+    height: 20,
+    backgroundColor: "#fff2",
+    borderRadius: 20,
+    position: "absolute",
+    left: 0,
+    top: 8
+  },
+  hiddenWord: {
+    lineHeight: 36,
+    fontSize: 25,
+    color: "transparent",
   },
   progressBarContainer: {
     top: 0,
