@@ -130,7 +130,7 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
                         <View style={styles.innerHiddenWord}></View>
                         <Text style={styles.hiddenWord}>{word}</Text>
                     </View>
-                    <Text style={{fontSize: 25}}>{" "}</Text>
+                    <Text style={{fontSize: 20}}>{" "}</Text>
                 </View>
             )
         })
@@ -163,11 +163,12 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
             )}
 
             <View style={styles.questionContainer}>
-                <TouchableHighlight onPress={() => play("button")}>
+                <TouchableHighlight onPress={() => play("button")} style={{borderRadius: 5}}>
                     <AntDesign
                         name="sound"
-                        size={30}
+                        size={27}
                         color={"#44AEDF"}
+                        style={{backgroundColor: "#222228", borderRadius: 5}}
                     />
                 </TouchableHighlight>
 
@@ -185,14 +186,14 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
                         disabled={isSelectedWord}
                         style={{
                             ...styles.answerButtonContainer,
-                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#2BAA4F" : "#9B3D42") : "#444855"
+                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#298F47" : "#9B3D42") : "#3D404C"
                         }}
                         onPress={() => answerEvent(index === data.correctAsnwerIndex, index)}
                     >
                         <View style={{
                             ...styles.answerButton,
-                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#2BAA4F" : "#9B3D42") : "#444855",
-                            borderColor: isSelectedWord && (data.correctAsnwerIndex == index || wordSelected == index) ? (data.correctAsnwerIndex == index ? "#2BAA4F" : "#9B3D42") : "#444855"
+                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#298F47" : "#9B3D42") : "#3D404C",
+                            borderColor: isSelectedWord && (data.correctAsnwerIndex == index || wordSelected == index) ? (data.correctAsnwerIndex == index ? "#298F47" : "#9B3D42") : "#3D404C"
                         }}>
                             <Text style={styles.answerText}>
                                 {answer}
@@ -205,14 +206,14 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
                     disabled={isSelectedWord}
                     style={{
                         ...styles.answerButtonContainer,
-                        backgroundColor: "#0A7CB1"
+                        backgroundColor: "#266E91"
                     }}
                     onPress={() => { answerEvent(false, -1) }}
                 >
                     <View style={{
                         ...styles.answerButton,
-                        backgroundColor: "#0A7CB1",
-                        borderColor: "#0A7CB1",
+                        backgroundColor: "#266E91",
+                        borderColor: "#266E91",
                     }}>
                         <Text style={styles.answerText}>Não sei</Text>
                     </View>
@@ -237,7 +238,7 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
 
             {showArrow && (
                 <Animated.View style={[styles.arrowContainer, { bottom: arrowPosition }]}>
-                    <AntDesign name="down" size={25} color="#ffffffbb" />
+                    <AntDesign name="down" size={22} color="#ffffffbb" />
                 </Animated.View>
             )}
         </View>

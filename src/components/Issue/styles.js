@@ -15,7 +15,8 @@ export const styles = StyleSheet.create({
     width: "100%",
     height: windowHeight,
     flex: 1,
-    padding: 20,
+    paddingVertical: 24,
+    paddingHorizontal: 16,
     backgroundColor: COLORS.BLACK_PRIMARY,
     overflow: "hidden"
   },
@@ -27,10 +28,10 @@ export const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
     // alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: "#44AEDF88",
-    paddingHorizontal: 8,
+    backgroundColor: "#266E91",
+    paddingHorizontal: 5,
     position: "absolute",
-    top: 10,
+    top: 8,
     left: 0,
   },
   tagText: {
@@ -42,13 +43,13 @@ export const styles = StyleSheet.create({
     // maxHeight: screenHeight * .2,
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: 24,
   },
   question: {
     flex: 1,
-    color: COLORS.WHITE,
-    fontSize: 30,
-    marginLeft: defaultSpacing,
+    color: "#dddddd",
+    fontSize: 24,
+    marginLeft: 16,
     overflow: "scroll",
   },
   word: {
@@ -60,14 +61,14 @@ export const styles = StyleSheet.create({
     height: "auto",
     // maxHeight: screenHeight * .6,
     justifyContent: 'center',
-    marginBottom: 30,
+    marginBottom: 16,
     overflow: "scroll",
   },  
   answerButtonContainer: {
-    height: defaultSpacing * 2.1,
+    height: defaultSpacing * 2,
     width: "100%",
     borderRadius: borderRadius * 1.2,
-    marginBottom: defaultSpacing,
+    marginBottom: 16,
   },
   answerButton: {
     height: "100%",
@@ -79,7 +80,7 @@ export const styles = StyleSheet.create({
   },
   answerText: {
     color: "#dddddd",
-    fontSize: 22
+    fontSize: 20
   },
   translation: {
     height: "auto",
@@ -94,14 +95,14 @@ export const styles = StyleSheet.create({
     overflow: "scroll",
   },
   translationLabel: {
-    fontSize: 15,
+    fontSize: 16,
     color: "#44AEDF",
-    marginBottom: defaultSpacing / 3,
+    marginBottom: defaultSpacing / 2,
   },
   translationText: {
-    fontSize: 25,
+    fontSize: 20,
+    lineHeight: 24,
     color: "#dddddd",
-    lineHeight: 36,
   },
   translationWord: {
     color: "#44AEDF",
@@ -114,22 +115,22 @@ export const styles = StyleSheet.create({
   },
   innerHiddenWord: {
     width: "100%",
-    height: 20,
-    backgroundColor: "#fff2",
-    borderRadius: 20,
+    height: 18,
+    backgroundColor: "#fff1",
+    borderRadius: 5,
     position: "absolute",
     left: 0,
-    top: 8
+    top: 3
   },
   hiddenWord: {
-    lineHeight: 36,
-    fontSize: 25,
+    fontSize: 20,
+    lineHeight: 24,
     color: "transparent",
   },
   progressBarContainer: {
     top: 0,
     left: 0,
-    height: 5,
+    height: 4,
     width: windowWidth,
     backgroundColor: COLORS.WHITE + 11,
     position: "absolute"
