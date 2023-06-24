@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     width: "100%",
     height: windowHeight,
     flex: 1,
-    paddingVertical: 24,
+    paddingVertical: 32,
     paddingHorizontal: 16,
     backgroundColor: COLORS.BLACK_PRIMARY,
     overflow: "hidden"
@@ -115,12 +115,11 @@ export const styles = StyleSheet.create({
   },
   innerHiddenWord: {
     width: "100%",
-    height: 18,
+    height: 16,
     backgroundColor: "#fff1",
-    borderRadius: 5,
     position: "absolute",
     left: 0,
-    top: 3
+    top: 4
   },
   hiddenWord: {
     fontSize: 20,

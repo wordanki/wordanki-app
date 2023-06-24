@@ -15,22 +15,25 @@ const slides = [
     {
         key: 'one',
         title: 'Bem-vindo ao Wordanki',
-        text: 'Aprenda inglês de forma rápida e eficiente não importa onde esteja.',
+        text: 'Aprenda milhares de palavras em inglês de forma rápida e eficiente',
         image: require('../../assets/logo.png'),
-        backgroundColor: '#30B956',
+        sizeImage: 200,
+        backgroundColor: '#3AAD5A',
     },
     {
         key: 'two',
         title: 'Disponível Offline',
-        text: 'Continue estudando mesmo quando não estiver conectado.',
+        text: 'Continue estudando mesmo quando não estiver conectado',
         image: require('../../assets/airplane.png'),
+        sizeImage: 150,
         backgroundColor: '#0A7CB1',
     },
     {
         key: 'three',
         title: 'Repetição Espaçada',
-        text: 'Estude com algoritmos eficientes para um melhor aprendizado.',
+        text: 'Estude com algoritmos eficientes para um melhor aprendizado',
         image: require('../../assets/algorithm.png'),
+        sizeImage: 150,
         backgroundColor: '#8367D0',
     }
 ]
@@ -46,7 +49,7 @@ export default function Welcome({ route }) {
 
                 <Image 
                     source={item.image} 
-                    style={styles.image} 
+                    style={{...styles.image, height: item.sizeImage}} 
                     resizeMode='contain'
                 />
 
@@ -76,7 +79,7 @@ export default function Welcome({ route }) {
     )
 
     const onDone = async () => {
-        await localStorage.storeData("@settings/first-time", true)
+        await localStorage.storeData("@settings/first-time", false)
 
         setFirstTime(false)
 

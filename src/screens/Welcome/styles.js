@@ -12,12 +12,10 @@ export const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     image: {
-        width: 320,
-        height: 200,
         marginVertical: 32
     },
     text: {
-        color: 'rgba(255, 255, 255, 0.8)',
+        color: 'rgba(255, 255, 255, 0.9)',
         fontSize: 20,
         textAlign: 'center',
         maxWidth: "90%"

@@ -70,10 +70,10 @@ export default function Home({ route }) {
             <View>
                 <Text style={styles.title}>Todas as palavras</Text>
 
-                <LinearGradient style={styles.allWordsContainer} colors={['#1B578Fdd', '#1B738Fdd']}>
+                <LinearGradient style={styles.allWordsContainer} colors={['#344baF', '#1B719F']}>
                     <View style={styles.info}>
                         <View style={styles.textInfoContainer}>
-                            <View style={[styles.dotInfo, { backgroundColor: "#14DC28" }]}></View>
+                            <View style={[styles.dotInfo, { backgroundColor: "#30B956" }]}></View>
                             <Text style={styles.textInfo}>Palavras vistas</Text>
                         </View>
 

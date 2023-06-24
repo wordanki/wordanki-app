@@ -121,20 +121,35 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
         } catch (error) {}
     };
 
+    // function splitWords(phrase) {
+    //     const phraseSplited = phrase.split(' ');
+    //     return phraseSplited.map((word, index) => {
+    //         return (
+    //             <View key={index} style={{flexDirection: "row"}}>
+    //                 <View style={styles.containerHiddenWord}>
+    //                     <View style={styles.innerHiddenWord}></View>
+    //                     <Text style={styles.hiddenWord}>{word}</Text>
+    //                 </View>
+    //                 <Text style={{fontSize: 20}}>{" "}</Text>
+    //             </View>
+    //         )
+    //     })
+    // }
+
     function splitWords(phrase) {
         const phraseSplited = phrase.split(' ');
         return phraseSplited.map((word, index) => {
             return (
-                <View key={index} style={{flexDirection: "row"}}>
-                    <View style={styles.containerHiddenWord}>
-                        <View style={styles.innerHiddenWord}></View>
-                        <Text style={styles.hiddenWord}>{word}</Text>
-                    </View>
-                    <Text style={{fontSize: 20}}>{" "}</Text>
+                <View key={index} style={styles.containerHiddenWord}>
+                    <View style={{...styles.innerHiddenWord}}></View>
+                    <Text style={styles.hiddenWord}>{word + " "}</Text>
+                    {/* <Text style={{fontSize: 20}}>{" "}</Text> */}
                 </View>
             )
         })
     }
+
+    // , borderTopLeftRadius: index == 0 ? 5 : 0, borderBottomLeftRadius: index == 0 ? 5 : 0, borderTopRightRadius: index == phraseSplited.lenght-1 ? 5 : 0, borderBottomRightRadius: index == phraseSplited.lenght-1 ? 5 : 0
 
     // useEffect(() => {
     //     // progressBarAnime.stop();
@@ -223,10 +238,10 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
 
 
             {/* {!isSelectedWord ? ( */}
-            <View style={{ ...styles.translation, paddingRight: isSelectedWord ? (defaultSpacing / 1.5) : (defaultSpacing / 1.5) - 5}}>
+            <View style={{ ...styles.translation, paddingRight: isSelectedWord ? (defaultSpacing / 1.5) : (defaultSpacing / 1.5) - 4}}>
                 <Text style={styles.translationLabel}>Tradução</Text>
                 {!isSelectedWord ?
-                    <Text>{splitWords(data.translatedPhrase.join(''))}</Text>
+                    <View style={{flexDirection: "row", flexWrap: "wrap"}}>{splitWords(data.translatedPhrase.join(''))}</View>
                     : (
                         <Text style={{ ...styles.translationText }}>
                             {data.translatedPhrase[0]}
