@@ -10,7 +10,7 @@ import {
 import Icon, { IconType } from "react-native-dynamic-vector-icons"
 import ProgressBar from "react-native-animated-progress"
 
-import { useAuthentication } from '../../hooks/auth'
+// import { useAuthentication } from '../../hooks/auth'
 
 import {
     DrawerContentScrollView,
@@ -27,7 +27,7 @@ import { COLORS } from '../../theme'
 import { styles } from './styles'
 
 export const Drawer = props => {
-    const { user, signOut } = useAuthentication()
+    // const { user, signOut } = useAuthentication()
     const { informations: { version }, level } = useGlobal()
 
     const handleShare = async () => {
@@ -49,7 +49,7 @@ export const Drawer = props => {
     }
 
     const handleLogout = async () => {
-        await signOut()
+        // await signOut()
     }
 
     return (

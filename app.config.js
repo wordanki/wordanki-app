@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 module.exports = {
-  name: "wordanki-english",
+  name: "Wordanki",
   slug: "wordanki-english",
   owner: "wordanki",
   version: "1.0.0",
@@ -12,7 +12,6 @@ module.exports = {
   androidStatusBar: {
     backgroundColor: "#222228",
     barStyle: "light-content",
-    animated: true,
     translucent: true
   },
   splash: {
@@ -35,7 +34,7 @@ module.exports = {
     versionCode: 1,
     adaptiveIcon: {
       foregroundImage: "./assets/adaptive-icon.png",
-      backgroundColor: "#FFFFFF"
+      backgroundColor: "#222228"
     }
   },
   web: {

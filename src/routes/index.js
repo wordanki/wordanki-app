@@ -1,4 +1,4 @@
-import { useAuthentication } from '../hooks/auth'
+// import { useAuthentication } from '../hooks/auth'
 
 import { AuthRoutes, UserRoutes } from './stack'
 
