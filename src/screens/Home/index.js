@@ -31,11 +31,9 @@ const topics = [
 ];
 
 export default function Home({ route }) {
-    const [wordData, setWordData] = useState({
-        all: 0,
-        seen: 0,
-        reviews: 0
-    })
+    const [all, setAll] = useState(0)
+    const [seen, setSeen] = useState(0)
+    const [reviews, setReviews] = useState(0)
 
     const navigation = useNavigation()
     const isFocused = useIsFocused()
@@ -43,17 +41,9 @@ export default function Home({ route }) {
     useEffect(() => {
         if (!isFocused) return
 
-        (async () => {
-            const all = await Word.getQuantity()
-            const seen = await Word.getNoSeenQuantity()
-            const reviews = await Word.getReviewsQuantity()
-
-            setWordData({
-                all,
-                seen,
-                reviews
-            })
-        })()
+        Word.getQuantity().then(response => setAll(response))
+        Word.getNoSeenQuantity().then(response => setSeen(response))
+        Word.getReviewsQuantity().then(response => setReviews(response))
     }, [isFocused])
 
     return (
@@ -77,7 +67,7 @@ export default function Home({ route }) {
                             <Text style={styles.textInfo}>Palavras vistas</Text>
                         </View>
 
-                        <Text style={styles.numberInfo}>{`${wordData.seen}/${wordData.all}`}</Text>
+                        <Text style={styles.numberInfo}>{`${seen}/${all}`}</Text>
                     </View>
 
                     <View style={[styles.info, { marginTop: 15 }]}>
@@ -86,7 +76,7 @@ export default function Home({ route }) {
                             <Text style={styles.textInfo}>Revisões pendentes</Text>
                         </View>
 
-                        <Text style={styles.numberInfo}>{wordData.reviews}</Text>
+                        <Text style={styles.numberInfo}>{reviews}</Text>
                     </View>
 
                     <TouchableHighlight onPress={() => navigation.navigate("Question")} style={styles.studyButtonContainer}>

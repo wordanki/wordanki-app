@@ -28,7 +28,6 @@ export default function App() {
 
   useEffect(() => {
     async function prepare() {
-      await SplashScreen.preventAutoHideAsync()
       await loadDatabase()
 
       setIsLoaded(true)
@@ -38,10 +37,10 @@ export default function App() {
   }, [])
 
   const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
+    if (fontsLoaded && isLoaded) {
       await SplashScreen.hideAsync()
     }
-  }, [fontsLoaded])
+  }, [fontsLoaded, isLoaded])
 
   if (!fontsLoaded || !isLoaded) return null
 

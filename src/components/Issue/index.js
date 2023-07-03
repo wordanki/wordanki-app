@@ -160,7 +160,7 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
     return (
         <View style={[styles.container, {backgroundColor: bgColor}]}>
             {/* <View style={styles.topLine}></View> */}
-            <View style={styles.progressBarContainer}>
+            <View style={[styles.progressBarContainer, { backgroundColor: !isSelectedWord ? COLORS.BLACK_TERTIARY : COLORS.WHITE + 11 }]}>
                 {isSelectedWord && (
                     <Animated.View style={[styles.progressBar, {
                         width: progressNextWord.interpolate({

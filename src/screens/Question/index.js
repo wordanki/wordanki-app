@@ -5,8 +5,6 @@ import * as Speech from 'expo-speech'
 
 import { FlashList } from "@shopify/flash-list"
 
-import { SwiperFlatList } from 'react-native-swiper-flatlist'
-
 import { Issue } from '../../components/Issue'
 import { useGlobal } from '../../hooks/global'
 
@@ -154,8 +152,7 @@ export default function Profile({ navigation }) {
         </View>
     ), [data])
     
-    if (!data.length) return <View />
-
+    if (!data.length) return <View style={styles.container} />
 
     return (
         <View style={styles.container}>
