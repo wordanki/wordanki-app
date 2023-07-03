@@ -58,7 +58,7 @@ export default function Home({ route }) {
             </View> */}
 
             <View>
-                <Text style={styles.title}>Todas as palavras</Text>
+                <Text style={styles.title}>Estudo de vocabulário</Text>
 
                 <LinearGradient style={styles.allWordsContainer} colors={['#344baF', '#1B719F']}>
                     <View style={styles.info}>

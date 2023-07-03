@@ -12,6 +12,7 @@ import Welcome from '../screens/Welcome'
 import { Drawer } from './drawer'
 
 import { NavBar } from '../components/NavBar'
+import { Tabs } from "./tabs";
 
 const Stack = createNativeStackNavigator()
 
@@ -22,19 +23,27 @@ export const UserRoutes = () => {
         <Stack.Navigator
             initialRouteName={!firstTime ? 'Main' : 'Welcome'}
         >
-            <Stack.Screen 
+            {/* <Stack.Screen 
                 name='Main' 
                 component={Drawer}
                 options={{
                     headerShown: false
                 }} 
+            /> */}
+
+            <Stack.Screen 
+                name="Main" 
+                component={Tabs} 
+                options={{
+                    headerShown: false
+                }}
             />
 
             <Stack.Screen 
                 name='Question' 
                 component={Question}
                 options={{
-                    header: () => <NavBar isBackScreen title='Todas'></NavBar>
+                    header: () => <NavBar isBackScreen title='Vocabulário'></NavBar>
                 }} 
             />
 
