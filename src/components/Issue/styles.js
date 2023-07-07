@@ -86,8 +86,8 @@ export const styles = StyleSheet.create({
     height: "auto",
     // maxHeight: screenHeight * .2,
     borderWidth: 1,
-    borderColor: "#fff2",
-    backgroundColor: "#fff1",
+    borderColor: "#ffffff28",
+    backgroundColor: "#ffffff14",
     borderRadius: borderRadius * 1.2,
     justifyContent: 'center',
     paddingVertical: defaultSpacing / 1.5,
@@ -116,7 +116,7 @@ export const styles = StyleSheet.create({
   innerHiddenWord: {
     width: "100%",
     height: 16,
-    backgroundColor: "#fff1",
+    backgroundColor: "#ffffff14",
     position: "absolute",
     left: 0,
     top: 4

@@ -201,14 +201,14 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
                         disabled={isSelectedWord}
                         style={{
                             ...styles.answerButtonContainer,
-                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#298F47" : "#bB3D42") : "#3D404C"
+                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#298F47" : "#aB3D42") : "#3D404C"
                         }}
                         onPress={() => answerEvent(index === data.correctAsnwerIndex, index)}
                     >
                         <View style={{
                             ...styles.answerButton,
-                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#298F47" : "#bB3D42") : "#3D404C",
-                            borderColor: isSelectedWord && (data.correctAsnwerIndex == index || wordSelected == index) ? (data.correctAsnwerIndex == index ? "#298F47" : "#bB3D42") : "#3D404C"
+                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#298F47" : "#aB3D42") : "#3D404C",
+                            borderColor: isSelectedWord && (data.correctAsnwerIndex == index || wordSelected == index) ? (data.correctAsnwerIndex == index ? "#298F47" : "#aB3D42") : "#3D404C"
                         }}>
                             <Text style={styles.answerText}>
                                 {answer}
