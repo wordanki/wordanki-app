@@ -1,20 +1,22 @@
 import { StyleSheet, Dimensions } from 'react-native'
 import { COLORS, FONTS } from "../../theme"
 
+const defaultSpacing = 16
+
 export const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         color: "#eeeeee",
         marginTop: 20,
-        marginLeft: 20,
+        marginLeft: defaultSpacing,
     },
     container: {
         flex: 1,
-        height: 140,
+        height: 120,
         borderRadius: 15,
         marginTop: 10,
-        marginLeft: 20,
-        marginRight: 20,
+        marginLeft: defaultSpacing,
+        marginRight: defaultSpacing,
     },
     gradient: {
         width: "100%",
@@ -23,16 +25,16 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        paddingHorizontal: 20,
+        paddingHorizontal: defaultSpacing,
     },
     image: {
-        width: 80,
-        height: 80
+        width: 70,
+        height: 70,
     },
     text: {
         width: "45%",
         color: "#ffffff",
         fontSize: 16,
-        lineHeight: 24,
+        lineHeight: 21,
     }
 });

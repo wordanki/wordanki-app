@@ -9,11 +9,14 @@ const defaultSpacing = 20
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: defaultSpacing,
-    paddingTop: defaultSpacing * 2,
-    paddingBottom: defaultSpacing / 2.5,
     width: windowWidth,
     backgroundColor: COLORS.BLACK_TERTIARY,
+    flexDirection: "column",
+  },
+  innerContainer: {
+    height: 50,
+    width: "100%",
+    paddingHorizontal: defaultSpacing,
 
     borderBottomWidth: 0.5,
     borderBottomColor: "#fff4",
@@ -28,7 +31,7 @@ const styles = StyleSheet.create({
   textContainer: {
     backgroundColor: "#ffffff22",
     width: 180,
-    height: 27,
+    height: 25,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20
@@ -36,7 +39,7 @@ const styles = StyleSheet.create({
   title: {
     color: COLORS.WHITE,
     fontFamily: FONTS.REGULAR,
-    fontSize: 18
+    fontSize: 15
   }
 })
 

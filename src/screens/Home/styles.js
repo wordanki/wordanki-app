@@ -5,7 +5,7 @@ import { COLORS, FONTS } from "../../theme"
 const windowWidth = Dimensions.get('window').width
 
 const borderRadius = 10
-const defaultSpacing = 20
+const defaultSpacing = 16
 
 export const styles = StyleSheet.create({
   container: {
@@ -17,15 +17,15 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     color: "#eeeeee",
     marginTop: 20,
-    marginLeft: 20
+    marginLeft: defaultSpacing
   },
   dailyGoalBar: {
     flex: 1,
     height: 25,
     backgroundColor: "#ffffff22",
     marginTop: 10,
-    marginLeft: 20,
-    marginRight: 20,
+    marginLeft: defaultSpacing,
+    marginRight: defaultSpacing,
     borderRadius: 12.5,
     justifyContent: "center",
     overflow: "hidden"
@@ -45,9 +45,9 @@ export const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 15,
     marginTop: 10,
-    marginLeft: 20,
-    marginRight: 20,
-    padding: 15,
+    marginLeft: defaultSpacing,
+    marginRight: defaultSpacing,
+    padding: 16,
     justifyContent: "space-between",
     alignItems: "center"
   },
@@ -83,7 +83,7 @@ export const styles = StyleSheet.create({
     width: "100%",
     height: 45,
     borderRadius: 30,
-    marginTop: 22.5
+    marginTop: 16
   },
   studyButton: {
     width: "100%",
@@ -104,7 +104,24 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: 20,
-    marginLeft: 20,
-    marginRight: 20
-  }
+    marginLeft: defaultSpacing,
+    marginRight: defaultSpacing
+  },
+  MVPcontainer: {
+    // width: "100%",
+    // backgroundColor: "#ffffff22",
+    // marginTop: 20,
+    // marginLeft: defaultSpacing,
+    // marginRight: defaultSpacing,
+    // padding: 16
+    borderRadius: 15,
+    padding: defaultSpacing,
+    marginTop: 10,
+    marginHorizontal: defaultSpacing
+  },
+  MVPtext: {
+    fontSize: 16,
+    color: "#ffffff",
+    lineHeight: 21,
+  },
 })

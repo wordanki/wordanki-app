@@ -60,7 +60,7 @@ export default function Home({ route }) {
             <View>
                 <Text style={styles.title}>Estudo de vocabulário</Text>
 
-                <LinearGradient style={styles.allWordsContainer} colors={['#344baF', '#1B719F']}>
+                <LinearGradient style={styles.allWordsContainer} colors={['#465baF', '#1B699F', '#1B88bF']} start={{x: 0, y: 0}} end={{x: 1, y: 1}}>
                     <View style={styles.info}>
                         <View style={styles.textInfoContainer}>
                             <View style={[styles.dotInfo, { backgroundColor: "#30B956" }]}></View>
@@ -70,7 +70,7 @@ export default function Home({ route }) {
                         <Text style={styles.numberInfo}>{`${seen}/${all}`}</Text>
                     </View>
 
-                    <View style={[styles.info, { marginTop: 15 }]}>
+                    <View style={[styles.info, { marginTop: 16 }]}>
                         <View style={styles.textInfoContainer}>
                             <View style={[styles.dotInfo, { backgroundColor: "#00B2FF" }]} />
                             <Text style={styles.textInfo}>Revisões pendentes</Text>
@@ -106,15 +106,27 @@ export default function Home({ route }) {
                 </ScrollView>
             </View> */}
 
+            <Text style={styles.title}>Sobre o MVP do Wordanki</Text>
+            <LinearGradient 
+                style={styles.MVPcontainer}
+                colors={['#438288', '#458979']}
+                start={{ x: 0, y: 1 }}
+                end={{ x: 1, y: 1 }}
+            >
+                <Text style={styles.MVPtext}>
+                    Esta não é a versão final do aplicativo. Lançamos o MVP (Produto Mínimo Viável) com o objetivo de obter avaliações e sugestões que nos ajudarão a aprimorar a experiência do usuário na versão final. Portanto, é possível que ocorram traduções incorretas de frases, as quais serão corrigidas nas próximas atualizações.
+                </Text>
+            </LinearGradient>
+
             <LinkCard 
-                title="Sua opinião"
+                title="Avalie o aplicativo"
                 link="https://forms.gle/QmV6CNqEfdBDJvjF8"
                 img="feedback.png"
                 colors={['#84e', '#94b']}
-                text="Nos dê um feedback sobre o aplicativo para que possamos melhorá-lo!" 
+                text="Avalie o MVP do aplicativo para que possamos melhorar a versão final" 
             />
 
-            <View style={{ height: 20 }} />
+            <View style={{ height: 16 }} />
         </ScrollView>
     )
 }

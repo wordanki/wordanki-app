@@ -160,7 +160,7 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
     return (
         <View style={[styles.container, {backgroundColor: bgColor}]}>
             {/* <View style={styles.topLine}></View> */}
-            <View style={[styles.progressBarContainer, { backgroundColor: !isSelectedWord ? COLORS.BLACK_TERTIARY : COLORS.WHITE + 11 }]}>
+            <View style={[styles.progressBarContainer, { backgroundColor: COLORS.WHITE + 11 }]}>
                 {isSelectedWord && (
                     <Animated.View style={[styles.progressBar, {
                         width: progressNextWord.interpolate({
@@ -201,14 +201,14 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
                         disabled={isSelectedWord}
                         style={{
                             ...styles.answerButtonContainer,
-                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#298F47" : "#9B3D42") : "#3D404C"
+                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#298F47" : "#bB3D42") : "#3D404C"
                         }}
                         onPress={() => answerEvent(index === data.correctAsnwerIndex, index)}
                     >
                         <View style={{
                             ...styles.answerButton,
-                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#298F47" : "#9B3D42") : "#3D404C",
-                            borderColor: isSelectedWord && (data.correctAsnwerIndex == index || wordSelected == index) ? (data.correctAsnwerIndex == index ? "#298F47" : "#9B3D42") : "#3D404C"
+                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#298F47" : "#bB3D42") : "#3D404C",
+                            borderColor: isSelectedWord && (data.correctAsnwerIndex == index || wordSelected == index) ? (data.correctAsnwerIndex == index ? "#298F47" : "#bB3D42") : "#3D404C"
                         }}>
                             <Text style={styles.answerText}>
                                 {answer}

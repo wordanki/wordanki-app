@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from 'react-native'
 import { COLORS, FONTS } from "../../theme"
 
 const windowWidth = Dimensions.get('window').width
-const windowHeight = Dimensions.get('window').height - 51.5
+const windowHeight = Dimensions.get('window').height - 50
 
 const screenHeight = windowHeight - 40
 
@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     width: "100%",
     height: windowHeight,
     flex: 1,
-    paddingVertical: 32,
+    paddingVertical: 28,
     paddingHorizontal: 16,
     backgroundColor: COLORS.BLACK_PRIMARY,
     overflow: "hidden"
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
     // maxHeight: screenHeight * .2,
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 28,
   },
   question: {
     flex: 1,
@@ -61,7 +61,7 @@ export const styles = StyleSheet.create({
     height: "auto",
     // maxHeight: screenHeight * .6,
     justifyContent: 'center',
-    marginBottom: 16,
+    marginBottom: 20,
     overflow: "scroll",
   },  
   answerButtonContainer: {
@@ -129,14 +129,14 @@ export const styles = StyleSheet.create({
   progressBarContainer: {
     top: 0,
     left: 0,
-    height: 4,
+    height: 3,
     width: windowWidth,
     backgroundColor: COLORS.WHITE + 11,
     position: "absolute"
   },
   progressBar: {
     height: "100%",
-    backgroundColor: COLORS.WHITE + 88
+    backgroundColor: COLORS.WHITE + "AA"
   },
   arrowContainer: {
     height: 60,
