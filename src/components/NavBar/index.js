@@ -16,7 +16,6 @@ export const NavBar = ({ title, isBackScreen, children }) => {
 
     return (
         <View style={styles.container}>
-            <View style={{height: heightTop}}></View>
             <View style={styles.innerContainer}>
                 <View style={styles.ActionButtonContainer}>
                     {
