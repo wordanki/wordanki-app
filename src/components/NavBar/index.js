@@ -9,14 +9,11 @@ import { COLORS } from '../../theme'
 
 import { styles } from "./styles"
 
-const heightTop = Dimensions.get('screen').height - Dimensions.get('window').height;
-
 export const NavBar = ({ title, isBackScreen, children }) => {
     const navigation = useNavigation()
 
     return (
         <View style={styles.container}>
-            <View style={{height: heightTop}}></View>
             <View style={styles.innerContainer}>
                 <View style={styles.ActionButtonContainer}>
                     {

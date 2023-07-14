@@ -44,15 +44,15 @@ export default function App() {
 
   useEffect(() => {
     loadDatabase().then(() => setIsLoaded(true))
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token))
+    // registerForPushNotificationsAsync().then(token => setExpoPushToken(token))
 
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => setNotification(notification))
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => console.log(response))
+    // notificationListener.current = Notifications.addNotificationReceivedListener(notification => setNotification(notification))
+    // responseListener.current = Notifications.addNotificationResponseReceivedListener(response => console.log(response))
 
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current)
-      Notifications.removeNotificationSubscription(responseListener.current)
-    }
+    // return () => {
+    //   Notifications.removeNotificationSubscription(notificationListener.current)
+    //   Notifications.removeNotificationSubscription(responseListener.current)
+    // }
   }, [])
 
   const onLayoutRootView = useCallback(async () => {
@@ -63,17 +63,16 @@ export default function App() {
 
   return (
     <GlobalProvider>
-      <StatusBar 
-        style='light' 
-        backgroundColor={COLORS.TRANSPARENT}
-      />
-
       <SafeAreaProvider style={{ backgroundColor: COLORS.BLACK_PRIMARY }}>
-        <NavigationContainer
-          onReady={onLayoutRootView}
-        >      
-          <Routes />
-        </NavigationContainer>
+        <StatusBar 
+          style='light' 
+          backgroundColor={COLORS.TRANSPARENT}
+        />
+            <NavigationContainer
+              onReady={onLayoutRootView}
+            >      
+              <Routes />
+            </NavigationContainer>
       </SafeAreaProvider>
     </GlobalProvider>
   )

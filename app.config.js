@@ -10,14 +10,14 @@ module.exports = {
   scheme: "com.wordanki.mvp",
   entryPoint : "./index.js",
   androidStatusBar: {
-    backgroundColor: "#222228",
+    backgroundColor: "#2299ff",
     barStyle: "light-content",
     translucent: true
   },
   splash: {
     image: "./assets/splash.png",
     resizeMode: "contain",
-    backgroundColor: "#222228"
+    backgroundColor: "#2299ff"
   },
   updates: {
     fallbackToCacheTimeout: 0
@@ -31,10 +31,10 @@ module.exports = {
   },
   android: {
     package: "com.wordanki.mvp",
-    versionCode: 1,
+    versionCode: 3,
     adaptiveIcon: {
       foregroundImage: "./assets/adaptive-icon.png",
-      backgroundColor: "#222228"
+      backgroundColor: "#ffffff"
     }
   },
   web: {

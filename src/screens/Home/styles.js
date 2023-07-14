@@ -108,12 +108,6 @@ export const styles = StyleSheet.create({
     marginRight: defaultSpacing
   },
   MVPcontainer: {
-    // width: "100%",
-    // backgroundColor: "#ffffff22",
-    // marginTop: 20,
-    // marginLeft: defaultSpacing,
-    // marginRight: defaultSpacing,
-    // padding: 16
     borderRadius: 15,
     padding: defaultSpacing,
     marginTop: 10,

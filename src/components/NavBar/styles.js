@@ -1,8 +1,10 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet, Dimensions, NativeModules, Platform } from 'react-native'
 
 import { COLORS, FONTS } from "../../theme"
 
 const windowWidth = Dimensions.get('window').width
+
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : NativeModules.StatusBarManager.HEIGHT
 
 const borderRadius = 10
 const defaultSpacing = 20
@@ -17,6 +19,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: "100%",
     paddingHorizontal: defaultSpacing,
+    marginTop: STATUSBAR_HEIGHT,
 
     borderBottomWidth: 0.5,
     borderBottomColor: "#fff4",

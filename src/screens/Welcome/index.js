@@ -88,6 +88,7 @@ export default function Welcome({ route }) {
 
     return (
         <AppIntroSlider
+            style={styles.container}
             data={slides}
             onDone={onDone}
             renderItem={renderItem}
