@@ -1,9 +1,11 @@
 import { StyleSheet, Dimensions, StatusBar } from 'react-native'
 
+import Constants from 'expo-constants'
+
 import { COLORS, FONTS } from "../../theme"
 
 const windowWidth = Dimensions.get('window').width
-const statusBarHight = StatusBar.currentHeight + 0.6
+const statusBarHight = Constants.statusBarHeight  
 
 const borderRadius = 10
 const defaultSpacing = 20
