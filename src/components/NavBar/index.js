@@ -9,8 +9,6 @@ import { COLORS } from '../../theme'
 
 import { styles } from "./styles"
 
-const heightTop = Dimensions.get('screen').height - Dimensions.get('window').height;
-
 export const NavBar = ({ title, isBackScreen, children }) => {
     const navigation = useNavigation()
 

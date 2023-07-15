@@ -106,7 +106,8 @@ export default function Home({ route }) {
                 </ScrollView>
             </View> */}
 
-            <Text style={styles.title}>Sobre o MVP do Wordanki</Text>
+            <Text style={styles.title}>Sobre esta versão</Text>
+
             <LinearGradient 
                 style={styles.MVPcontainer}
                 colors={['#438288', '#458979']}
@@ -114,7 +115,7 @@ export default function Home({ route }) {
                 end={{ x: 1, y: 1 }}
             >
                 <Text style={styles.MVPtext}>
-                    Esta não é a versão final do aplicativo. Lançamos o MVP (Produto Mínimo Viável) com o objetivo de obter avaliações e sugestões que nos ajudarão a aprimorar a experiência do usuário na versão final. Portanto, é possível que ocorram traduções incorretas de frases, as quais serão corrigidas nas próximas atualizações.
+                    Esta não é a versão final do aplicativo, portanto, é possível que ocorram traduções incorretas de frases, as quais serão corrigidas nas próximas atualizações.
                 </Text>
             </LinearGradient>
 

@@ -9,6 +9,10 @@ import { styles } from './styles'
 
 const images = [
     {
+        name: "logo.png",
+        img: require("../../assets/logo.png")
+    },
+    {
         name: "image-course.png",
         // img: require("../../assets/image-course.png")
     },

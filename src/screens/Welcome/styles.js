@@ -6,6 +6,9 @@ const borderRadius = 40
 const defaultSpacing = 20
 
 export const styles = StyleSheet.create({
+    container: {
+        backgroundColor: "#3AAD5A"
+    },
     slide: {
         flex: 1,
         alignItems: 'center',
