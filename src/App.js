@@ -65,7 +65,7 @@ export default function App() {
 		<GlobalProvider>
 			<StatusBar
 				style='light'
-				backgroundColor={COLORS.TRANSPARENT}
+				translucent={true}
 			/>
 
 			<SafeAreaProvider style={{ backgroundColor: COLORS.BLACK_PRIMARY }}>

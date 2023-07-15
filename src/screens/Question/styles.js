@@ -1,19 +1,19 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet, Dimensions, StatusBar } from 'react-native'
 
 import { COLORS, FONTS } from "../../theme"
 
-const windowWidth = Dimensions.get('window').width
+const statusBarHight = StatusBar.currentHeight
 
 const borderRadius = 10
 const defaultSpacing = 20
-const maxWidth = windowWidth * 0.8
 
-const height = Dimensions.get('screen').height
-const width = Dimensions.get('screen').width
+const height = Dimensions.get('window').height - 49 - (statusBarHight < 24 ? statusBarHight : 0) 
+const width = Dimensions.get('window').width
 
 export const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        height: height,
+        width: width,
         backgroundColor: COLORS.BLACK_PRIMARY
     }
 })

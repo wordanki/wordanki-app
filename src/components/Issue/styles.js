@@ -1,23 +1,17 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet, Dimensions, StatusBar } from 'react-native'
 
 import { COLORS, FONTS } from "../../theme"
 
 const windowWidth = Dimensions.get('window').width
-const windowHeight = Dimensions.get('window').height - 50
-
-const screenHeight = windowHeight - 40
 
 const borderRadius = 10
 const defaultSpacing = 20
 
 export const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    height: windowHeight,
     flex: 1,
     paddingVertical: 28,
     paddingHorizontal: 16,
-    backgroundColor: COLORS.BLACK_PRIMARY,
     overflow: "hidden"
   },
   tagContainer: {
