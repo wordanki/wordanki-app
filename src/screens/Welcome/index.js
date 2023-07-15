@@ -83,7 +83,7 @@ export default function Welcome({ route }) {
 
         setFirstTime(false)
 
-        navigation.navigate('Main')
+        navigation.replace('Main')
     }
 
     return (
