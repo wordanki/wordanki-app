@@ -2,17 +2,17 @@ require('dotenv').config()
 
 module.exports = {
   name: "Wordanki",
-  slug: "wordanki-mvp",
+  slug: "wordanki-app",
   owner: "wordanki",
   version: "1.0.0",
   orientation: "portrait",
-  icon: "./assets/adaptive-icon.png",
-  scheme: "com.wordanki.mvp",
+  icon: "./assets/icon.png",
+  scheme: "com.wordanki.app",
   entryPoint : "./index.js",
   androidStatusBar: {
     backgroundColor: "#2299ff",
     barStyle: "light-content",
-    translucent: true
+    translucent: false
   },
   splash: {
     image: "./assets/splash.png",
@@ -27,10 +27,10 @@ module.exports = {
   ],
   ios: {
     supportsTablet: true,
-    bundleIdentifier:"com.wordanki.mvp"
+    bundleIdentifier:"com.wordanki.app"
   },
   android: {
-    package: "com.wordanki.mvp",
+    package: "com.wordanki.app",
     versionCode: 3,
     adaptiveIcon: {
       foregroundImage: "./assets/adaptive-icon.png",
@@ -42,7 +42,7 @@ module.exports = {
   },
   extra: {
     eas: {
-      projectId: "c41ad981-4632-441a-a036-928f593d708e"
+      projectId: "bdf52748-b43e-4037-87b0-3d5b40dd14a6"
     },
     firebaseApiKey: process.env.FIREBASE_API_KEY,
     firebaseAuthDomain: process.env.FIREBASE_AUTH_DOMAIN,
