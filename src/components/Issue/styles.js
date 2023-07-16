@@ -5,7 +5,7 @@ import { COLORS, FONTS } from "../../theme"
 const windowWidth = Dimensions.get('window').width
 
 const borderRadius = 10
-const defaultSpacing = 20
+export const defaultSpacing = 20
 
 export const styles = StyleSheet.create({
   container: {
@@ -102,23 +102,6 @@ export const styles = StyleSheet.create({
     color: "#44AEDF",
     fontWeight: 'bold',
     textDecorationLine: 'underline'
-  },
-  containerHiddenWord: {
-    // height: 10,
-    // position: "relative"
-  },
-  innerHiddenWord: {
-    width: "100%",
-    height: 16,
-    backgroundColor: "#ffffff14",
-    position: "absolute",
-    left: 0,
-    top: 4
-  },
-  hiddenWord: {
-    fontSize: 20,
-    lineHeight: 24,
-    color: "transparent",
   },
   progressBarContainer: {
     top: 0,

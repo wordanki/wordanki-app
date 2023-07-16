@@ -6,15 +6,21 @@ const borderRadius = 10
 const defaultSpacing = 20
 
 export const styles = StyleSheet.create({
-    text: {
-        fontSize: 25,
-        color: "#fff0",
-
-        // paddingVertical: 15,
-
-        fontWeight: "600",
-
-        textShadowColor: "rgba(255, 255, 255, 1)",
-        textShadowRadius: 30,
+    container: { 
+        flexDirection: "row", 
+        flexWrap: "wrap" 
+    },
+    innerHiddenWord: {
+        width: "100%",
+        height: 16,
+        left: 0,
+        top: 4,
+        position: "absolute",
+        backgroundColor: COLORS.WHITE + 14
+    },
+    hiddenWord: {
+        fontSize: 20,
+        lineHeight: 24,
+        color: COLORS.TRANSPARENT
     }
 })

@@ -1,9 +1,6 @@
 import { useState, forwardRef, useImperativeHandle, useEffect } from 'react'
 
-import {
-    View, Text, TouchableHighlight,
-    Animated, Easing, ImageBackground
-} from 'react-native'
+import { View, Text, TouchableHighlight, Animated, Easing } from 'react-native'
 
 import * as Speech from 'expo-speech'
 
@@ -11,30 +8,37 @@ import { AntDesign } from '@expo/vector-icons'
 
 import { BlurText } from '../../components/BlurText'
 
+import { useGlobal } from '../../hooks/global'
+
 import Word from '../../database/models/Word'
 import Information from '../../database/models/Information'
 
 import { spacedRepetition } from '../../utils/spacedRepetition'
 
 import { COLORS } from '../../theme'
-import { styles } from './styles'
+import { styles, defaultSpacing } from './styles'
 
-const defaultSpacing = 20
-
-export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, setLevel, clicked, setClicked, indexData }, parentRef) => {
+export const Issue = forwardRef(({ data, nextWord, setNextWord, goToLast }, parentRef) => {
+    const [isSelectedWord, setIsSelectedWord] = useState(false)
     const [wordSelected, setWordSelected] = useState(false)
+    const [showArrow, setShowArrow] = useState(false)
 
     const [progressNextWord] = useState(new Animated.Value(0))
     const [arrowPosition] = useState(new Animated.Value(0))
-    const [showArrow, setShowArrow] = useState(false)
 
-    const [isSelectedWord, setIsSelectedWord] = useState(false)
+    const { level, setLevel } = useGlobal()
 
     useImperativeHandle(parentRef, () => ({
         play,
-        stop,
-        isScroll
+        scroll
     }))
+
+    const progressBarAnime = Animated.timing(progressNextWord, {
+        toValue: 100,
+        duration: 6000,
+        useNativeDriver: false,
+        easing: Easing.linear
+    })
 
     Animated.loop(
         Animated.sequence([
@@ -51,116 +55,82 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
         ])
     ).start()
 
-    const progressBarAnime = Animated.timing(progressNextWord, {
-        toValue: 100,
-        duration: 6000,
-        useNativeDriver: false,
-        easing: Easing.linear
-    });
-
-    const play = async (activation) => {
+    const play = async (force) => {
         const isSpeaking = await Speech.isSpeakingAsync()
+
         if (isSpeaking) await Speech.stop()
-        
-        if(clicked[indexData] == null || activation == "button") {
-            Speech.speak(data.phrase.join(''), { language: 'en' })
+
+        if (data.clickedAnswerIndex === null || force) {
+            Speech.speak(data.phrase.join(""), { language: "en" })
         }
     }
 
-    const stop = async () => await Speech.stop()
-
-    const isScroll = () => {
+    const scroll = () => {
+        progressBarAnime.stop()
         progressNextWord.setValue(0)
-        setShowArrow(false)
     }
-
-    useEffect(() => {
-        if(clicked[indexData] != null) {
-            setIsSelectedWord(true)
-            setWordSelected(clicked[indexData])
-        }
-    }, [])
 
     async function answerEvent(right, index) {
+        data.clickedAnswerIndex = index
+
+        setIsSelectedWord(true)
+        setWordSelected(index)
+        setShowArrow(true)
+
+        const next_repetition = spacedRepetition(right, data.hits, data.next_repetition, data.previous_repetition)
+
         try {
-            let arrayClicked = clicked
-            arrayClicked[indexData] = index
-            setClicked(arrayClicked)
-
-            setIsSelectedWord(true)
-            setWordSelected(index)
-            setShowArrow(true)
-
-            const next_repetition = spacedRepetition(right, data.hits, data.next_repetition, data.previous_repetition)
-
             await Word.update(data.id, {
                 hits: right ? data.hits + 1 : data.hits,
                 next_repetition: new Date(next_repetition).toISOString(),
                 previous_repetition: data.next_repetition || new Date().toISOString(),
             })
+        } catch (error) {
+            console.log(`[ERROR: UPDATE WORD]: ${error.messsage}`)
+        }
 
-            if (data.isNewWord) {
-                let newLevel = level
+        if (data.isNewWord) {
+            let newLevel = level
 
-                if (right && data.level > level) {
-                    newLevel = level + 1
-                } else if (!right && data.level < level) {
-                    newLevel = level - 1
-                }
-                
-                await Information.updateLevel(newLevel)
-
-                setLevel(newLevel)
+            if (right && data.level > level) {
+                newLevel = level + 1
+            } else if (!right && data.level < level) {
+                newLevel = level - 1
             }
 
-            progressNextWord.setValue(0)
-            progressBarAnime.start()
+            try {
+                await Information.updateLevel(newLevel)
+            } catch (error) {
+                console.log(`[ERROR: UPDATE LEVEL]: ${error.messsage}`)
+            }
 
-            setNextWord(!nextWord)
+            setLevel(newLevel)
+        }
 
-        } catch (error) {}
-    };
+        progressNextWord.setValue(0)
+        progressBarAnime.start()
 
-    // function splitWords(phrase) {
-    //     const phraseSplited = phrase.split(' ');
-    //     return phraseSplited.map((word, index) => {
-    //         return (
-    //             <View key={index} style={{flexDirection: "row"}}>
-    //                 <View style={styles.containerHiddenWord}>
-    //                     <View style={styles.innerHiddenWord}></View>
-    //                     <Text style={styles.hiddenWord}>{word}</Text>
-    //                 </View>
-    //                 <Text style={{fontSize: 20}}>{" "}</Text>
-    //             </View>
-    //         )
-    //     })
-    // }
-
-    function splitWords(phrase) {
-        const phraseSplited = phrase.split(' ');
-        return phraseSplited.map((word, index) => {
-            return (
-                <View key={index} style={styles.containerHiddenWord}>
-                    <View style={{...styles.innerHiddenWord}}></View>
-                    <Text style={styles.hiddenWord}>{word + " "}</Text>
-                    {/* <Text style={{fontSize: 20}}>{" "}</Text> */}
-                </View>
-            )
-        })
+        setNextWord(!nextWord)
     }
 
-    // , borderTopLeftRadius: index == 0 ? 5 : 0, borderBottomLeftRadius: index == 0 ? 5 : 0, borderTopRightRadius: index == phraseSplited.lenght-1 ? 5 : 0, borderBottomRightRadius: index == phraseSplited.lenght-1 ? 5 : 0
+    useEffect(() => {
+        if (data.clickedAnswerIndex !== null) {
+            setIsSelectedWord(true)
+            setShowArrow(true)
 
-    // useEffect(() => {
-    //     // progressBarAnime.stop();
-    //     progressNextWord.setValue(50);
-    //     // console.log("teste");
-    // }, [scroll]);
+            setWordSelected(data.clickedAnswerIndex)
+        }
+    }, [])
 
     return (
-        <View style={[styles.container, {backgroundColor: bgColor}]}>
-            {/* <View style={styles.topLine}></View> */}
-            <View style={[styles.progressBarContainer, { backgroundColor: COLORS.WHITE + 11 }]}>
+        <View style={[styles.container, { backgroundColor: COLORS.BLACK_PRIMARY }]}>
+            {!data.isNewWord && (
+                <View style={styles.tagContainer}>
+                    <Text style={styles.tagText}>Revisão</Text>
+                </View>
+            )}
+
+            <View style={[styles.progressBarContainer, { backgroundColor: data.clickedAnswerIndex === null && isSelectedWord ?  COLORS.WHITE + 11 : COLORS.BLACK_PRIMARY  }]}>
                 {isSelectedWord && (
                     <Animated.View style={[styles.progressBar, {
                         width: progressNextWord.interpolate({
@@ -171,19 +141,12 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
                 )}
             </View>
 
-            {!data.isNewWord && (
-                <View style={styles.tagContainer}>
-                    <Text style={styles.tagText}>Revisão</Text>
-                </View>
-            )}
-
             <View style={styles.questionContainer}>
-                <TouchableHighlight onPress={() => play("button")} style={{borderRadius: 5}}>
+                <TouchableHighlight onPress={() => play(true)}>
                     <AntDesign
                         name="sound"
                         size={27}
                         color={"#44AEDF"}
-                        style={{backgroundColor: "#222228", borderRadius: 5}}
                     />
                 </TouchableHighlight>
 
@@ -199,17 +162,15 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
                     <TouchableHighlight
                         key={index}
                         disabled={isSelectedWord}
-                        style={{
-                            ...styles.answerButtonContainer,
-                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#298F47" : "#aB3D42") : "#3D404C"
-                        }}
                         onPress={() => answerEvent(index === data.correctAsnwerIndex, index)}
+                        style={[styles.answerButtonContainer, {
+                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#298F47" : "#aB3D42") : "#3D404C"
+                        }]}
                     >
-                        <View style={{
-                            ...styles.answerButton,
+                        <View style={[styles.answerButton, {
                             backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#298F47" : "#aB3D42") : "#3D404C",
                             borderColor: isSelectedWord && (data.correctAsnwerIndex == index || wordSelected == index) ? (data.correctAsnwerIndex == index ? "#298F47" : "#aB3D42") : "#3D404C"
-                        }}>
+                        }]}>
                             <Text style={styles.answerText}>
                                 {answer}
                             </Text>
@@ -219,31 +180,24 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
 
                 <TouchableHighlight
                     disabled={isSelectedWord}
-                    style={{
-                        ...styles.answerButtonContainer,
-                        backgroundColor: "#266E91"
-                    }}
-                    onPress={() => { answerEvent(false, -1) }}
+                    style={[styles.answerButtonContainer, { backgroundColor: "#266E91" }]}
+                    onPress={() => answerEvent(false, -1)}
                 >
-                    <View style={{
-                        ...styles.answerButton,
-                        backgroundColor: "#266E91",
-                        borderColor: "#266E91",
-                    }}>
+                    <View style={[styles.answerButton, { backgroundColor: "#266E91", borderColor: "#266E91" }]}>
                         <Text style={styles.answerText}>Não sei</Text>
                     </View>
                 </TouchableHighlight>
             </View>
 
-
-
-            {/* {!isSelectedWord ? ( */}
-            <View style={{ ...styles.translation, paddingRight: isSelectedWord ? (defaultSpacing / 1.5) : (defaultSpacing / 1.5) - 4}}>
+            <View style={[styles.translation, { paddingRight: isSelectedWord ? (defaultSpacing / 1.5) : (defaultSpacing / 1.5) - 4 }]}>
                 <Text style={styles.translationLabel}>Tradução</Text>
+
                 {!isSelectedWord ?
-                    <View style={{flexDirection: "row", flexWrap: "wrap"}}>{splitWords(data.translatedPhrase.join(''))}</View>
+                    (
+                        <BlurText text={data.translatedPhrase.join('')} />
+                    )
                     : (
-                        <Text style={{ ...styles.translationText }}>
+                        <Text style={styles.translationText}>
                             {data.translatedPhrase[0]}
                             <Text style={styles.translationWord}>{data.translatedPhrase[1]}</Text>
                             {data.translatedPhrase[2]}
@@ -253,7 +207,9 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, bgColor, level, 
 
             {showArrow && (
                 <Animated.View style={[styles.arrowContainer, { bottom: arrowPosition }]}>
-                    <AntDesign name="down" size={22} color="#ffffffbb" />
+                    <TouchableHighlight onPress={goToLast}>
+                        <AntDesign name="down" size={22} color={COLORS.WHITE + "bb"} />
+                    </TouchableHighlight>
                 </Animated.View>
             )}
         </View>

@@ -18,31 +18,35 @@ import { styles } from './styles'
 
 let time = null
 
-export default function Profile({ navigation }) {
+export default function Question({ navigation }) {
     const [nextWord, setNextWord] = useState(false)
     const [isNewWord, setIsNewWord] = useState(true)
 
     const [data, setData] = useState([])
-    const [color, setColor] = useState(true)
-    const [clicked, setClicked] = useState([])
 
     const flatListRef = useRef()
     const issueRefs = useRef([])
 
-    const { level, setLevel } = useGlobal()
+    const { level } = useGlobal()
+
+    const goToLast = () => {
+        flatListRef?.current?.scrollToIndex({
+            index: data.length - 1,
+            animated: true
+        })
+    }
 
     useEffect(() => {
         (async () => {
             let word = null
             let frequency = 0
-            let newWord
+            let newWord = false
 
             switch (isNewWord) {
                 case true:
                     word = await Word.findOneByNextReview()
-                    newWord = false
+
                     if (word) break
-                    
                 default:
                     frequency = generateWordFrequency(level)
                     word = await Word.findOneByFrequencyOrNext(frequency) || await Word.findOneByFrequencyOrBefore(frequency)
@@ -50,6 +54,7 @@ export default function Profile({ navigation }) {
             }
 
             if (!word) return
+
             setIsNewWord(newWord)
 
             const options = await Word
@@ -62,46 +67,27 @@ export default function Profile({ navigation }) {
                 portuguese: word.portuguese
             })
 
-            setClicked([...clicked, null])
-
-            // let newData = data
-            // newData[data.length].clicked = clicked[data.length]
-
-            // newData.push({
-            //     isNewWord,
-            //     id: word.id,
-            //     hits: word.hits,
-            //     next_repetition: word.next_repetition,
-            //     previous_repetition: word.previous_repetition,
-            //     correctAsnwerIndex: wordPosition,
-            //     answers: options.map(option => option.portuguese),
-            //     level: Math.floor(frequency / wordsQuantiyPer100),
-            //     phrase: splitedPhrase(word.phrases[0].english, true),
-            //     translatedPhrase: splitedPhrase(word.phrases[0].portuguese, true),
-            //     clicked: null,
-            // })
-
             const newData = [...data, {
-                isNewWord: newWord,
                 id: word.id,
                 hits: word.hits,
+                isNewWord: newWord,
+                clickedAnswerIndex: null,
+                correctAsnwerIndex: wordPosition,
                 next_repetition: word.next_repetition,
                 previous_repetition: word.previous_repetition,
-                correctAsnwerIndex: wordPosition,
                 answers: options.map(option => option.portuguese),
                 level: Math.floor(frequency / wordsQuantiyPer100),
                 phrase: splitedPhrase(word.phrases[0].english, true),
                 translatedPhrase: splitedPhrase(word.phrases[0].portuguese, true),
             }]
 
-            // if(newData.length >= 3) {
-            //     newData.shift()
-            // }
-
             setData(newData)
-            setColor(!color)
         })()
     }, [nextWord])
+
+    useEffect(() => {
+        if (data.length > 1 && flatListRef) time = setTimeout(() => goToLast(), 6000)
+    }, [data])
 
     useEffect(() => {
         navigation.addListener('beforeRemove', () => {
@@ -110,48 +96,29 @@ export default function Profile({ navigation }) {
         })
     }, [navigation])
 
-    useEffect(() => {
-
-        if (data.length > 1 && flatListRef) {
-            time = setTimeout(() => {
-                try {
-                    flatListRef.current.scrollToIndex({
-                        index: data.length - 1,
-                        animated: true
-                    })
-                } catch(error) {}
-                
-            }, 6000)
-        }
-    }, [data])
-
     const onViewableItemsChanged = useRef(({ changed }) => {
         clearTimeout(time)
+
         changed.forEach(element => {
             const cell = issueRefs.current[element.key]
 
-            if (cell) element.isViewable ? cell.play("auto") : cell.isScroll()
+            if (cell) element.isViewable ? cell.play() : cell.scroll()
         })
     })
 
-    const renderItems = useCallback(({ item, index }) => (
+    const renderItems = useCallback(({ item }) => (
         <View style={styles.container}>
             <Issue
                 key={item.id}
                 data={item}
-                level={level}
-                setLevel={setLevel}
-                bgColor={"#222228"}
                 nextWord={nextWord}
                 setNextWord={setNextWord}
-                clicked={clicked}
-                setClicked={setClicked}
-                indexData={index}
+                goToLast={goToLast}
                 ref={IssueRef => (issueRefs.current[item.id] = IssueRef)}
             />
         </View>
     ), [data])
-    
+
     if (!data.length) return <View style={styles.container} />
 
     return (
@@ -160,14 +127,12 @@ export default function Profile({ navigation }) {
                 ref={flatListRef}
                 data={data}
                 vertical={true}
+                pagingEnabled={true}
                 renderItem={renderItems}
                 estimatedItemSize={400}
                 keyExtractor={item => item.id}
                 decelerationRate='normal'
-                pagingEnabled
-                viewabilityConfig={{
-                    itemVisiblePercentThreshold: 50
-                }}
+                viewabilityConfig={{ itemVisiblePercentThreshold: 50 }}
                 onViewableItemsChanged={onViewableItemsChanged.current}
             />
         </View>
