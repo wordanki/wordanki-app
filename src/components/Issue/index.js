@@ -142,11 +142,12 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, goToLast }, pare
             </View>
 
             <View style={styles.questionContainer}>
-                <TouchableHighlight onPress={() => play(true)}>
+                <TouchableHighlight onPress={() => play(true)} style={{borderRadius: 5}}>
                     <AntDesign
                         name="sound"
                         size={27}
                         color={"#44AEDF"}
+                        style={{backgroundColor: "#222228", borderRadius: 5}}
                     />
                 </TouchableHighlight>
 
@@ -207,8 +208,13 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, goToLast }, pare
 
             {showArrow && (
                 <Animated.View style={[styles.arrowContainer, { bottom: arrowPosition }]}>
-                    <TouchableHighlight onPress={goToLast}>
-                        <AntDesign name="down" size={22} color={COLORS.WHITE + "bb"} />
+                    <TouchableHighlight onPress={goToLast} style={{borderRadius: 5}}>
+                        <AntDesign
+                            name="down"
+                            size={22}
+                            color={COLORS.WHITE + "bb"} 
+                            style={{backgroundColor: "#222228", padding: 5, borderRadius: 5}}
+                        />
                     </TouchableHighlight>
                 </Animated.View>
             )}
