@@ -7,7 +7,7 @@ export default {
     getData: async key => {
         const data = await AsyncStorage.getItem(key)
     
-        if (!data) throw new Error()
+        if (data === null || data === undefined) throw new Error()
 
         return JSON.parse(data)
     }
