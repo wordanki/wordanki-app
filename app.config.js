@@ -31,7 +31,7 @@ module.exports = {
   },
   android: {
     package: "com.wordanki.app",
-    versionCode: 3,
+    versionCode: 2,
     adaptiveIcon: {
       foregroundImage: "./assets/adaptive-icon.png",
       backgroundColor: "#ffffff"
