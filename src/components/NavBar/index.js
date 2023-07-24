@@ -18,7 +18,7 @@ export const NavBar = ({ title, isBackScreen, children }) => {
                 <View style={styles.ActionButtonContainer}>
                     {
                         !isBackScreen ? (
-                            <TouchableOpacity disabled style={{ opacity: 0 }} onPress={() => navigation.openDrawer()}>
+                            <TouchableOpacity onPress={() => navigation.openDrawer()}>
                                 <Ionicons 
                                     name="menu-outline" 
                                     size={35} 

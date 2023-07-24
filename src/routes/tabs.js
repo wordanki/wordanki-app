@@ -123,7 +123,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
 
 export const Tabs = () => (
     <Tab.Navigator
-        tabBar={props => <View/>}
+        tabBar={props => <TabBar {...props} />}
         screenOptions={{
             headerShown: false,
         }}
