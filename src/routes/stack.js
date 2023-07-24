@@ -6,13 +6,12 @@ import Question from '../screens/Question'
 import Profile from '../screens/Profile'
 
 import Welcome from '../screens/Welcome'
-// import Signup from '../screens/Signup'
-// import Login from '../screens/Login'
+import Signup from '../screens/Signup'
+import Login from '../screens/Login'
 
 import { Drawer } from './drawer'
 
 import { NavBar } from '../components/NavBar'
-import { Tabs } from "./tabs";
 
 const Stack = createNativeStackNavigator()
 
@@ -23,20 +22,12 @@ export const UserRoutes = () => {
         <Stack.Navigator
             initialRouteName={!firstTime ? 'Main' : 'Welcome'}
         >
-            {/* <Stack.Screen 
+            <Stack.Screen 
                 name='Main' 
                 component={Drawer}
                 options={{
                     headerShown: false
                 }} 
-            /> */}
-
-            <Stack.Screen 
-                name="Main" 
-                component={Tabs} 
-                options={{
-                    headerShown: false
-                }}
             />
 
             <Stack.Screen 
@@ -75,8 +66,8 @@ export const AuthRoutes = () => {
             }}
         >
             <Stack.Screen name='Welcome' component={Welcome} />
-            {/* <Stack.Screen name='Login' component={Login} /> */}
-            {/* <Stack.Screen name='Signup' component={Signup} /> */}
+            <Stack.Screen name='Login' component={Login} />
+            <Stack.Screen name='Signup' component={Signup} />
         </Stack.Navigator>
     )
 }

@@ -79,7 +79,7 @@ export default function Welcome({ route }) {
     )
 
     const onDone = async () => {
-        await localStorage.storeData("@settings/first-time", false)
+        // await localStorage.storeData("@settings/first-time", false)
 
         setFirstTime(false)
 
