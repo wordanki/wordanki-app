@@ -8,15 +8,17 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#222228",
-        paddingHorizontal: 20,
+        paddingHorizontal: 16,
     },
     containerSearchTopic: {
-        height: 50,
+        height: 48,
         flexDirection: "row",
         alignItems: "center",
         marginTop: 20,
-        marginBottom: 20,
-        backgroundColor: "#ffffff22",
+        marginBottom: 16,
+        backgroundColor: "#ffffff14",
+        borderWidth: 1,
+        borderColor: "#ffffff28",
         borderRadius: 25,
     },
     title: {

@@ -8,6 +8,7 @@ import Profile from '../screens/Profile'
 import Welcome from '../screens/Welcome'
 import Signup from '../screens/Signup'
 import Login from '../screens/Login'
+import Login2 from '../screens/Login2'
 
 import { Drawer } from './drawer'
 
@@ -60,13 +61,13 @@ export const UserRoutes = () => {
 export const AuthRoutes = () => {
     return (
         <Stack.Navigator
-            initialRouteName='Welcome'
+            initialRouteName='Login'
             screenOptions={{
-                headerShown: false
+                headerShown: false,
             }}
         >
             <Stack.Screen name='Welcome' component={Welcome} />
-            <Stack.Screen name='Login' component={Login} />
+            <Stack.Screen name='Login' component={Login2} />
             <Stack.Screen name='Signup' component={Signup} />
         </Stack.Navigator>
     )

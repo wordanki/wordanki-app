@@ -107,15 +107,4 @@ export const styles = StyleSheet.create({
     marginLeft: defaultSpacing,
     marginRight: defaultSpacing
   },
-  MVPcontainer: {
-    borderRadius: 15,
-    padding: defaultSpacing,
-    marginTop: 10,
-    marginHorizontal: defaultSpacing
-  },
-  MVPtext: {
-    fontSize: 16,
-    color: "#ffffff",
-    lineHeight: 21,
-  },
 })

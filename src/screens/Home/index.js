@@ -14,19 +14,19 @@ import { styles } from "./styles"
 const topics = [
     {
         title: "Viagens",
-        // img: require("../../assets/img_topics/Viagens.png")
+        img: require("../../assets/img_topics/Viagens.jpg")
     },
     {
         title: "Escola",
-        // img: require("../../assets/img_topics/Escola.png")
+        img: require("../../assets/img_topics/Viagens.jpg")
     },
     {
         title: "Trabalho",
-        // img: require("../../assets/img_topics/Trabalho.png")
+        img: require("../../assets/img_topics/Viagens.jpg")
     },
     {
         title: "Tecnologia",
-        // img: require("../../assets/img_topics/Tecnologia.png")
+        img: require("../../assets/img_topics/Viagens.jpg")
     }
 ];
 
@@ -48,14 +48,14 @@ export default function Home({ route }) {
 
     return (
         <ScrollView style={styles.container}>
-            {/* <View>
+            <View>
                 <Text style={styles.title}>Meta diária</Text>
 
                 <View style={styles.dailyGoalBar}>
                     <View style={[styles.completedBar, { width: `${64}%` }]}></View>
                     <Text style={styles.dailyGoalText}>{64}/100</Text>
                 </View>
-            </View> */}
+            </View>
 
             <View>
                 <Text style={styles.title}>Estudo de vocabulário</Text>
@@ -87,7 +87,7 @@ export default function Home({ route }) {
                 </LinearGradient>
             </View>
 
-            {/* <View>
+            <View>
                 <Text style={styles.title}>Tópicos recentes</Text>
 
                 <ScrollView
@@ -98,34 +98,14 @@ export default function Home({ route }) {
                     {topics.map((topic, index) => (
                         <Topic 
                             key={index} 
+                            index={index}
                             ima={topic.img} 
                             title={topic.title} 
                             navigation={navigation} 
                         />
                     ))}
                 </ScrollView>
-            </View> */}
-
-            <Text style={styles.title}>Sobre esta versão</Text>
-
-            <LinearGradient 
-                style={styles.MVPcontainer}
-                colors={['#438288', '#458979']}
-                start={{ x: 0, y: 1 }}
-                end={{ x: 1, y: 1 }}
-            >
-                <Text style={styles.MVPtext}>
-                    Esta não é a versão final do aplicativo, portanto, é possível que ocorram traduções incorretas de frases, as quais serão corrigidas nas próximas atualizações.
-                </Text>
-            </LinearGradient>
-
-            <LinkCard 
-                title="Avalie o aplicativo"
-                link="https://forms.gle/QmV6CNqEfdBDJvjF8"
-                img="feedback.png"
-                colors={['#84e', '#94b']}
-                text="Avalie o MVP do aplicativo para que possamos melhorar a versão final" 
-            />
+            </View>
 
             <View style={{ height: 16 }} />
         </ScrollView>

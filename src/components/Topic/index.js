@@ -9,13 +9,15 @@ export default function TopicContainer( props ) {
 
     // const img = `../../assets/img_topics/${props.topic}.png`;
     const img = props.ima;
+    const marginL = props.index === 0 ? 16 : 0;
+
     return (
         <TouchableHighlight 
             onPress={() => {
                 const navigation = props.navigation;
                 navigation.navigate('Question');
             }}
-            style={styles.container}
+            style={[styles.container, { marginLeft: marginL }]}
         >
             <View style={styles.innerContainer}>
                 <Image

@@ -13,19 +13,19 @@ export default function Categories({ route }) {
     const topics = [
         {
             title: "Viagens",
-            // img: require("../../assets/img_topics/Viagens.png")
+            img: require("../../assets/img_topics/Viagens.jpg")
         },
         {
             title: "Escola",
-            // img: require("../../assets/img_topics/Escola.png")
+            img: require("../../assets/img_topics/Viagens.jpg")
         },
         {
             title: "Trabalho",
-            // img: require("../../assets/img_topics/Trabalho.png")
+            img: require("../../assets/img_topics/Viagens.jpg")
         },
         {
             title: "Tecnologia",
-            // img: require("../../assets/img_topics/Tecnologia.png")
+            img: require("../../assets/img_topics/Viagens.jpg")
         }
     ];
     // const colors = ['7087AF', '70AF7A', '8470AF', 'AFAD70'];

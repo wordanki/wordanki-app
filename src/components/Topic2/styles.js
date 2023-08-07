@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     container: {
         width: "100%",
         height: "auto",
-        marginBottom: 20,
+        marginBottom: 16,
         borderRadius: 15,
     },
     innerContainer: {
