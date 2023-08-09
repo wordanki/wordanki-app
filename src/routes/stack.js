@@ -21,7 +21,7 @@ export const UserRoutes = () => {
 
     return (
         <Stack.Navigator
-            initialRouteName={!firstTime ? 'Main' : 'Welcome'}
+            initialRouteName={!firstTime ? 'Main' : 'Main'}
         >
             <Stack.Screen 
                 name='Main' 

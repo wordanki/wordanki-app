@@ -7,7 +7,6 @@ import {
     TouchableOpacity,
 } from 'react-native'
 
-import Icon, { IconType } from "react-native-dynamic-vector-icons"
 import ProgressBar from "react-native-animated-progress"
 
 // import { useAuthentication } from '../../hooks/auth'
@@ -18,6 +17,8 @@ import {
 } from '@react-navigation/drawer'
 
 import { UserPhoto } from '../UserPhoto'
+
+import { ButtonDrawer } from '../ButtonDrawer'
 
 import { useGlobal } from '../../hooks/global'
 
@@ -30,10 +31,15 @@ export const Drawer = props => {
     // const { user, signOut } = useAuthentication()
     const { informations: { version }, level } = useGlobal()
 
+    const user = {
+        displayName: "Pedro Henrique",
+        email: "pedrohenriquefesi@gmail.com"
+    }
+
     const handleShare = async () => {
         try {
             const result = await Share.share({
-                message: 'WORDANKI HHHHHH',
+                message: 'Baixe o Wordanki na Play Store\n\nhttps://play.google.com/store/apps/details?id=com.wordanki.app ',
             });
 
             if (result.action === Share.sharedAction) {
@@ -59,70 +65,40 @@ export const Drawer = props => {
 
                 contentContainerStyle={{ backgroundColor: COLORS.BLACK_TERTIARY }}>
 
-                <ImageBackground style={styles.profileContainer}>
-                    {/* <UserPhoto imageUri={user?.photoURL} size='HIGHER' /> */}
+                <View style={styles.profileContainer}>
+                    <View style={styles.userContainer}>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.username}>
+                                {user?.displayName}
+                            </Text>
 
-                    {/* <Text style={styles.username}>
-                        {user?.displayName}
-                    </Text>
+                            <Text style={styles.usermail}>
+                                {user?.email}
+                            </Text>
+                        </View>
 
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.usermail}>
-                            {user?.email}
-                        </Text>
-                    </View> */}
-
-                    <View style={styles.levelContainer}>
-                        <Text style={styles.levelText}>Nível {level}/{maxLevel}</Text>
-
-                        {/* <Text style={styles.version}>
-                            {version}
-                        </Text> */}
+                        <UserPhoto imageUri={user?.photoURL} size='NORMAL' />
                     </View>
 
-                    <ProgressBar progress={level} backgroundColor={COLORS.GREEN_PRIMARY} />
-                </ImageBackground>
+                    <View style={{width: "100%", height: 4, borderRadius: 2, backgroundColor: "#ffffff22"}}></View>
+
+                    <View style={styles.statisticContainer}>
+                        <Text style={styles.wordsText}>120 palavras vistas</Text>
+                        <Text style={styles.levelText}>Nível {level}</Text>
+
+                        <View style={styles.levelBar}>
+                            <View style={[styles.completedBar, { width: `${level}%` }]}></View>
+                        </View>
+                    </View>
+                </View>
+                
+                <View style={styles.buttonsContainer}>
+                    <ButtonDrawer iconName={"analytics-outline"} text={"Ver estatísticas"} handle={handleShare} />
+                    <ButtonDrawer iconName={"share-social"} text={"Compartilhar app"} handle={handleShare} />
+                    <ButtonDrawer iconName={"star-outline"} text={"Avaliar app"} handle={handleShare} />
+                    <ButtonDrawer iconName={"exit-outline"} text={"Sair do app"} handle={handleShare} />
+                </View>
             </DrawerContentScrollView>
-
-            <View style={styles.logoContainer}>
-                <Image
-                    style={styles.logo}
-                    resizeMode='contain'
-                    source={require('../../assets/logo.png')}
-                />
-            </View>
-
-            <View style={styles.footer}>
-                <TouchableOpacity onPress={handleShare} style={styles.footerButtonContainer}>
-                    <View style={styles.footerButton}>
-                        <Icon
-                            name="share-social-outline"
-                            type={IconType.Ionicons}
-                            size={20}
-                            color={COLORS.WHITE}
-                        />
-
-                        <Text style={styles.footerButtonText}>
-                            Convide um amigo
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-
-                {/* <TouchableOpacity onPress={handleShare} style={styles.footerButtonContainer}>
-                    <View style={styles.footerButton}>
-                        <Icon
-                            name="setting"
-                            type={IconType.AntDesign}
-                            size={20}
-                            color={COLORS.WHITE}
-                        />
-
-                        <Text style={styles.footerButtonText}>
-                            Configurações
-                        </Text>
-                    </View>
-                </TouchableOpacity> */}
-            </View>
         </View>
     );
 };

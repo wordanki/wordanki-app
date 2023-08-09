@@ -20,7 +20,7 @@ export const Drawer = () => {
       }}>
       <Screen 
         name="Home" 
-        component={Tabs} 
+        component={Tabs}
         options={{
           headerShown: false
         }}

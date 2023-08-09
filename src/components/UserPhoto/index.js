@@ -14,7 +14,7 @@ const SIZES = {
     },
     NORMAL: {
         containerSize: 36,
-        avatarSize: 30
+        avatarSize: 32
     },
     HIGHER: {
         containerSize: 70,
@@ -29,7 +29,7 @@ export const UserPhoto = ({ imageUri, size = 'NORMAL' }) => {
 
     return (
         <LinearGradient 
-            colors={[COLORS.ORANGE, COLORS.RED]}
+            colors={["#2299ff", "#22bbbb"]}
             start={{ x: 0, y: 0.8 }}
             end={{ x: 0.9, y: 1 }}
             style={[

@@ -6,8 +6,4 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  avatar: {
-    borderWidth: 4,
-    borderColor: COLORS.BLACK_SECONDARY
-  }
 })
