@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     container: {
         width: "100%",
         height: "auto",
-        marginBottom: 16,
+        marginBottom: 32,
         borderRadius: 15,
     },
     innerContainer: {
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     },
     image: {
         width: "100%",
-        height: 140,
+        height: 120,
     },
     infoContainer: {
         width: "100%",
@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
         alignItems: "center",
     },
     title: {
-        fontSize: 25,
+        fontSize: 22,
         color: "#fff",
         marginBottom: 5,
     },
@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
         marginRight: 12,
     },
     text: {
-        fontSize: 18,
+        fontSize: 16,
         color: "#eeeeee",
     },
     button: {
@@ -58,10 +58,6 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    textButton: {
-        fontSize: 18,
-        color: "#ffffff",
-    }
 });
 
 // 3D4C56

@@ -13,20 +13,20 @@ import { styles } from "./styles"
 
 const topics = [
     {
-        title: "Viagens",
-        img: require("../../assets/img_topics/Viagens.jpg")
+        title: "Viagem",
+        img: require("../../assets/img_topics/Viagem.jpg")
     },
     {
         title: "Escola",
-        img: require("../../assets/img_topics/Viagens.jpg")
+        img: require("../../assets/img_topics/Escola.jpg")
     },
     {
         title: "Trabalho",
-        img: require("../../assets/img_topics/Viagens.jpg")
+        img: require("../../assets/img_topics/Trabalho.jpg")
     },
     {
         title: "Tecnologia",
-        img: require("../../assets/img_topics/Viagens.jpg")
+        img: require("../../assets/img_topics/Tecnologia.jpg")
     }
 ];
 
@@ -47,13 +47,13 @@ export default function Home({ route }) {
     }, [isFocused])
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <View>
                 <Text style={styles.title}>Meta diária</Text>
 
                 <View style={styles.dailyGoalBar}>
                     <View style={[styles.completedBar, { width: `${64}%` }]}></View>
-                    <Text style={styles.dailyGoalText}>{64}/100</Text>
+                    <Text style={styles.dailyGoalText}>{64} / 100</Text>
                 </View>
             </View>
 
@@ -67,7 +67,7 @@ export default function Home({ route }) {
                             <Text style={styles.textInfo}>Palavras vistas</Text>
                         </View>
 
-                        <Text style={styles.numberInfo}>{`${seen}/${all}`}</Text>
+                        <Text style={styles.numberInfo}>{`${seen} / ${all}`}</Text>
                     </View>
 
                     <View style={[styles.info, { marginTop: 16 }]}>

@@ -66,6 +66,8 @@ export const Drawer = props => {
                 contentContainerStyle={{ backgroundColor: COLORS.BLACK_TERTIARY }}>
 
                 <View style={styles.profileContainer}>
+                    <UserPhoto imageUri={user?.photoURL} size='HIGHER' />
+
                     <View style={styles.userContainer}>
                         <View style={styles.textContainer}>
                             <Text style={styles.username}>
@@ -76,20 +78,18 @@ export const Drawer = props => {
                                 {user?.email}
                             </Text>
                         </View>
-
-                        <UserPhoto imageUri={user?.photoURL} size='NORMAL' />
                     </View>
 
-                    <View style={{width: "100%", height: 4, borderRadius: 2, backgroundColor: "#ffffff22"}}></View>
+                    {/* <View style={{width: "100%", height: 4, borderRadius: 2, backgroundColor: "#ffffff22"}}></View> */}
 
-                    <View style={styles.statisticContainer}>
+                    {/* <View style={styles.statisticContainer}>
                         <Text style={styles.wordsText}>120 palavras vistas</Text>
                         <Text style={styles.levelText}>Nível {level}</Text>
 
                         <View style={styles.levelBar}>
                             <View style={[styles.completedBar, { width: `${level}%` }]}></View>
                         </View>
-                    </View>
+                    </View> */}
                 </View>
                 
                 <View style={styles.buttonsContainer}>

@@ -39,7 +39,7 @@ const TabsContent = [
     { route: { tab: 'Initial', screen: 'Home' }, label: 'Home', type: IconType.Ionicons, activeIcon: 'home-outline', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Home", component: Home }) },
     { route: { tab: 'Topics', screen: 'Tópicos' }, label: 'Tópicos', type: IconType.Ionicons, activeIcon: 'search-outline', inActiveIcon: 'search-outline', component: MyTabBar({ name: "Tópicos", component: Categories }) },
     { route: { tab: 'Words', screen: 'Palavras' }, label: 'Palavras', type: IconType.MaterialCommunityIcons, activeIcon: 'format-letter-case', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Palavras", component: Words }) },
-    { route: { tab: 'Profile', screen: 'Perfil' }, label: 'Perfil', type: IconType.Ionicons, activeIcon: 'person-outline', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Perfil", component: Profile }) },
+    { route: { tab: 'Profile', screen: 'Perfil' }, label: 'Estatísticas', type: IconType.Ionicons, activeIcon: 'person-outline', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Estatísticas", component: Profile }) },
 ];
 
 const TabBar = ({ state, descriptors, navigation }) => {

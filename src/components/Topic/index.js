@@ -25,7 +25,7 @@ export default function TopicContainer( props ) {
                     style={styles.image}
                 />
                 <View style={styles.infoContainer}>
-                    <Text style={styles.title}>Viagens</Text>
+                    <Text style={styles.title}>{ props.title }</Text>
                     <View style={styles.textContainer}>
                         <View style={[styles.dot, {backgroundColor: "#14DC28"}]}></View>
                         <Text style={styles.text}>Palavras vistas: 256</Text>

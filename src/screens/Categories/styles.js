@@ -10,25 +10,29 @@ export const styles = StyleSheet.create({
         backgroundColor: "#222228",
         paddingHorizontal: 16,
     },
+    title: {
+        color: COLORS.WHITE,
+        fontSize: 20,
+    },
     containerSearchTopic: {
-        height: 48,
+        width: "100%",
+        height: 40,
         flexDirection: "row",
         alignItems: "center",
-        marginTop: 20,
+        marginTop: 16,
         marginBottom: 16,
         backgroundColor: "#ffffff14",
         borderWidth: 1,
         borderColor: "#ffffff28",
         borderRadius: 25,
     },
-    title: {
-        color: COLORS.WHITE,
-        fontSize: 20,
-    },
     searchTopic: {
         flex: 1,
-        fontSize: 20,
+        fontSize: 18,
         color: "#ffffff",
         paddingHorizontal: 15,
+    },
+    containerTopics: {
+        
     }
 })

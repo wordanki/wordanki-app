@@ -6,9 +6,7 @@ const defaultSpacing = 16
 export const styles = StyleSheet.create({
     container: {
         width: "100%",
-        height: 40,
-        borderRadius: borderRadius,
-        marginBottom: defaultSpacing,
+        height: 50,
     },
     content: {
         width: "100%",
@@ -17,8 +15,7 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         paddingHorizontal: defaultSpacing,
-        borderRadius: borderRadius,
-        backgroundColor: "#3B3E48",
+        backgroundColor: "#222228",
     },
     buttonText: {
         fontSize: 18,

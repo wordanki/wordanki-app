@@ -31,11 +31,11 @@ export default function TopicContainer( props ) {
                         <Text style={styles.title}>{props.title}</Text>
                         <View style={styles.textContainer}>
                             <View style={[styles.dot, {backgroundColor: "#14DC28"}]}></View>
-                            <Text style={styles.text}>Palavras vistas: 256</Text>
+                            <Text style={styles.text}>Palavras vistas: {props.viewedWords} / {props.numberWords}</Text>
                         </View>
                         <View style={styles.textContainer}>
                             <View style={[styles.dot, {backgroundColor: "#00B2FF"}]}></View>
-                            <Text style={styles.text}>Revisões pendentes: 64</Text>
+                            <Text style={styles.text}>Revisões pendentes: {props.pendingReviews}</Text>
                         </View>
                     </View>
                     <View style={styles.button}>

@@ -5,8 +5,8 @@ export const styles = StyleSheet.create({
     button: {
         width: "100%",
         height: "auto",
-        borderRadius: 12,
-        marginTop: 20,
+        borderRadius: 10,
+        marginBottom: 16,
         overflow: "hidden",
     },
     container: {
@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     },
     basicInfo: {
         width: "100%",
-        height: 40,
+        height: 50,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
     },
     info: {
         height: "auto",
-        padding: 15,
+        padding: 16,
     },
     title: {
         fontSize: 18,
@@ -45,7 +45,7 @@ export const styles = StyleSheet.create({
     infoContainer: {
         width: "100%",
         height: "auto",
-        padding: 15,
+        padding: 16,
         marginTop: 10,
         borderRadius: 12,
         borderWidth: 2

@@ -9,7 +9,7 @@ export const ButtonDrawer = ( { iconName, text, handle } ) => {
     return (
         <TouchableHighlight onPress={() => handle()} style={styles.container}>
             <View style={styles.content}>
-                <Ionicons name={iconName} size={24} color="#ffffffbb" style={{marginRight: 16}} />
+                <Ionicons name={iconName} size={20} color="#ffffffbb" style={{marginRight: 16}} />
 
                 <Text style={styles.buttonText}>
                     {text}

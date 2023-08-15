@@ -15,9 +15,11 @@ export const styles = StyleSheet.create({
   profileContainer: {
     height: "auto",
     padding: defaultSpacing,
-    backgroundColor: "#38383E",
-    borderBottomLeftRadius: borderRadius,
-    borderBottomRightRadius: borderRadius,
+    paddingBottom: defaultSpacing * 1.5,
+    backgroundColor: "#2F2F35",
+    flexDirection: "column",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ffffff22",
   },
   userContainer: {
     width: "100%",
@@ -25,7 +27,6 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "space-between",
-    marginBottom: defaultSpacing,
   },
   textContainer: {
     height: "auto",
@@ -33,13 +34,13 @@ export const styles = StyleSheet.create({
   },
   username: {
     color: COLORS.WHITE,
-    fontSize: 18,
-    marginBottom: defaultSpacing,
+    fontSize: 20,
+    marginVertical: defaultSpacing,
     fontWeight: "500",
   },
   usermail: {
+    fontSize: 15,
     color: COLORS.WHITE,
-    marginRight: 5,
   },
   statisticContainer: {
     height: "auto",
@@ -70,8 +71,9 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.GREEN_PRIMARY,
   },
   buttonsContainer: {
-    padding: defaultSpacing,
-    paddingTop: defaultSpacing,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ffffff22",
+    paddingVertical: defaultSpacing * 0.5,
   },
   version: {
     fontSize: 12,
