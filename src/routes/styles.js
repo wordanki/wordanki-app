@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
         marginLeft: 16
     },
     globalTabContainer: {
-        backgroundColor: "#2F2F35",
+        backgroundColor: COLORS.BLACK_PRIMARY,
     },
     tabsContainer: {
         flexDirection: 'row',

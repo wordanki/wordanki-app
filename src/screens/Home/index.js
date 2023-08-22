@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react'
-
 import { View, Text, ScrollView, TouchableHighlight } from 'react-native'
+import {
+    CopilotProvider,
+    CopilotStep,
+    walkthroughable,
+    useCopilot
+  } from "react-native-copilot";
+
+
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 
@@ -10,6 +17,8 @@ import LinkCard from '../../components/LinkCard'
 import Word from '../../database/models/Word'
 
 import { styles } from "./styles"
+
+const CopilotText = walkthroughable(Text);
 
 const topics = [
     {
@@ -38,76 +47,84 @@ export default function Home({ route }) {
     const navigation = useNavigation()
     const isFocused = useIsFocused()
 
-    useEffect(() => {
-        if (!isFocused) return
+    const { start } = useCopilot()
 
-        Word.getQuantity().then(response => setAll(response))
-        Word.getNoSeenQuantity().then(response => setSeen(response))
-        Word.getReviewsQuantity().then(response => setReviews(response))
+    useEffect(() => {
+        if (isFocused) {
+            Word.getQuantity().then(response => setAll(response))
+            Word.getNoSeenQuantity().then(response => setSeen(response))
+            Word.getReviewsQuantity().then(response => setReviews(response))
+        }
     }, [isFocused])
 
     return (
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-            <View>
-                <Text style={styles.title}>Meta diária</Text>
+            <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+                <View>
+                    <CopilotStep text="This is a hello world example!" order={1} name="hello">
+                        <CopilotText style={styles.title}>Meta diária</CopilotText>
+                    </CopilotStep>
 
-                <View style={styles.dailyGoalBar}>
-                    <View style={[styles.completedBar, { width: `${64}%` }]}></View>
-                    <Text style={styles.dailyGoalText}>{64} / 100</Text>
+                    <View style={styles.dailyGoalBar}>
+                        <View style={[styles.completedBar, { width: `${64}%` }]}></View>
+
+                        <CopilotStep text="This is a hello world example!" order={2} name="hellso">
+                        <CopilotText style={styles.dailyGoalText}>{64} / 100</CopilotText>
+                    </CopilotStep>
+                        
+                    </View>
                 </View>
-            </View>
 
-            <View>
-                <Text style={styles.title}>Estudo de vocabulário</Text>
+                <View>
+                    <Text style={styles.title}>Estudo de vocabulário</Text>
 
-                <LinearGradient style={styles.allWordsContainer} colors={['#465baF', '#1B699F', '#1B88bF']} start={{x: 0, y: 0}} end={{x: 1, y: 1}}>
-                    <View style={styles.info}>
-                        <View style={styles.textInfoContainer}>
-                            <View style={[styles.dotInfo, { backgroundColor: "#30B956" }]}></View>
-                            <Text style={styles.textInfo}>Palavras vistas</Text>
+                    <LinearGradient style={styles.allWordsContainer} colors={['#465baF', '#1B699F', '#1B88bF']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}>
+                        <View style={styles.info}>
+                            <View style={styles.textInfoContainer}>
+                                <View style={[styles.dotInfo, { backgroundColor: "#30B956" }]}></View>
+                                <Text style={styles.textInfo}>Palavras vistas</Text>
+                            </View>
+
+                            <Text style={styles.numberInfo}>{`${seen} / ${all}`}</Text>
                         </View>
 
-                        <Text style={styles.numberInfo}>{`${seen} / ${all}`}</Text>
-                    </View>
+                        <View style={[styles.info, { marginTop: 16 }]}>
+                            <View style={styles.textInfoContainer}>
+                                <View style={[styles.dotInfo, { backgroundColor: "#00B2FF" }]} />
+                                <Text style={styles.textInfo}>Revisões pendentes</Text>
+                            </View>
 
-                    <View style={[styles.info, { marginTop: 16 }]}>
-                        <View style={styles.textInfoContainer}>
-                            <View style={[styles.dotInfo, { backgroundColor: "#00B2FF" }]} />
-                            <Text style={styles.textInfo}>Revisões pendentes</Text>
+                            <Text style={styles.numberInfo}>{reviews}</Text>
                         </View>
 
-                        <Text style={styles.numberInfo}>{reviews}</Text>
-                    </View>
+                        <TouchableHighlight onPress={() =>  start()/*navigation.navigate("Question")*/} style={styles.studyButtonContainer}>
+                            <View style={styles.studyButton}>
+                                <Text style={styles.studyText}>Estudar</Text>
+                            </View>
+                        </TouchableHighlight>
+                    </LinearGradient>
+                </View>
 
-                    <TouchableHighlight onPress={() => navigation.navigate("Question")} style={styles.studyButtonContainer}>
-                        <View style={styles.studyButton}>
-                            <Text style={styles.studyText}>Estudar</Text>
-                        </View>
-                    </TouchableHighlight>
-                </LinearGradient>
-            </View>
+                <View>
+                    <Text style={styles.title}>Tópicos recentes</Text>
 
-            <View>
-                <Text style={styles.title}>Tópicos recentes</Text>
+                    <ScrollView
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                        style={styles.topics}
+                    >
+                        {topics.map((topic, index) => (
+                            <Topic
+                                key={index}
+                                index={index}
+                                ima={topic.img}
+                                title={topic.title}
+                                navigation={navigation}
+                            />
+                        ))}
+                    </ScrollView>
+                </View>
 
-                <ScrollView
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    style={styles.topics}
-                >
-                    {topics.map((topic, index) => (
-                        <Topic 
-                            key={index} 
-                            index={index}
-                            ima={topic.img} 
-                            title={topic.title} 
-                            navigation={navigation} 
-                        />
-                    ))}
-                </ScrollView>
-            </View>
-
-            <View style={{ height: 16 }} />
-        </ScrollView>
+                <View style={{ height: 16 }} />
+            </ScrollView>
     )
 }

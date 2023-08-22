@@ -1,57 +1,87 @@
-import { StyleSheet, Dimensions } from 'react-native'
-
-import { COLORS, FONTS } from "../../theme"
-
-const borderRadius = 40
-const defaultSpacing = 20
+import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        width: "100%",
-        backgroundColor: COLORS.BGCOLOR_DARK,
-        justifyContent: "flex-end"
-    },
-    logoContainer: {
-        flex: 1,
-        justifyContent: "flex-end",
-        padding: defaultSpacing * 2
-    },
-    welcomeText: {
-        fontSize: 30,
-        fontWeight: "bold",
-        color: COLORS.WHITE
-    },
-    content: {
-        width: "100%",
-        height: "65%",
-        padding: defaultSpacing * 2,
-        borderTopLeftRadius: borderRadius,
-        borderTopRightRadius: borderRadius,
-        backgroundColor: COLORS.BGCOLOR_DARK
-    },
-    spacing: {
-        marginBottom: defaultSpacing
-    },
-    forgotPassword: {
-        alignItems: 'center',
-        marginTop: -(defaultSpacing / 4),
-        marginBottom: defaultSpacing * 2
-    },
-    forgotPasswordText: {
-        color: COLORS.GRAY_PRIMARY
-    },
-    button: {
-        paddingVertical: defaultSpacing / 1.5,
-        borderRadius: borderRadius / 4,
-        alignItems: "center"
-    },
-    buttonText: {
-        color: COLORS.WHITE,
-        fontWeight: "bold"
-    },
-    loginServices: {
-        flexDirection: "row",
-        justifyContent: "space-evenly"
-    }
+  page: {
+    height: "100%",
+    justifyContent: "flex-end",
+    backgroundColor: "#222228",
+    position: "relative",
+  },
+  exitButton: {
+    width: 24,
+    height: 24,
+    backgroundColor: "#606870",
+    position: "absolute",
+    top: 80,
+    right: 40,
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  container: {
+    height: "85%",
+    backgroundColor: "transparent",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingVertical: 32,
+  },
+  image: {
+    height: 160,
+    width: 160,
+  },
+  text: {
+    width: 300,
+    maxWidth: "100%",
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#b8c0d0",
+    textAlign: "center",
+  },
+  buttonsContainer: {
+    width: 250,
+    maxWidth: "90%",
+  },
+  button: {
+    height: 50,
+    width: "100%",
+    borderRadius: 12,
+    marginBottom: 20,
+  },
+  contentButton: {
+    flex: 1,
+    borderRadius: 12,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#303036",
+    borderWidth: 1,
+    borderBottomWidth: 4,
+    borderColor: "#535966",
+  },
+  imageButton: {
+    width: 20,
+    height: "100%",
+    marginRight: 15,
+  },
+  textButton: {
+    fontSize: 15,
+    fontWeight: "500",
+    color: "#a8b2bb",
+  },
+  withoutRegister: {
+    textAlign: "center",
+    textDecorationLine: "underline",
+    fontSize: 15,
+    fontWeight: "500",
+    color: "#a8b2bb",
+  },
+  textFooter: {
+    width: 300,
+    maxWidth: "100%",
+    fontSize: 12,
+    fontWeight: "500",
+    color: "#a0a7ae",
+    textAlign: "center",
+  }
 })

@@ -26,9 +26,7 @@ export const GlobalProvider = ({ children }) => {
 
     useEffect(() => {
         localStorage
-            .getData("@settings/first-time")
-            .then(_ =>  setFirstTime(false))
-            .catch(_ => setFirstTime(true))
+            .getData("user.first-times").then(_ =>  setFirstTime(false)).catch(_ => setFirstTime(true))
     }, [])
 
     return (

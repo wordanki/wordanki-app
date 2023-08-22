@@ -79,11 +79,11 @@ export default function Welcome({ route }) {
     )
 
     const onDone = async () => {
-        // await localStorage.storeData("@settings/first-time", false)
+        localStorage.storeData("user.first-time", false)
 
         setFirstTime(false)
 
-        navigation.replace('Main')
+        navigation.replace('Login')
     }
 
     return (

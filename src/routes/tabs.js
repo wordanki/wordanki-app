@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { View, Text, Dimensions, TouchableOpacity } from 'react-native'
 import Animated, { EasingNode } from 'react-native-reanimated';
 
+import { darken, transparentize } from 'polished'
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
@@ -39,7 +41,7 @@ const TabsContent = [
     { route: { tab: 'Initial', screen: 'Home' }, label: 'Home', type: IconType.Ionicons, activeIcon: 'home-outline', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Home", component: Home }) },
     { route: { tab: 'Topics', screen: 'Tópicos' }, label: 'Tópicos', type: IconType.Ionicons, activeIcon: 'search-outline', inActiveIcon: 'search-outline', component: MyTabBar({ name: "Tópicos", component: Categories }) },
     { route: { tab: 'Words', screen: 'Palavras' }, label: 'Palavras', type: IconType.MaterialCommunityIcons, activeIcon: 'format-letter-case', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Palavras", component: Words }) },
-    { route: { tab: 'Profile', screen: 'Perfil' }, label: 'Estatísticas', type: IconType.Ionicons, activeIcon: 'person-outline', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Estatísticas", component: Profile }) },
+    { route: { tab: 'Profile', screen: 'Perfil' }, label: 'Perfil', type: IconType.Ionicons, activeIcon: 'person-outline', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Perfil", component: Profile }) },
 ];
 
 const TabBar = ({ state, descriptors, navigation }) => {
@@ -98,7 +100,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
                             key={index}
                         >
                             <View  style={[styles.tabContainer]}>
-                                    <View style={[styles.icon, { backgroundColor: isFocused ? "#4987C066" : "transparent" }]}>
+                                    <View style={[styles.icon, { backgroundColor: isFocused ? transparentize(0.85, COLORS.BLUE) : COLORS.TRANSPARENT }]}>
                                         <Icon
                                             name={tab.activeIcon}
                                             type={tab.type}
@@ -107,7 +109,9 @@ const TabBar = ({ state, descriptors, navigation }) => {
                                         />
                                     </View >
 
-                                    <Text style={[styles.text]}>{tab.label}</Text>
+                                    <Text style={[styles.text, { fontWeight: isFocused ? "bold" : "normal" }]}>
+                                        {tab.label}
+                                    </Text>
                                 </View>
                         </TouchableOpacity>
                     )

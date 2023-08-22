@@ -7,9 +7,15 @@ import {
     TouchableOpacity,
 } from 'react-native'
 
+import * as Linking from 'expo-linking';
+
+import { Platform } from 'react-native'
+
+import * as StoreReview from 'expo-store-review'
+
 import ProgressBar from "react-native-animated-progress"
 
-// import { useAuthentication } from '../../hooks/auth'
+import { useAuth } from '../../hooks/auth'
 
 import {
     DrawerContentScrollView,
@@ -28,13 +34,11 @@ import { COLORS } from '../../theme'
 import { styles } from './styles'
 
 export const Drawer = props => {
-    // const { user, signOut } = useAuthentication()
-    const { informations: { version }, level } = useGlobal()
+    const { user } = useAuth()
 
-    const user = {
-        displayName: "Pedro Henrique",
-        email: "pedrohenriquefesi@gmail.com"
-    }
+    console.log(user)
+
+    const { informations, level } = useGlobal()
 
     const handleShare = async () => {
         try {
@@ -54,6 +58,18 @@ export const Drawer = props => {
         } catch (error) { }
     }
 
+    const handleReview = async () => {
+        if (Platform.OS === "android") {
+            Linking.openURL(
+                `https://play.google.com/store/apps/details?id=com.wordanki.app&showAllReviews=true`
+            )
+        } else if (Platform.OS === "ios") {
+            Linking.openURL(
+                `https://apps.apple.com/app/apple-store/id570060128?action=write-review`
+            )
+        }
+    }
+
     const handleLogout = async () => {
         // await signOut()
     }
@@ -66,12 +82,12 @@ export const Drawer = props => {
                 contentContainerStyle={{ backgroundColor: COLORS.BLACK_TERTIARY }}>
 
                 <View style={styles.profileContainer}>
-                    <UserPhoto imageUri={user?.photoURL} size='HIGHER' />
+                    <UserPhoto imageUri={user?.picture} size='HIGHER' />
 
                     <View style={styles.userContainer}>
                         <View style={styles.textContainer}>
                             <Text style={styles.username}>
-                                {user?.displayName}
+                                {user?.name}
                             </Text>
 
                             <Text style={styles.usermail}>
@@ -91,12 +107,12 @@ export const Drawer = props => {
                         </View>
                     </View> */}
                 </View>
-                
+
                 <View style={styles.buttonsContainer}>
-                    <ButtonDrawer iconName={"analytics-outline"} text={"Ver estatísticas"} handle={handleShare} />
-                    <ButtonDrawer iconName={"share-social"} text={"Compartilhar app"} handle={handleShare} />
-                    <ButtonDrawer iconName={"star-outline"} text={"Avaliar app"} handle={handleShare} />
-                    <ButtonDrawer iconName={"exit-outline"} text={"Sair do app"} handle={handleShare} />
+                    <ButtonDrawer iconName={"settings-outline"} text={"Configurações"} handle={handleShare} />
+                    <ButtonDrawer iconName={"share-social"} text={"Compartilhar"} handle={handleShare} />
+                    <ButtonDrawer iconName={"star-outline"} text={"Avaliar"} handle={handleReview} />
+                    <ButtonDrawer iconName={"exit-outline"} text={"Sair"} handle={handleShare} />
                 </View>
             </DrawerContentScrollView>
         </View>

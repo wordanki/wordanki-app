@@ -6,9 +6,7 @@ import Question from '../screens/Question'
 import Profile from '../screens/Profile'
 
 import Welcome from '../screens/Welcome'
-import Signup from '../screens/Signup'
 import Login from '../screens/Login'
-import Login2 from '../screens/Login2'
 
 import { Drawer } from './drawer'
 
@@ -21,7 +19,7 @@ export const UserRoutes = () => {
 
     return (
         <Stack.Navigator
-            initialRouteName={!firstTime ? 'Main' : 'Main'}
+            initialRouteName={firstTime ? 'Welcome' : 'Main'}
         >
             <Stack.Screen 
                 name='Main' 
@@ -54,21 +52,14 @@ export const UserRoutes = () => {
                     headerShown: false
                 }} 
             />
-        </Stack.Navigator>
-    )
-}
 
-export const AuthRoutes = () => {
-    return (
-        <Stack.Navigator
-            initialRouteName='Login'
-            screenOptions={{
-                headerShown: false,
-            }}
-        >
-            <Stack.Screen name='Welcome' component={Welcome} />
-            <Stack.Screen name='Login' component={Login2} />
-            <Stack.Screen name='Signup' component={Signup} />
+            <Stack.Screen 
+                name='Login' 
+                component={Login} 
+                options={{
+                    headerShown: false
+                }} 
+            />
         </Stack.Navigator>
     )
 }

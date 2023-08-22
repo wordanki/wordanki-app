@@ -3,24 +3,61 @@ import * as SQLite from 'expo-sqlite'
 
 import { Asset } from 'expo-asset'
 
-const database = {
-    name: "database.db",
-    db: require('./database.db')
-}
+import SecureStorage from '../helpers/secureLocalStorage'
+
+import { apiUrl } from '../services/api'
+
+const databaseName = "database.db"
+const databaseFolder = `${FileSystem.documentDirectory}SQLite`
+const databaseUri = `${databaseFolder}/${databaseName}`
+
+const defaultDatabase = require('./database.db')
 
 export async function loadDatabase() {
-    const databaseFolderPath = FileSystem.documentDirectory + 'SQLite'
-    
-    if (!(await FileSystem.getInfoAsync(databaseFolderPath)).exists) {
-        await FileSystem.makeDirectoryAsync(databaseFolderPath)
-            
+    if (!(await FileSystem.getInfoAsync(databaseFolder)).exists) {
+        await FileSystem.makeDirectoryAsync(databaseFolder)
+        await downloadDatabase({ isDefault: true })
+    }
+}
+
+export async function downloadDatabase({ isDefault }) {
+    if (isDefault) {
         await FileSystem.downloadAsync(
-            Asset.fromModule(database.db).uri,
-            FileSystem.documentDirectory + `SQLite/${database.name}`
+            Asset.fromModule(defaultDatabase).uri,
+            databaseUri
+        )  
+    } else {
+        const access_token = await SecureStorage.getData("users.token")
+
+        openDatabase()._db.close()
+
+        await FileSystem.downloadAsync(
+            `${apiUrl}/users/backup`,
+            databaseUri, {
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                }
+            }
         )
     }
 }
 
+export async function uploadDatabase(data) {
+    const access_token = await SecureStorage.getData("users.token")
+
+    await FileSystem.uploadAsync(`${apiUrl}/users/backup`, databaseUri, {
+        uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+        httpMethod: "POST",
+        fieldName: "file",
+        mimeType: ".db",
+        headers: {
+            "content-type": "multipart/form-data",
+            "Authorization": `Bearer ${access_token}`,
+        },
+        parameters: data
+    })
+}
+
 export function openDatabase() {
-    return SQLite.openDatabase(database.name)
+    return SQLite.openDatabase(databaseName)
 }

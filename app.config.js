@@ -14,6 +14,11 @@ module.exports = {
     barStyle: "light-content",
     translucent: false
   },
+  androidNavigationBar: {
+    visible: true,
+    barStyle: "light-content",
+    backgroundColor: "#2299ff"
+  },
   splash: {
     image: "./assets/splash.png",
     resizeMode: "contain",
@@ -27,7 +32,10 @@ module.exports = {
   ],
   ios: {
     supportsTablet: true,
-    bundleIdentifier:"com.wordanki.app"
+    bundleIdentifier:"com.wordanki.app",
+    config: {
+      usesNonExemptEncryption: false
+    }
   },
   android: {
     package: "com.wordanki.app",
@@ -51,6 +59,7 @@ module.exports = {
     firebaseMessagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
     firebaseAppId: process.env.FIREBASE_APP_ID,
     googleClientId: process.env.GOOGLE_CLIENT_ID,
-    facebookClientId: process.env.FACEBOOK_CLIENT_ID
+    facebookClientId: process.env.FACEBOOK_CLIENT_ID,
+    apiUrl: process.env.API_URL
   }
 }

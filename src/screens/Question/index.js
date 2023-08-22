@@ -10,6 +10,8 @@ import { useGlobal } from '../../hooks/global'
 
 import Word from '../../database/models/Word'
 
+import { uploadDatabase } from '../../database/connection'
+
 import { wordsQuantiyPer100 } from '../../config/algorithm'
 import { generateWordFrequency } from '../../utils/generateWordFrequency'
 import { splitedPhrase } from '../../utils/splitedPhrase'
@@ -93,6 +95,11 @@ export default function Question({ navigation }) {
         navigation.addListener('beforeRemove', () => {
             Speech.stop()
             clearTimeout(time)
+
+            uploadDatabase({
+                level,
+                seen_words: 500
+            })
         })
     }, [navigation])
 
