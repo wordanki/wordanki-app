@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import { View, Text, TouchableOpacity, Dimensions } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons';
+import PopupMenu from '../PopupMenu'
 
 import { UserPhoto } from '../UserPhoto'
 
@@ -41,9 +42,11 @@ export const NavBar = ({ title, isBackScreen, children }) => {
                     <Text style={styles.title}>{ title }</Text>
                 </View>
 
-                <View style={styles.UserPhotoContainer}>
+                <PopupMenu/>
+
+                {/* <View style={styles.UserPhotoContainer}>
                     <View style={{ width: 30, height: 10 }}></View>
-                </View>
+                </View> */}
             </View>
         </View>
     )

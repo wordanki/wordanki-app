@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     container: {
         width: "100%",
         backgroundColor: "#222228",
-        paddingHorizontal: 20,
+        paddingHorizontal: 16,
     },
     // profileContainer: {
     //     width: "100%",

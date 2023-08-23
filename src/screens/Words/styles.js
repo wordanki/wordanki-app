@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     container: {
         width: "100%",
         height: "100%",
-        paddingHorizontal: 20,
+        paddingHorizontal: 16,
         backgroundColor: "#222228",
     },
     containerSearchTopic: {
