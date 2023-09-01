@@ -1,9 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
-import { View, Text, TouchableOpacity, Dimensions } from 'react-native'
+import { View, Text, Dimensions, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import { AntDesign } from '@expo/vector-icons';
-
-import { UserPhoto } from '../UserPhoto'
+import { AntDesign } from '@expo/vector-icons'
 
 import { COLORS } from '../../theme'
 
@@ -22,15 +20,15 @@ export const NavBar = ({ title, isBackScreen, children }) => {
                                 <Ionicons 
                                     name="menu-outline" 
                                     size={35} 
-                                    color={COLORS.GRAY_SECONDARY} 
+                                    color={COLORS.BLACK_SECONDARY} 
                                 />
                             </TouchableOpacity>
                         ) : (
-                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <TouchableOpacity onPress={() => navigation.replace('Main')}>
                                 <AntDesign 
-                                    name="arrowleft" 
+                                    name="close" 
                                     size={32} 
-                                    color={COLORS.GRAY_SECONDARY} 
+                                    color={COLORS.BLACK_SECONDARY} 
                                 />
                             </TouchableOpacity>
                         )

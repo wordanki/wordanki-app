@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
         left: 0,
         top: 4,
         position: "absolute",
-        backgroundColor: COLORS.WHITE + 14
+        backgroundColor: COLORS.BLACK_SECONDARY + 14
     },
     hiddenWord: {
         fontSize: 20,

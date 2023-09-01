@@ -2,60 +2,51 @@ import {
     View,
     Text,
     Image,
-    ImageBackground,
     Share,
     TouchableOpacity,
+    Platform,
+    Linking,
 } from 'react-native'
 
-import * as Linking from 'expo-linking';
+import { BeautifulName } from "beautiful-name"
 
-import { Platform } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
-import * as StoreReview from 'expo-store-review'
-
-import ProgressBar from "react-native-animated-progress"
+import { MaterialIcons } from '@expo/vector-icons'
 
 import { useAuth } from '../../hooks/auth'
 
 import {
     DrawerContentScrollView,
-    DrawerItemList,
 } from '@react-navigation/drawer'
 
 import { UserPhoto } from '../UserPhoto'
 
 import { ButtonDrawer } from '../ButtonDrawer'
 
-import { useGlobal } from '../../hooks/global'
-
-import { maxLevel } from '../../config/algorithm'
-
 import { COLORS } from '../../theme'
 import { styles } from './styles'
 
+const phrases = [
+    "Não conte horas trabalhadas, mas metas alcançadas.",
+    "Cada escolha que você faz tem um resultado.",
+    "Caminhos difíceis levam a destinos incríveis.",
+    "Oportunidades não acontecem, você as cria.",
+    "Quem não tenta, não erra, mas também não evolui.",
+    "Qual é a graça de viver em pesadelos e morrer com sonhos?",
+    "Sentimentos são algo que você tem e não algo que você é."
+]
+
 export const Drawer = props => {
-    const { user } = useAuth()
+    const navigation = useNavigation()
+    const { user, isLogged } = useAuth()
 
-    console.log(user)
-
-    const { informations, level } = useGlobal()
+    const userName = "Estudante"//user ? new BeautifulName(user.name).firstName : "Estudante";
 
     const handleShare = async () => {
-        try {
-            const result = await Share.share({
-                message: 'Baixe o Wordanki na Play Store\n\nhttps://play.google.com/store/apps/details?id=com.wordanki.app ',
-            });
-
-            if (result.action === Share.sharedAction) {
-                if (result.activityType) {
-                    // shared with activity type of result.activityType
-                } else {
-                    // shared
-                }
-            } else if (result.action === Share.dismissedAction) {
-                // dismissed
-            }
-        } catch (error) { }
+        Share.share({
+            message: 'Também quer aprender inglês de uma maneira rápida e eficiente? 🚀🚀\n\n Baixe o Wordanki na Play Store: ❤️❤️\n\nhttps://play.google.com/store/apps/details?id=com.wordanki.app ',
+        })
     }
 
     const handleReview = async () => {
@@ -70,8 +61,8 @@ export const Drawer = props => {
         }
     }
 
-    const handleLogout = async () => {
-        // await signOut()
+    const handleLogin = () => {
+        navigation.navigate("Login")
     }
 
     return (
@@ -79,20 +70,36 @@ export const Drawer = props => {
             <DrawerContentScrollView
                 {...props}
 
-                contentContainerStyle={{ backgroundColor: COLORS.BLACK_TERTIARY }}>
+                contentContainerStyle={{ backgroundColor: COLORS.BGCOLOR_DARK }}>
 
                 <View style={styles.profileContainer}>
-                    <UserPhoto imageUri={user?.picture} size='HIGHER' />
+                    <UserPhoto size='HIGHER' />
 
                     <View style={styles.userContainer}>
                         <View style={styles.textContainer}>
                             <Text style={styles.username}>
-                                {user?.name}
+                                {`Olá, ${userName}! 👋`}
                             </Text>
 
                             <Text style={styles.usermail}>
-                                {user?.email}
+                                "{phrases[new Date().getDay()]}"
                             </Text>
+
+                            {/* {user ? (
+                                <Text style={styles.usermail}>
+                                    {user.email}
+                                </Text>
+                            ) : (
+                                <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
+                                    <Text style={styles.loginButtonText}>Salvar meu progresso</Text>
+
+                                    <MaterialIcons
+                                        name="keyboard-arrow-right"
+                                        size={25}
+                                        color={COLORS.BLACK_SECONDARY}
+                                    />
+                                </TouchableOpacity>
+                            )} */}
                         </View>
                     </View>
 
@@ -109,10 +116,10 @@ export const Drawer = props => {
                 </View>
 
                 <View style={styles.buttonsContainer}>
-                    <ButtonDrawer iconName={"settings-outline"} text={"Configurações"} handle={handleShare} />
-                    <ButtonDrawer iconName={"share-social"} text={"Compartilhar"} handle={handleShare} />
-                    <ButtonDrawer iconName={"star-outline"} text={"Avaliar"} handle={handleReview} />
-                    <ButtonDrawer iconName={"exit-outline"} text={"Sair"} handle={handleShare} />
+                    {/* <ButtonDrawer iconName={"analytics-outline"} text={"Ver progresso"} handle={handleShare} /> */}
+                    <ButtonDrawer iconName={"share-social-outline"} text={"Compartilhar app"} handle={handleShare} />
+                    <ButtonDrawer iconName={"star-outline"} text={"Avaliar app"} handle={handleReview} />
+                    {/* <ButtonDrawer iconName={"exit-outline"} text={"Sair do app"} handle={handleShare} /> */}
                 </View>
             </DrawerContentScrollView>
         </View>

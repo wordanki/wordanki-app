@@ -32,14 +32,15 @@ export const styles = StyleSheet.create({
     tabsContainer: {
         flexDirection: 'row',
         // backgroundColor: COLORS.BLACK_TERTIARY,
-        borderTopWidth: 0.5,
+        borderTopWidth: 0,
         borderTopColor: "#fff4",
     },
     tabContainer: {
+        flexDirection: "row",
         justifyContent: 'center', 
         height: 70,
         alignItems: 'center', 
-        width: windowWidth / 4,
+        width: windowWidth / 2,
     },
     slidingTabContainer: {
         // ...StyleSheet.absoluteFillObject,
@@ -55,10 +56,11 @@ export const styles = StyleSheet.create({
     },  
     icon: {
         borderRadius: 20,
-        width: "50%",
+        width: "20%",
         justifyContent: 'center',
         alignItems: 'center',
         padding: 4,
+        marginRight: 8
     },
     buttonAdd: {
         height: 70,
@@ -83,7 +85,6 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     text: {
-        color: COLORS.WHITE, 
         textAlign: 'center',
         fontSize: 12, 
         marginTop: 2

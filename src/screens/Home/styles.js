@@ -1,110 +1,157 @@
 import { StyleSheet, Dimensions } from 'react-native'
 
+import { transparentize } from 'polished'
+
 import { COLORS, FONTS } from "../../theme"
+import { border } from 'polished'
 
 const windowWidth = Dimensions.get('window').width
 
 const borderRadius = 10
-const defaultSpacing = 16
+export const defaultSpacing = 16
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    backgroundColor: COLORS.BGCOLOR_DARK
-  },
-  title: {
-    fontSize: 20,
-    color: "#eeeeee",
-    marginTop: 20,
-    marginLeft: defaultSpacing
-  },
-  dailyGoalBar: {
-    flex: 1,
-    height: 25,
-    backgroundColor: "#ffffff22",
-    marginTop: 10,
-    marginLeft: defaultSpacing,
-    marginRight: defaultSpacing,
-    borderRadius: 12.5,
-    justifyContent: "center",
-    overflow: "hidden"
-  },
-  completedBar: {
-    height: "100%",
-    backgroundColor: "#30B956"
-  },
-  dailyGoalText: {
-    color: "#dddddd",
-    fontSize: 15,
-    position: "absolute",
-    left: 15,
-    fontWeight: "bold"
-  },
-  allWordsContainer: {
-    flex: 1,
-    borderRadius: 15,
-    marginTop: 10,
-    marginLeft: defaultSpacing,
-    marginRight: defaultSpacing,
-    padding: 16,
-    justifyContent: "space-between",
-    alignItems: "center"
+    backgroundColor: COLORS.BGCOLOR_DARK,
+    padding: defaultSpacing
   },
   info: {
-    width: "100%",
-    height: 60,
-    borderRadius: 12,
-    backgroundColor: "#ffffff19",
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 12
+    alignItems: "flex-end",
+    marginTop: defaultSpacing,
   },
-  textInfoContainer: {
+  infoImg: {
+    width: 60,
+    height: 60,
+    marginRight: defaultSpacing * 1.5
+  },
+  infoText: {
+    fontSize: 20,
+    backgroundColor: transparentize(0.85, COLORS.GREEN_PRIMARY),
+    color: COLORS.BLACK_SECONDARY,
+    borderRadius,
+    paddingLeft: defaultSpacing / 2
+  },
+  infoMainText: {
     flexDirection: "row",
     alignItems: "center"
+  },  
+  infoQuantity: {
+    fontSize: 30,
+    fontWeight: "bold",
+    marginRight: defaultSpacing / 2,
+    marginLeft: defaultSpacing
   },
-  dotInfo: {
-    width: 10,
-    height: 10,
-    borderRadius: 5
+  reviewImg: {
+    width: 90,
+    height: 90,
+    alignSelf: "flex-start"
   },
-  textInfo: {
-    fontSize: 18,
-    color: "#ffffff",
-    marginLeft: 12
-  },
-  numberInfo: {
-    fontSize: 20,
-    color: "#dddddd"
-  },
-  studyButtonContainer: {
-    width: "100%",
-    height: 45,
-    borderRadius: 30,
-    marginTop: 16
-  },
-  studyButton: {
-    width: "100%",
-    height: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 30,
-    backgroundColor: "#30B956"
-  },
-  studyText: {
-    fontSize: 24,
-    color: "#ffffff"
-  },
-  titleContainer: {
-    flex: 1,
+  reviewHeader: {
     flexDirection: "row",
-    alignItems: "flex-end",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },  
+  reviewContent: {
+    maxWidth: 150
+  },
+  reviewTitle: {
+    fontSize: 25,
+    fontWeight: "bold",
+    marginBottom: defaultSpacing / 2
+  },
+  reviewText: {
+    color: COLORS.GRAY_PRIMARY
+  },
+  reviewItems: {
+    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 20,
-    marginLeft: defaultSpacing,
-    marginRight: defaultSpacing
+    marginTop: defaultSpacing
   },
+  progressBar: {
+    width: 150
+  },  
+  reviewButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: defaultSpacing / 2,
+    borderRadius: borderRadius * 2
+  },
+  reviewButtonText: {
+    textAlign: "center",
+    color: transparentize(0.25, COLORS.BLUE),
+    fontWeight: "bold",
+    marginRight: defaultSpacing / 4
+  },
+  studyContainer: {
+    borderRadius,
+    paddingVertical: defaultSpacing,
+    paddingHorizontal: defaultSpacing,
+    marginTop: defaultSpacing * 2,
+    backgroundColor: COLORS.WHITE,
+    shadowColor: COLORS.WHITE,
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+  studyHeader: {
+    flexDirection: "row",
+    alignItems: "center"
+  },  
+  studyContent: {
+    maxWidth: 150
+  },
+  studyHeaderTitle: {
+    fontSize: 25,
+    fontWeight: "bold",
+    marginBottom: defaultSpacing / 2
+  },
+  studyHeaderSubtitle: {
+    color: COLORS.GRAY_PRIMARY
+  },
+  studyImg: {
+    width: 110,
+    height: 110,
+    alignSelf: "flex-start"
+  },
+  studyButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: defaultSpacing * 2,
+    backgroundColor: COLORS.GREEN_PRIMARY,
+    paddingVertical: defaultSpacing / 2,
+    borderRadius: borderRadius * 2
+  },
+  studyButtonText: {
+    textAlign: "center",
+    color: transparentize(0.25, COLORS.GREEN_PRIMARY),
+    fontWeight: "bold",
+    marginRight: defaultSpacing / 4
+  },
+  bottomSize: {
+    height: windowWidth / 8 + defaultSpacing
+  },
+  fab: {
+    borderRadius,
+    backgroundColor: COLORS.WHITE,
+  },
+  studyAndReviewButton: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: defaultSpacing * 2
+  },
+  studyAndReviewButtonText: {
+    textAlign: "center",
+    color: COLORS.GRAY_PRIMARY,
+    marginRight: defaultSpacing / 4,
+    fontSize: 16,
+    fontWeight: "500"
+  }
 })

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { View, Text, Dimensions, TouchableOpacity } from 'react-native'
 import Animated, { EasingNode } from 'react-native-reanimated';
 
-import { darken, transparentize } from 'polished'
+import { transparentize } from 'polished'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -38,10 +38,10 @@ const MyTabBar = ({ name, component }) => () => (
 )
 
 const TabsContent = [
-    { route: { tab: 'Initial', screen: 'Home' }, label: 'Home', type: IconType.Ionicons, activeIcon: 'home-outline', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Home", component: Home }) },
-    { route: { tab: 'Topics', screen: 'Tópicos' }, label: 'Tópicos', type: IconType.Ionicons, activeIcon: 'search-outline', inActiveIcon: 'search-outline', component: MyTabBar({ name: "Tópicos", component: Categories }) },
-    { route: { tab: 'Words', screen: 'Palavras' }, label: 'Palavras', type: IconType.MaterialCommunityIcons, activeIcon: 'format-letter-case', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Palavras", component: Words }) },
-    { route: { tab: 'Profile', screen: 'Perfil' }, label: 'Perfil', type: IconType.Ionicons, activeIcon: 'person-outline', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Perfil", component: Profile }) },
+    { route: { tab: 'Initial', screen: 'Início' }, label: 'Início', type: IconType.Ionicons, activeIcon: 'home-outline', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Início", component: Home }) },
+    // { route: { tab: 'Topics', screen: 'Missões' }, label: 'Missões', type: IconType.Ionicons, activeIcon: 'md-trophy-outline', inActiveIcon: 'md-trophy-outline', component: MyTabBar({ name: "Missões", component: Categories }) },
+    // { route: { tab: 'Words', screen: 'Palavras' }, label: 'Palavras', type: IconType.MaterialCommunityIcons, activeIcon: 'format-letter-case', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Palavras", component: Words }) },
+    // { route: { tab: 'Profile', screen: 'Progresso' }, label: 'Progresso', type: IconType.Ionicons, activeIcon: 'analytics-outline', inActiveIcon: 'grid-outline', component: MyTabBar({ name: "Progresso", component: Profile }) },
 ];
 
 const TabBar = ({ state, descriptors, navigation }) => {
@@ -88,33 +88,35 @@ const TabBar = ({ state, descriptors, navigation }) => {
             
                     const tab = TabsContent[index]
 
-                    return (
-                        <TouchableOpacity
-                            activeOpacity={0.5}
-                            accessibilityRole='button'
-                            accessibilityState={isFocused ? { selected: true } : {}}
-                            accessibilityLabel={options.tabBarAccessibilityLabel}
-                            testID={options.tabBarTestID}
-                            onPress={onPress}
-                            onLongPress={onLongPress}
-                            key={index}
-                        >
-                            <View  style={[styles.tabContainer]}>
-                                    <View style={[styles.icon, { backgroundColor: isFocused ? transparentize(0.85, COLORS.BLUE) : COLORS.TRANSPARENT }]}>
-                                        <Icon
-                                            name={tab.activeIcon}
-                                            type={tab.type}
-                                            size={20} 
-                                            color={COLORS.WHITE}
-                                        />
-                                    </View >
+                    return <View />
 
-                                    <Text style={[styles.text, { fontWeight: isFocused ? "bold" : "normal" }]}>
-                                        {tab.label}
-                                    </Text>
-                                </View>
-                        </TouchableOpacity>
-                    )
+                    // return (
+                    //     <TouchableOpacity
+                    //         activeOpacity={0.5}
+                    //         accessibilityRole='button'
+                    //         accessibilityState={isFocused ? { selected: true } : {}}
+                    //         accessibilityLabel={options.tabBarAccessibilityLabel}
+                    //         testID={options.tabBarTestID}
+                    //         onPress={onPress}
+                    //         onLongPress={onLongPress}
+                    //         key={index}
+                    //     >
+                    //         <View  style={[styles.tabContainer]}>
+                    //                 <View style={[styles.icon, { backgroundColor: isFocused ? transparentize(0.85, COLORS.BLUE) : COLORS.TRANSPARENT }]}>
+                    //                     <Icon
+                    //                         name={tab.activeIcon}
+                    //                         type={tab.type}
+                    //                         size={20} 
+                    //                         color={isFocused ? COLORS.BLUE : COLORS.BLACK_SECONDARY}
+                    //                     />
+                    //                 </View >
+
+                    //                 <Text style={[styles.text, { fontWeight: isFocused ? "500" : "normal", color: isFocused ? COLORS.BLUE : COLORS.BLACK_SECONDARY }]}>
+                    //                     {tab.label}
+                    //                 </Text>
+                    //             </View>
+                    //     </TouchableOpacity>
+                    // )
                 })}
             </View>
 

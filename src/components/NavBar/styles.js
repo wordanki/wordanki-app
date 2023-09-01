@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     borderRadius: 20
   },  
   title: {
-    color: COLORS.WHITE,
+    color: COLORS.BLACK_SECONDARY,
     fontFamily: FONTS.REGULAR,
     fontSize: 15
   }

@@ -1,19 +1,18 @@
 import { StyleSheet } from 'react-native'
+import { COLORS } from '../../theme'
 
 export const styles = StyleSheet.create({
   page: {
     height: "100%",
     justifyContent: "flex-end",
-    backgroundColor: "#222228",
+    backgroundColor: COLORS.BGCOLOR_DARK,
     position: "relative",
   },
   exitButton: {
-    width: 24,
-    height: 24,
-    backgroundColor: "#606870",
+    // backgroundColor: "#dde1e8",
     position: "absolute",
-    top: 80,
-    right: 40,
+    top: 60,
+    left: 40,
     borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
@@ -35,7 +34,7 @@ export const styles = StyleSheet.create({
     maxWidth: "100%",
     fontSize: 22,
     fontWeight: "bold",
-    color: "#b8c0d0",
+    color: COLORS.BLACK_SECONDARY,
     textAlign: "center",
   },
   buttonsContainer: {
@@ -54,34 +53,35 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#303036",
+    backgroundColor: COLORS.BGCOLOR_DARK,
     borderWidth: 1,
     borderBottomWidth: 4,
-    borderColor: "#535966",
+    borderColor: "#dde1e8",
   },
   imageButton: {
     width: 20,
     height: "100%",
-    marginRight: 15,
+    marginRight: 10,
   },
   textButton: {
     fontSize: 15,
     fontWeight: "500",
-    color: "#a8b2bb",
+    color: "#777777",
   },
   withoutRegister: {
     textAlign: "center",
-    textDecorationLine: "underline",
+    // textDecorationLine: "underline",
     fontSize: 15,
     fontWeight: "500",
-    color: "#a8b2bb",
+    color: "#777777",
   },
   textFooter: {
     width: 300,
     maxWidth: "100%",
     fontSize: 12,
     fontWeight: "500",
-    color: "#a0a7ae",
+    color: COLORS.GRAY_PRIMARY,
     textAlign: "center",
+    textDecorationLine: "underline"
   }
 })

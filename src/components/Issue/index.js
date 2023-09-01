@@ -1,22 +1,24 @@
-import { useState, forwardRef, useImperativeHandle, useEffect } from 'react'
+import { useState, forwardRef, useImperativeHandle, useEffect, useCallback } from 'react'
 
-import { View, Text, TouchableHighlight, Animated, Easing } from 'react-native'
+import { View, Text, TouchableOpacity, Animated, Easing } from 'react-native'
 
 import * as Speech from 'expo-speech'
 
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign, Entypo } from '@expo/vector-icons'
 
 import { BlurText } from '../../components/BlurText'
 
 import { useGlobal } from '../../hooks/global'
 
 import Word from '../../database/models/Word'
-import Information from '../../database/models/Information'
+import Language from '../../database/models/Language'
+import Statistic from '../../database/models/Statistic'
 
 import { spacedRepetition } from '../../utils/spacedRepetition'
 
 import { COLORS } from '../../theme'
 import { styles, defaultSpacing } from './styles'
+import { transparentize } from 'polished'
 
 export const Issue = forwardRef(({ data, nextWord, setNextWord, goToLast }, parentRef) => {
     const [isSelectedWord, setIsSelectedWord] = useState(false)
@@ -26,7 +28,7 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, goToLast }, pare
     const [progressNextWord] = useState(new Animated.Value(0))
     const [arrowPosition] = useState(new Animated.Value(0))
 
-    const { level, setLevel } = useGlobal()
+    const { language, level, setLevel } = useGlobal()
 
     useImperativeHandle(parentRef, () => ({
         play,
@@ -61,7 +63,7 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, goToLast }, pare
         if (isSpeaking) await Speech.stop()
 
         if (data.clickedAnswerIndex === null || force) {
-            Speech.speak(data.phrase.join(""), { language: "en" })
+            Speech.speak(data.phrase.join(""), { language: language.to })
         }
     }
 
@@ -76,6 +78,10 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, goToLast }, pare
         setIsSelectedWord(true)
         setWordSelected(index)
         setShowArrow(true)
+        setNextWord(!nextWord)
+
+        progressNextWord.setValue(0)
+        progressBarAnime.start()
 
         const next_repetition = spacedRepetition(right, data.hits, data.next_repetition, data.previous_repetition)
 
@@ -98,19 +104,24 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, goToLast }, pare
                 newLevel = level - 1
             }
 
+            setLevel(newLevel)
+
             try {
-                await Information.updateLevel(newLevel)
+                await Language.updateLevelById(1, newLevel)
             } catch (error) {
                 console.log(`[ERROR: UPDATE LEVEL]: ${error.messsage}`)
             }
-
-            setLevel(newLevel)
         }
 
-        progressNextWord.setValue(0)
-        progressBarAnime.start()
-
-        setNextWord(!nextWord)
+        try {
+            await Statistic.create({
+                word_id: data.id,
+                type: data.isNewWord ? 1 : 0,
+                datest: new Date().toISOString()
+            })
+        } catch(error) {
+            console.log(`[ERROR: CREATE STATISTIC]: ${error.messsage}`)
+        }
     }
 
     useEffect(() => {
@@ -124,13 +135,13 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, goToLast }, pare
 
     return (
         <View style={[styles.container, { backgroundColor: COLORS.BLACK_PRIMARY }]}>
-            {!data.isNewWord && (
-                <View style={styles.tagContainer}>
-                    <Text style={styles.tagText}>Revisão</Text>
+            {(
+                <View style={[styles.tagContainer, { backgroundColor: transparentize(0.85, data.isNewWord ? COLORS.GREEN_PRIMARY : COLORS.BLUE) }]}>
+                    <Text style={[styles.tagText, { color: data.isNewWord ? COLORS.BLACK_SECONDARY + "bb" : COLORS.BLACK_SECONDARY + "bb" }]}>{data.isNewWord ? "Novo" : "Revisão"}</Text>
                 </View>
             )}
 
-            <View style={[styles.progressBarContainer, { backgroundColor: data.clickedAnswerIndex === null && isSelectedWord ?  COLORS.WHITE + 11 : COLORS.BLACK_PRIMARY  }]}>
+            <View style={[styles.progressBarContainer, { backgroundColor: data.clickedAnswerIndex === null && isSelectedWord ? COLORS.WHITE + 11 : COLORS.BLACK_PRIMARY }]}>
                 {isSelectedWord && (
                     <Animated.View style={[styles.progressBar, {
                         width: progressNextWord.interpolate({
@@ -142,14 +153,13 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, goToLast }, pare
             </View>
 
             <View style={styles.questionContainer}>
-                <TouchableHighlight onPress={() => play(true)} style={{borderRadius: 5}}>
+                <TouchableOpacity onPress={() => play(true)} style={{ borderRadius: 5 }}>
                     <AntDesign
                         name="sound"
                         size={27}
-                        color={"#44AEDF"}
-                        style={{backgroundColor: "#222228", borderRadius: 5}}
+                        color={COLORS.BLACK_SECONDARY + 'bb'}
                     />
-                </TouchableHighlight>
+                </TouchableOpacity>
 
                 <Text style={styles.question}>
                     {data.phrase[0]}
@@ -160,39 +170,37 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, goToLast }, pare
 
             <View style={styles.answersContainer}>
                 {data.answers.map((answer, index) => (
-                    <TouchableHighlight
+                    <TouchableOpacity
                         key={index}
                         disabled={isSelectedWord}
                         onPress={() => answerEvent(index === data.correctAsnwerIndex, index)}
                         style={[styles.answerButtonContainer, {
-                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#298F47" : "#aB3D42") : "#3D404C"
+                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? COLORS.GREEN_PRIMARY : "#aB3D42") : COLORS.WHITE
                         }]}
                     >
                         <View style={[styles.answerButton, {
-                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? "#298F47" : "#aB3D42") : "#3D404C",
-                            borderColor: isSelectedWord && (data.correctAsnwerIndex == index || wordSelected == index) ? (data.correctAsnwerIndex == index ? "#298F47" : "#aB3D42") : "#3D404C"
+                            backgroundColor: isSelectedWord && wordSelected == index ? (wordSelected == data.correctAsnwerIndex ? COLORS.GREEN_PRIMARY : "#aB3D42") : COLORS.WHITE,
+                            borderColor: isSelectedWord && (data.correctAsnwerIndex == index || wordSelected == index) ? (data.correctAsnwerIndex == index ? COLORS.GREEN_PRIMARY : "#aB3D42") : COLORS.WHITE
                         }]}>
-                            <Text style={styles.answerText}>
+                            <Text style={[styles.answerText, { color: isSelectedWord && wordSelected == index ? COLORS.WHITE : COLORS.BLACK_SECONDARY }]}>
                                 {answer}
                             </Text>
                         </View>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 ))}
 
-                <TouchableHighlight
+                <TouchableOpacity
                     disabled={isSelectedWord}
                     style={[styles.answerButtonContainer, { backgroundColor: "#266E91" }]}
                     onPress={() => answerEvent(false, -1)}
                 >
-                    <View style={[styles.answerButton, { backgroundColor: "#266E91", borderColor: "#266E91" }]}>
-                        <Text style={styles.answerText}>Não sei</Text>
+                    <View style={[styles.answerButton, { backgroundColor: transparentize(0.25, COLORS.BLUE), borderColor: transparentize(0.25, COLORS.BLUE) }]}>
+                        <Text style={[styles.answerText, { color: COLORS.WHITE }]}>Não sei</Text>
                     </View>
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
 
             <View style={[styles.translation, { paddingRight: isSelectedWord ? (defaultSpacing / 1.5) : (defaultSpacing / 1.5) - 4 }]}>
-                <Text style={styles.translationLabel}>Tradução</Text>
-
                 {!isSelectedWord ?
                     (
                         <BlurText text={data.translatedPhrase.join('')} />
@@ -208,14 +216,13 @@ export const Issue = forwardRef(({ data, nextWord, setNextWord, goToLast }, pare
 
             {showArrow && (
                 <Animated.View style={[styles.arrowContainer, { bottom: arrowPosition }]}>
-                    <TouchableHighlight onPress={goToLast} style={{borderRadius: 5}}>
+                    <TouchableOpacity onPress={goToLast}>
                         <AntDesign
                             name="down"
                             size={22}
-                            color={COLORS.WHITE + "bb"} 
-                            style={{backgroundColor: "#222228", padding: 5, borderRadius: 5}}
+                            color={COLORS.BLACK_SECONDARY + 'bb'}
                         />
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </Animated.View>
             )}
         </View>

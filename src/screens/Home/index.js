@@ -1,130 +1,187 @@
 import { useState, useEffect } from 'react'
-import { View, Text, ScrollView, TouchableHighlight } from 'react-native'
+import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
 import {
     CopilotProvider,
     CopilotStep,
     walkthroughable,
     useCopilot
-  } from "react-native-copilot";
+} from "react-native-copilot"
 
+import { useTheme, FAB, AnimatedFAB } from "react-native-paper"
+
+import { transparentize } from 'polished'
+
+import { MaterialIcons, Ionicons } from '@expo/vector-icons'
+
+import { ProgressBar, MD3Colors } from 'react-native-paper';
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 
-import Topic from '../../components/Topic'
-import LinkCard from '../../components/LinkCard'
-
+import { Loading } from '../../components/Loading'
 import Word from '../../database/models/Word'
 
 import { styles } from "./styles"
+import { COLORS } from '../../theme';
 
 const CopilotText = walkthroughable(Text);
 
-const topics = [
-    {
-        title: "Viagem",
-        img: require("../../assets/img_topics/Viagem.jpg")
-    },
-    {
-        title: "Escola",
-        img: require("../../assets/img_topics/Escola.jpg")
-    },
-    {
-        title: "Trabalho",
-        img: require("../../assets/img_topics/Trabalho.jpg")
-    },
-    {
-        title: "Tecnologia",
-        img: require("../../assets/img_topics/Tecnologia.jpg")
-    }
-];
-
 export default function Home({ route }) {
-    const [all, setAll] = useState(0)
     const [seen, setSeen] = useState(0)
     const [reviews, setReviews] = useState(0)
+
+    const [isOpen, setIsOpen] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false)
 
     const navigation = useNavigation()
     const isFocused = useIsFocused()
 
     const { start } = useCopilot()
 
+    const handleLearn = type => navigation.navigate("Question", { type })
+
     useEffect(() => {
-        if (isFocused) {
-            Word.getQuantity().then(response => setAll(response))
-            Word.getNoSeenQuantity().then(response => setSeen(response))
-            Word.getReviewsQuantity().then(response => setReviews(response))
+        const loadData = async () => {
+            try {
+                const [seen, reviews] = await Promise.all([
+                    Word.getNoSeenQuantity(),
+                    Word.getReviewsQuantity()
+                ])
+    
+                setSeen(seen)
+                setReviews(reviews)
+            } catch(error) {} finally {
+                setIsLoaded(true)
+            }
         }
+
+        if (isFocused) loadData()
     }, [isFocused])
 
+    if (!isLoaded) return <Loading />
+
     return (
+        <>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-                <View>
-                    <CopilotStep text="This is a hello world example!" order={1} name="hello">
-                        <CopilotText style={styles.title}>Meta diária</CopilotText>
-                    </CopilotStep>
+                <View style={styles.info}>
+                    <View>
+                        <Text style={styles.infoText}>Você já aprendeu</Text>
 
-                    <View style={styles.dailyGoalBar}>
-                        <View style={[styles.completedBar, { width: `${64}%` }]}></View>
+                        <View style={styles.infoMainText}>
+                            <Text style={styles.infoQuantity}>{seen}</Text>
+                            <Text style={styles.infoText}>palavras! 👏</Text>
+                        </View>
+                    </View>
 
-                        <CopilotStep text="This is a hello world example!" order={2} name="hellso">
-                        <CopilotText style={styles.dailyGoalText}>{64} / 100</CopilotText>
-                    </CopilotStep>
-                        
+                    <Image source={require("../../assets/trofeu.png")} style={styles.infoImg} />
+                </View>
+
+                <View style={styles.studyContainer}>
+                    <View style={styles.reviewHeader}>
+                        <View style={styles.reviewContent}>
+                            <Text style={styles.reviewTitle}>Hmm...</Text>
+                            <Text style={styles.reviewText}>Parece que há {reviews} revisões pendentes 🔍</Text>
+                        </View>
+
+                        <Image resizeMode='contain' source={require("../../assets/revisao.png")} style={styles.reviewImg} />
+                    </View>
+
+                    <View style={styles.reviewItems}>
+                        <View style={styles.progressBar}>
+                            <ProgressBar style={styles.progressBar} progress={1} color={transparentize(0.35, COLORS.BLUE)} />
+                        </View>
+
+                        <TouchableOpacity onPress={() => handleLearn(0)} style={styles.reviewButton}>
+                            <Text style={styles.reviewButtonText}>REVISAR</Text>
+
+                            <MaterialIcons
+                                name="keyboard-arrow-right"
+                                size={32}
+                                color={COLORS.BLUE}
+                            />
+                        </TouchableOpacity>
                     </View>
                 </View>
 
-                <View>
-                    <Text style={styles.title}>Estudo de vocabulário</Text>
-
-                    <LinearGradient style={styles.allWordsContainer} colors={['#465baF', '#1B699F', '#1B88bF']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}>
-                        <View style={styles.info}>
-                            <View style={styles.textInfoContainer}>
-                                <View style={[styles.dotInfo, { backgroundColor: "#30B956" }]}></View>
-                                <Text style={styles.textInfo}>Palavras vistas</Text>
-                            </View>
-
-                            <Text style={styles.numberInfo}>{`${seen} / ${all}`}</Text>
+                <View style={styles.studyContainer}>
+                    <View style={styles.reviewHeader}>
+                        <View style={styles.reviewContent}>
+                            <Text style={styles.reviewTitle}>Isso aí!</Text>
+                            <Text style={styles.reviewText}>Continue aumentando seu vocabulário ✏️</Text>
                         </View>
 
-                        <View style={[styles.info, { marginTop: 16 }]}>
-                            <View style={styles.textInfoContainer}>
-                                <View style={[styles.dotInfo, { backgroundColor: "#00B2FF" }]} />
-                                <Text style={styles.textInfo}>Revisões pendentes</Text>
-                            </View>
+                        <Image resizeMode='contain' source={require("../../assets/estudo.png")} style={styles.studyImg} />
+                    </View>
 
-                            <Text style={styles.numberInfo}>{reviews}</Text>
+                    <View style={styles.reviewItems}>
+                        <View style={styles.progressBar}>
+                            <ProgressBar progress={1} color={transparentize(0.35, COLORS.GREEN_PRIMARY)} />
                         </View>
 
-                        <TouchableHighlight onPress={() =>  start()/*navigation.navigate("Question")*/} style={styles.studyButtonContainer}>
-                            <View style={styles.studyButton}>
-                                <Text style={styles.studyText}>Estudar</Text>
-                            </View>
-                        </TouchableHighlight>
-                    </LinearGradient>
-                </View>
+                        <TouchableOpacity onPress={() => handleLearn(1)} style={styles.reviewButton}>
+                            <Text style={styles.studyButtonText}>ESTUDAR</Text>
 
-                <View>
-                    <Text style={styles.title}>Tópicos recentes</Text>
-
-                    <ScrollView
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                        style={styles.topics}
-                    >
-                        {topics.map((topic, index) => (
-                            <Topic
-                                key={index}
-                                index={index}
-                                ima={topic.img}
-                                title={topic.title}
-                                navigation={navigation}
+                            <MaterialIcons
+                                name="keyboard-arrow-right"
+                                size={32}
+                                color={COLORS.GREEN_PRIMARY}
                             />
-                        ))}
-                    </ScrollView>
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
-                <View style={{ height: 16 }} />
+                <TouchableOpacity onPress={() => handleLearn(2)} style={styles.studyAndReviewButton}>
+                    <Text style={styles.studyAndReviewButtonText}>Estudar e Revisar</Text>
+
+                    <MaterialIcons
+                        name="keyboard-arrow-right"
+                        size={32}
+                        color={COLORS.GRAY_PRIMARY}
+                    />
+                </TouchableOpacity>
+
+                <View style={styles.bottomSize} />
             </ScrollView>
+
+            {/* <FAB.Group
+                open={isOpen}
+                label={!isOpen && "Estudar"}
+                icon={isOpen ? "close" : "pencil"}
+                fabStyle={ styles.fab}    
+                visible={true}
+                iconMode
+                color={COLORS.GREEN_PRIMARY}
+                actions={[
+                    {
+                        icon: "magnify",
+                        label: "Revisar",
+                        style: styles.fab,
+                        color: COLORS.BLUE,
+                        onPress: () => {
+
+                        },
+                    },
+                    {
+                        icon: "pencil",
+                        label: "Estudar",
+                        style: styles.fab,
+                        color: COLORS.GREEN_PRIMARY,
+                        onPress: () => {
+
+                        },
+                    },
+                    {
+                        icon: "plus",
+                        label: "Estudar e Revisar",
+                        style: styles.fab,
+                        color: COLORS.ORANGE,
+                        onPress: () => {
+
+                        },
+                    },
+                ]}
+                onStateChange={({ open }) => setIsOpen(open)}
+            /> */}
+        </>
     )
 }

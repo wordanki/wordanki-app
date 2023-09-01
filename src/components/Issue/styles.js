@@ -1,5 +1,7 @@
 import { StyleSheet, Dimensions, StatusBar } from 'react-native'
 
+import { transparentize } from 'polished'
+
 import { COLORS, FONTS } from "../../theme"
 
 const windowWidth = Dimensions.get('window').width
@@ -10,38 +12,37 @@ export const defaultSpacing = 20
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 28,
-    paddingHorizontal: 16,
+    padding: defaultSpacing,
     overflow: "hidden"
   },
   tagContainer: {
-    height: 20,
-    // width: 30,
-    marginBottom: 10,
-    borderTopRightRadius: 10,
-    borderBottomRightRadius: 10,
-    // alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: "#266E91",
-    paddingHorizontal: 5,
-    position: "absolute",
-    top: 8,
-    left: 0,
+    alignItems: "center",
+    backgroundColor: transparentize(0.85, COLORS.BLUE),
+    paddingHorizontal: defaultSpacing,
+    paddingVertical: defaultSpacing / 4,
+    borderRadius,
+    maxWidth: defaultSpacing  * 4,
+    marginBottom: defaultSpacing
   },
   tagText: {
-   fontSize: 10,
-   color: "#ffffff",
-  },
+    fontSize: 10,
+    color: COLORS.BLUE
+    },
   questionContainer: {
     height: "auto",
     // maxHeight: screenHeight * .2,
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 28,
+    shadowColor: COLORS.WHITE,
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3
   },
   question: {
     flex: 1,
-    color: "#dddddd",
+    color: COLORS.BLACK_SECONDARY + 'bb',
     fontSize: 24,
     marginLeft: 16,
     overflow: "scroll",
@@ -57,7 +58,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 20,
     overflow: "scroll",
-  },  
+  },
   answerButtonContainer: {
     height: defaultSpacing * 2,
     width: "100%",
@@ -73,30 +74,42 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
   },
   answerText: {
-    color: "#dddddd",
     fontSize: 20
   },
   translation: {
     height: "auto",
     // maxHeight: screenHeight * .2,
     borderWidth: 1,
-    borderColor: "#ffffff28",
-    backgroundColor: "#ffffff14",
+    borderColor: COLORS.WHITE,
+    backgroundColor: COLORS.WHITE,
     borderRadius: borderRadius * 1.2,
     justifyContent: 'center',
     paddingVertical: defaultSpacing / 1.5,
     paddingLeft: defaultSpacing / 1.5,
     overflow: "scroll",
+    shadowColor: COLORS.WHITE,
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3
+  },
+  translationContainer: {
+    backgroundColor: transparentize(0.85, COLORS.BLACK_SECONDARY),
+    maxWidth: defaultSpacing * 5,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: defaultSpacing / 2,
+    paddingHorizontal: defaultSpacing,
+    paddingVertical: defaultSpacing / 4,
+    borderRadius
   },
   translationLabel: {
-    fontSize: 16,
-    color: "#44AEDF",
-    marginBottom: defaultSpacing / 2,
+    fontSize: 10,
+    color: COLORS.BLACK_SECONDARY,
   },
   translationText: {
     fontSize: 20,
     lineHeight: 24,
-    color: "#dddddd",
+    color: COLORS.BLACK_SECONDARY + 'bb',
   },
   translationWord: {
     color: "#44AEDF",
@@ -108,12 +121,12 @@ export const styles = StyleSheet.create({
     left: 0,
     height: 3,
     width: windowWidth,
-    backgroundColor: COLORS.WHITE + 11,
+    backgroundColor: COLORS.BLACK_SECONDARY + 11,
     position: "absolute"
   },
   progressBar: {
     height: "100%",
-    backgroundColor: COLORS.WHITE + "AA"
+    backgroundColor: COLORS.BLACK_SECONDARY + "bb"
   },
   arrowContainer: {
     height: 60,

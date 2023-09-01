@@ -1,11 +1,14 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
 
-import { View } from 'react-native'
+import { View, BackHandler  } from 'react-native'
 import * as Speech from 'expo-speech'
 
 import { FlashList } from "@shopify/flash-list"
 
 import { Issue } from '../../components/Issue'
+import { Loading } from '../../components/Loading'
+import { FinishScreen } from '../../components/FinishScreen'
+
 import { useGlobal } from '../../hooks/global'
 
 import Word from '../../database/models/Word'
@@ -20,11 +23,11 @@ import { styles } from './styles'
 
 let time = null
 
-export default function Question({ navigation }) {
+export default function Question({ navigation, route }) {
     const [nextWord, setNextWord] = useState(false)
-    const [isNewWord, setIsNewWord] = useState(true)
+    const [isNewWord, setIsNewWord] = useState([0, 2].includes(route.params.type))
 
-    const [data, setData] = useState([])
+    const [data, setData] = useState()
 
     const flatListRef = useRef()
     const issueRefs = useRef([])
@@ -38,6 +41,19 @@ export default function Question({ navigation }) {
         })
     }
 
+    const handleBackButtonClick = () => {
+        navigation.replace("Main")
+        return true
+      }
+      
+      useEffect(() => {
+        BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick)
+
+        return () => {
+          BackHandler.removeEventListener("hardwareBackPress", handleBackButtonClick)
+        }
+      }, [])
+
     useEffect(() => {
         (async () => {
             let word = null
@@ -49,27 +65,37 @@ export default function Question({ navigation }) {
                     word = await Word.findOneByNextReview()
 
                     if (word) break
+
+                    if (route.params.type === 0) {
+                        if (!data) setData([])
+
+                        return
+                    }
                 default:
                     frequency = generateWordFrequency(level)
                     word = await Word.findOneByFrequencyOrNext(frequency) || await Word.findOneByFrequencyOrBefore(frequency)
                     newWord = true
             }
 
-            if (!word) return
+            if (!word) {
+                if (!data) setData([])
 
-            setIsNewWord(newWord)
+                return
+            }
+
+            if (route.params.type === 2) setIsNewWord(newWord)
 
             const options = await Word
-                .findByClassRandomlyAndDifferentOfTranslationWithLimit(word.class, word.portuguese, 3)
+                .findByClassRandomlyAndDifferentOfTranslationWithLimit(word.class, word.translated_content, 3)
 
             const wordPosition = Math.floor(Math.random() * 4)
 
             options.splice(wordPosition, 0, {
-                english: word.english,
-                portuguese: word.portuguese
+                content: word.content,
+                translated_content: word.translated_content
             })
 
-            const newData = [...data, {
+            const newData = [...(data || []), {
                 id: word.id,
                 hits: word.hits,
                 isNewWord: newWord,
@@ -77,10 +103,10 @@ export default function Question({ navigation }) {
                 correctAsnwerIndex: wordPosition,
                 next_repetition: word.next_repetition,
                 previous_repetition: word.previous_repetition,
-                answers: options.map(option => option.portuguese),
+                answers: options.map(option => option.translated_content),
                 level: Math.floor(frequency / wordsQuantiyPer100),
-                phrase: splitedPhrase(word.phrases[0].english, true),
-                translatedPhrase: splitedPhrase(word.phrases[0].portuguese, true),
+                phrase: splitedPhrase(word.phrases[0].content, true),
+                translatedPhrase: splitedPhrase(word.phrases[0].translated_content, true),
             }]
 
             setData(newData)
@@ -88,7 +114,7 @@ export default function Question({ navigation }) {
     }, [nextWord])
 
     useEffect(() => {
-        if (data.length > 1 && flatListRef) time = setTimeout(() => goToLast(), 6000)
+        if (data?.length > 1 && flatListRef) time = setTimeout(() => goToLast(), 6000)
     }, [data])
 
     useEffect(() => {
@@ -96,10 +122,10 @@ export default function Question({ navigation }) {
             Speech.stop()
             clearTimeout(time)
 
-            uploadDatabase({
-                level,
-                seen_words: 500
-            })
+            // uploadDatabase({
+            //     level,
+            //     seen_words: 500
+            // })
         })
     }, [navigation])
 
@@ -126,7 +152,9 @@ export default function Question({ navigation }) {
         </View>
     ), [data])
 
-    if (!data.length) return <View style={styles.container} />
+    if (!data) return <Loading />
+
+    if (!data.length) return <FinishScreen learning={route.params.type} />
 
     return (
         <View style={styles.container}>

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 
-import Information from '../database/models/Information'
+import Language from '../database/models/Language'
 
 import localStorage from '../helpers/localStorage' 
 
@@ -9,24 +9,22 @@ const GlobalContext = createContext({})
 export const GlobalProvider = ({ children }) => {
     const [level, setLevel] = useState(0)
     const [firstTime, setFirstTime] = useState(true)
-
-    const [informations, setInformations] = useState()
+    const [language, setLanguage] = useState(true)
 
     useEffect(() => {
-        Information
-            .findTheOne()
-            .then(response => {
-                setLevel(response.level)
+        Language.findById(1).then(response => {
+            setLevel(response.level)
 
-                setInformations({
-                    version: response.version
-                })
+            setLanguage({
+                from: response.froml,
+                to: response.tol
             })
+        })
     }, [])
 
     useEffect(() => {
         localStorage
-            .getData("user.first-times").then(_ =>  setFirstTime(false)).catch(_ => setFirstTime(true))
+            .getData("user.first-time").then(_ =>  setFirstTime(false)).catch(_ => setFirstTime(true))
     }, [])
 
     return (
@@ -35,7 +33,7 @@ export const GlobalProvider = ({ children }) => {
             setLevel,
             firstTime,
             setFirstTime,
-            informations
+            language
         }}>
             {children}
         </GlobalContext.Provider>

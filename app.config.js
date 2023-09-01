@@ -8,17 +8,28 @@ module.exports = {
   orientation: "portrait",
   icon: "./assets/icon.png",
   scheme: "com.wordanki.app",
-  entryPoint : "./index.js",
+  entryPoint: "./index.js",
   androidStatusBar: {
     backgroundColor: "#2299ff",
     barStyle: "light-content",
     translucent: false
   },
-  androidNavigationBar: {
-    visible: true,
-    barStyle: "light-content",
-    backgroundColor: "#2299ff"
-  },
+  plugins: [
+    [
+      "expo-build-properties",
+      {
+        android: {
+          compileSdkVersion: 33,
+          targetSdkVersion: 33,
+          buildToolsVersion: "33.0.0"
+        }
+      }
+    ]],
+  // androidNavigationBar: {
+  //   visible: true,
+  //   barStyle: "light-content",
+  //   backgroundColor: "#2299ff"
+  // },
   splash: {
     image: "./assets/splash.png",
     resizeMode: "contain",
@@ -32,14 +43,14 @@ module.exports = {
   ],
   ios: {
     supportsTablet: true,
-    bundleIdentifier:"com.wordanki.app",
+    bundleIdentifier: "com.wordanki.app",
     config: {
       usesNonExemptEncryption: false
     }
   },
   android: {
     package: "com.wordanki.app",
-    versionCode: 2,
+    versionCode: 3,
     adaptiveIcon: {
       foregroundImage: "./assets/adaptive-icon.png",
       backgroundColor: "#ffffff"

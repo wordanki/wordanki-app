@@ -7,15 +7,18 @@ import SecureStorage from '../helpers/secureLocalStorage'
 
 import { apiUrl } from '../services/api'
 
-const databaseName = "database.db"
+const databaseName = "databaseV1-0-0.db"
 const databaseFolder = `${FileSystem.documentDirectory}SQLite`
 const databaseUri = `${databaseFolder}/${databaseName}`
 
 const defaultDatabase = require('./database.db')
 
 export async function loadDatabase() {
-    if (!(await FileSystem.getInfoAsync(databaseFolder)).exists) {
-        await FileSystem.makeDirectoryAsync(databaseFolder)
+    if (!(await FileSystem.getInfoAsync(databaseUri)).exists) {
+        if (!(await FileSystem.getInfoAsync(databaseFolder)).exists) {
+            await FileSystem.makeDirectoryAsync(databaseFolder)
+        }
+
         await downloadDatabase({ isDefault: true })
     }
 }
@@ -43,19 +46,21 @@ export async function downloadDatabase({ isDefault }) {
 }
 
 export async function uploadDatabase(data) {
-    const access_token = await SecureStorage.getData("users.token")
+    try {
+        const access_token = await SecureStorage.getData("users.token")
 
-    await FileSystem.uploadAsync(`${apiUrl}/users/backup`, databaseUri, {
-        uploadType: FileSystem.FileSystemUploadType.MULTIPART,
-        httpMethod: "POST",
-        fieldName: "file",
-        mimeType: ".db",
-        headers: {
-            "content-type": "multipart/form-data",
-            "Authorization": `Bearer ${access_token}`,
-        },
-        parameters: data
-    })
+        await FileSystem.uploadAsync(`${apiUrl}/users/backup`, databaseUri, {
+            uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+            httpMethod: "POST",
+            fieldName: "file",
+            mimeType: ".db",
+            headers: {
+                "content-type": "multipart/form-data",
+                "Authorization": `Bearer ${access_token}`,
+            },
+            parameters: data
+        })
+    } catch(error) {}
 }
 
 export function openDatabase() {

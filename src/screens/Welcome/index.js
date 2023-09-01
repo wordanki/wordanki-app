@@ -4,6 +4,8 @@ import { Feather } from '@expo/vector-icons'
 
 import AppIntroSlider from 'react-native-app-intro-slider'
 
+import Language from '../../database/models/Language'
+
 import { useGlobal } from '../../hooks/global'
 import localStorage from '../../helpers/localStorage'
 
@@ -18,7 +20,7 @@ const slides = [
         text: 'Aprenda milhares de palavras em inglês de forma rápida e eficiente',
         image: require('../../assets/logo.png'),
         sizeImage: 200,
-        backgroundColor: '#3AAD5A',
+        backgroundColor: COLORS.GREEN_PRIMARY,
     },
     {
         key: 'two',
@@ -26,7 +28,7 @@ const slides = [
         text: 'Continue estudando mesmo quando não estiver conectado',
         image: require('../../assets/airplane.png'),
         sizeImage: 150,
-        backgroundColor: '#0A7CB1',
+        backgroundColor: COLORS.BLUE,
     },
     {
         key: 'three',
@@ -34,7 +36,7 @@ const slides = [
         text: 'Estude com algoritmos eficientes para um melhor aprendizado',
         image: require('../../assets/algorithm.png'),
         sizeImage: 150,
-        backgroundColor: '#8367D0',
+        backgroundColor: COLORS.ORANGE,
     }
 ]
 
@@ -79,11 +81,11 @@ export default function Welcome({ route }) {
     )
 
     const onDone = async () => {
-        localStorage.storeData("user.first-time", false)
-
         setFirstTime(false)
+        navigation.replace('Question', { type: 1 })
 
-        navigation.replace('Login')
+        localStorage.storeData("user.first-time", false)
+        Language.updateStartedDateById(1, new Date().toISOString())
     }
 
     return (

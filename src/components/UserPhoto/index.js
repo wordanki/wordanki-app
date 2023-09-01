@@ -1,7 +1,7 @@
 import { Image } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 
-import avatarImg from '../../assets/avatar.png'
+import avatarImg from '../../assets/mulher.png'
 
 import { COLORS } from '../../theme'
 
@@ -17,8 +17,8 @@ const SIZES = {
         avatarSize: 32
     },
     HIGHER: {
-        containerSize: 70,
-        avatarSize: 66
+        containerSize: 100,
+        avatarSize: 94
     }
 }
 
@@ -29,7 +29,7 @@ export const UserPhoto = ({ imageUri, size = 'NORMAL' }) => {
 
     return (
         <LinearGradient 
-            colors={["#2299ff", "#22bbbb"]}
+            colors={[COLORS.GREEN_PRIMARY, COLORS.BLUE]}
             start={{ x: 0, y: 0.8 }}
             end={{ x: 0.9, y: 1 }}
             style={[

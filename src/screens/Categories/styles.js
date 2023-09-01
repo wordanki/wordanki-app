@@ -1,38 +1,42 @@
 import { StyleSheet, Dimensions } from 'react-native'
 
+import { transparentize } from 'polished'
+
 import { COLORS, FONTS } from "../../theme"
 
 const windowWidth = Dimensions.get('window').width
 
+const borderRadius = 10
+export const defaultSpacing = 16
+
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#222228",
-        paddingHorizontal: 16,
+        backgroundColor: COLORS.BGCOLOR_DARK,
+        paddingHorizontal: defaultSpacing
     },
-    title: {
-        color: COLORS.WHITE,
-        fontSize: 20,
-    },
-    containerSearchTopic: {
-        width: "100%",
-        height: 40,
-        flexDirection: "row",
-        alignItems: "center",
-        marginTop: 16,
-        marginBottom: 16,
-        backgroundColor: "#ffffff14",
-        borderWidth: 1,
-        borderColor: "#ffffff28",
-        borderRadius: 25,
-    },
-    searchTopic: {
+    list: {
         flex: 1,
-        fontSize: 18,
-        color: "#ffffff",
-        paddingHorizontal: 15,
+        marginTop: 20
     },
-    containerTopics: {
-        
+    time: {
+        textAlign: 'center', 
+        backgroundColor: transparentize(0.85, COLORS.ORANGE), 
+        color: COLORS.ORANGE, 
+        padding: 5, 
+        borderRadius: borderRadius
+    },
+    timeContainer: {
+        minWidth: defaultSpacing * 2
+    },
+    detailContainer: {
+        backgroundColor: COLORS.WHITE,
+        shadowColor: COLORS.WHITE,
+        shadowOffset: {width: -2, height: 4},
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        paddingHorizontal: defaultSpacing / 2,
+        borderRadius,
+        marginBottom: defaultSpacing * 2
     }
 })

@@ -1,32 +1,41 @@
-import { View, Text, TouchableHighlight, Image, Linking } from 'react-native'
+import { useState } from 'react'
+import { View, Text, TouchableOpacity, Image, Linking } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
 import * as WebBrowser from 'expo-web-browser'
-import * as AuthSession from 'expo-auth-session'
+
+import { AntDesign } from '@expo/vector-icons'
+
+import { Loading } from '../../components/Loading'
 
 import { useAuth } from '../../hooks/auth'
 
-import { googleAuthUrl } from '../../config/google'
-
-import api from '../../services/api'
-
-import LogoImage from '../../assets/logo_blue.png'
+import LogoImage from '../../assets/conecte-se.png'
 import GoogleImage from '../../assets/logo_google.png'
 import AppleImage from '../../assets/logo_apple_gray.png'
 
 import { styles } from "./styles"
+import { COLORS } from '../../theme'
 
-export default function Login() {
+export default function Login2() {
+    const [isLoading, setIsLoading] = useState(false)
+
     const navigation = useNavigation()
     const { signIn } = useAuth()
 
-    const handleWithoutLogin = () => {
-        navigation.replace('Main')
+    const handleExitButton = () => {
+        navigation.replace("Main")
     }
 
     const handleGoogleLogin = async () => {
-        await signIn()
-        navigation.replace('Main')
+        try {
+            setIsLoading(true)
+
+            await signIn()
+            navigation.replace('Main')
+        } catch (error) { } finally {
+            setIsLoading(false)
+        }
     }
 
     const handleAppleLogin = async () => {
@@ -43,60 +52,48 @@ export default function Login() {
 
     return (
         <View style={styles.page}>
+            <TouchableOpacity onPress={() => handleExitButton()} style={styles.exitButton}>
+                <AntDesign name="close" size={32} color={COLORS.BLACK_SECONDARY} />
+            </TouchableOpacity>
+
             <View style={styles.container}>
-                <Image 
+                <Image
                     source={LogoImage}
-                    style={styles.image} 
+                    style={styles.image}
                     resizeMode='contain'
                 />
 
                 <Text style={styles.text}>
-                    Entre com uma conta para não perder seu progresso de aprendizado!
+                    Entre com uma conta para não perder seu progresso de aprendizado! 🚀
                 </Text>
 
                 <View style={styles.buttonsContainer}>
-                    <TouchableHighlight onPress={handleGoogleLogin} style={styles.button}>
+                    <TouchableOpacity onPress={() => handleGoogleLogin()} style={styles.button}>
                         <View style={styles.contentButton}>
-                            <Image 
-                                source={GoogleImage}
-                                style={styles.imageButton} 
-                                resizeMode='contain'
-                            />
+                            {isLoading ? <Loading /> : (
+                                <>
+                                    <Image
+                                        source={GoogleImage}
+                                        style={styles.imageButton}
+                                        resizeMode='contain'
+                                    />
 
-                            <Text style={styles.textButton}>Continuar com Google</Text>
+                                    <Text style={styles.textButton}>Continuar com Google</Text>
+                                </>
+                            )}
                         </View>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
-                    <TouchableHighlight onPress={handleAppleLogin} style={styles.button}>
-                        <View style={styles.contentButton}>
-                            <Image 
-                                source={AppleImage}
-                                style={styles.imageButton} 
-                                resizeMode='contain'
-                            />
-                            
-                            <Text style={styles.textButton}>Continuar com Apple</Text>
-                        </View>
-                    </TouchableHighlight>
-
-                    <Text onPress={handleWithoutLogin} style={styles.withoutRegister}>Continuar sem registro</Text>
+                    <TouchableOpacity onPress={() => handleExitButton()}>
+                        <Text style={styles.withoutRegister}>Continuar sem registro</Text>
+                    </TouchableOpacity>
                 </View>
 
-                <Text style={styles.textFooter}>
-                    Ao usar o Wordanki, você confirma que leu e concorda com nossos 
-
-                    {" "}
-
-                    <Text onPress={openPrivacyPolitics} style={{textDecorationLine: "underline"}}>
-                        termos de uso
-                    </Text> 
-                    
-                    {" e "}
-
-                    <Text onPress={openPrivacyPolitics} style={{textDecorationLine: "underline"}}>
-                        política de privacidade
-                    </Text>.
-                </Text>
+                <TouchableOpacity onPress={openPrivacyPolitics}>
+                    <Text style={styles.textFooter}>
+                        Termos de uso e política de privacidade
+                    </Text>
+                </TouchableOpacity>
             </View>
         </View>
     )

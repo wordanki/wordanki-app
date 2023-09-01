@@ -5,11 +5,12 @@ import { NavigationContainer } from '@react-navigation/native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { CopilotProvider } from "react-native-copilot"
 import { useFonts, Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto"
+import { PaperProvider } from 'react-native-paper'
 import { StatusBar } from 'expo-status-bar'
 
 import * as SplashScreen from 'expo-splash-screen'
 import * as Notifications from 'expo-notifications'
-import * as NavigationBar from 'expo-navigation-bar'
+// import * as NavigationBar from 'expo-navigation-bar'
 
 import { GlobalProvider } from './hooks/global'
 import { AuthProvider } from './hooks/auth'
@@ -38,17 +39,17 @@ const style = {
 
 SplashScreen.preventAutoHideAsync()
 
-Notifications.setNotificationHandler({
-	handleNotification: async () => ({
-		shouldShowAlert: true,
-		shouldPlaySound: false,
-		shouldSetBadge: false
-	})
-})
+// Notifications.setNotificationHandler({
+// 	handleNotification: async () => ({
+// 		shouldShowAlert: true,
+// 		shouldPlaySound: false,
+// 		shouldSetBadge: false
+// 	})
+// })
 
-if (Platform.OS === "android") {
-	NavigationBar.setBackgroundColorAsync(COLORS.BLACK_PRIMARY)
-}
+// if (Platform.OS === "android") {
+// 	NavigationBar.setBackgroundColorAsync(COLORS.TRANSPARENT)
+// }
 
 export default function App() {
 	const [isLoaded, setIsLoaded] = useState(false)
@@ -62,15 +63,15 @@ export default function App() {
 	useEffect(() => {
 		loadDatabase().then(() => setIsLoaded(true))
 
-		registerForPushNotificationsAsync().then(token => {
-			setExpoPushToken(token)
+		// registerForPushNotificationsAsync().then(token => {
+		// 	setExpoPushToken(token)
 
-			LocalStorage.getData('user.expo-push-token-sendeds').catch(_ => {
-				api.post('/notifications', { token }).then(_ => {
-					LocalStorage.storeData('user.expo-push-token-sendeds', true)
-				})
-			})
-		})
+		// 	LocalStorage.getData('user.expo-push-token-sendeds').catch(_ => {
+		// 		api.post('/notifications', { token }).then(_ => {
+		// 			LocalStorage.storeData('user.expo-push-token-sendeds', true)
+		// 		})
+		// 	})
+		// })
 	}, [])
 
 	const onLayoutRootView = useCallback(async () => {
@@ -83,7 +84,7 @@ export default function App() {
 		<GlobalProvider>
 			<AuthProvider expoPushToken={expoPushToken}>
 				<StatusBar
-					style='light'
+					style='dark'
 					translucent={true}
 				/>
 
@@ -91,15 +92,17 @@ export default function App() {
 					<NavigationContainer
 						onReady={onLayoutRootView}
 					>
-						<CopilotProvider 
-							overlay='svg' 
-							tooltipStyle={style} 
-							arrowColor="#9FA8DA" 
-							backdropColor="rgba(50, 50, 100, 0.9)"
-							svgMaskPath={circleSvgPath}
-						>
-							<Routes />
-						</CopilotProvider>
+						<PaperProvider>
+							<CopilotProvider 
+								overlay='svg' 
+								tooltipStyle={style} 
+								arrowColor="#9FA8DA" 
+								backdropColor="rgba(50, 50, 100, 0.9)"
+								svgMaskPath={circleSvgPath}
+							>
+								<Routes />
+							</CopilotProvider>
+						</PaperProvider>
 					</NavigationContainer>
 				</SafeAreaProvider>
 			</AuthProvider>

@@ -8,24 +8,6 @@ class Word {
         this.db = openDatabase()
     }
 
-    async create(data) {
-        return new Promise((resolve, reject) => {
-            this.db.transaction(tx => {
-                tx.executeSql(
-                    `INSERT INTO ${TABLE_NAME} (english, portuguese, class, frequency) values (?, ?, ?, ?);`,
-                    [data.english, data.portuguese, data.class, data.frequency],
-                    (_, { rowsAffected, insertId }) => {
-                        if (rowsAffected > 0) return resolve(insertId)
-
-                        reject("Error inserting data: " + JSON.stringify(data))
-
-                    },
-                    (_, error) => reject(error)
-                )
-            })
-        })
-    }
-
     async update(id, data) {
         return new Promise((resolve, reject) => {
             this.db.transaction(tx => {
@@ -67,12 +49,12 @@ class Word {
                 tx.executeSql(
                     `SELECT 
                         ${TABLE_NAME}.id as word_id,
-                        ${TABLE_NAME}.english as word_english,
-                        ${TABLE_NAME}.portuguese as word_portuguese,
+                        ${TABLE_NAME}.content as word_content,
+                        ${TABLE_NAME}.translated_content as word_translated_content,
                         ${TABLE_NAME}.class as word_class,
                         ${PHRASE_TABLE_NAME}.id as phrase_id,
-                        ${PHRASE_TABLE_NAME}.english as phrase_english,
-                        ${PHRASE_TABLE_NAME}.portuguese as phrase_portuguese
+                        ${PHRASE_TABLE_NAME}.content as phrase_content,
+                        ${PHRASE_TABLE_NAME}.translated_content as phrase_translated_content
                     FROM ${TABLE_NAME} 
                     LEFT JOIN ${PHRASE_TABLE_NAME} 
                     ON ${PHRASE_TABLE_NAME}.word_id = ${TABLE_NAME}.id;`,
@@ -93,12 +75,12 @@ class Word {
                         })
 
                         const rowsFormatted = rows.map(row => ({
-                            english: row[0].word_english,
-                            portuguese: row[0].word_portuguese,
+                            content: row[0].word_content,
+                            translated_content: row[0].word_translated_content,
                             class: row[0].word_class,
                             phrases: row.map(item => ({
-                                english: item.phrase_english,
-                                portuguese: item.phrase_portuguese
+                                content: item.phrase_content,
+                                translated_content: item.phrase_translated_content
                             }))
                         }))
 
@@ -116,16 +98,16 @@ class Word {
                 tx.executeSql(
                     `SELECT 
                         ${TABLE_NAME}.id as word_id,
-                        ${TABLE_NAME}.english as word_english,
-                        ${TABLE_NAME}.portuguese as word_portuguese,
+                        ${TABLE_NAME}.content as word_content,
+                        ${TABLE_NAME}.translated_content as word_translated_content,
                         ${TABLE_NAME}.class as word_class,
                         ${TABLE_NAME}.next_repetition as word_next_repetition,
                         ${TABLE_NAME}.previous_repetition as word_previous_repetition,
                         ${TABLE_NAME}.hits as word_hits,
                         ${TABLE_NAME}.frequency as word_frequency,
                         ${PHRASE_TABLE_NAME}.id as phrase_id,
-                        ${PHRASE_TABLE_NAME}.english as phrase_english,
-                        ${PHRASE_TABLE_NAME}.portuguese as phrase_portuguese
+                        ${PHRASE_TABLE_NAME}.content as phrase_content,
+                        ${PHRASE_TABLE_NAME}.translated_content as phrase_translated_content
                     FROM ${TABLE_NAME} 
                     LEFT JOIN ${PHRASE_TABLE_NAME} 
                     ON ${PHRASE_TABLE_NAME}.word_id = ${TABLE_NAME}.id
@@ -151,15 +133,15 @@ class Word {
                         const rowsFormatted = rows.map(row => ({
                             id: row[0].word_id,
                             hits: row[0].word_hits,
-                            english: row[0].word_english,
-                            portuguese: row[0].word_portuguese,
+                            content: row[0].word_content,
+                            translated_content: row[0].word_translated_content,
                             frequency: row[0].word_frequency,
                             next_repetition: row[0].word_next_repetition,
                             previous_repetition: row[0].word_previous_repetition,
                             class: row[0].word_class,
                             phrases: row.map(item => ({
-                                english: item.phrase_english,
-                                portuguese: item.phrase_portuguese
+                                content: item.phrase_content,
+                                translated_content: item.phrase_translated_content
                             }))
                         }))
 
@@ -177,16 +159,16 @@ class Word {
                 tx.executeSql(
                     `SELECT 
                         ${TABLE_NAME}.id as word_id,
-                        ${TABLE_NAME}.english as word_english,
-                        ${TABLE_NAME}.portuguese as word_portuguese,
+                        ${TABLE_NAME}.content as word_content,
+                        ${TABLE_NAME}.translated_content as word_translated_content,
                         ${TABLE_NAME}.class as word_class,
                         ${TABLE_NAME}.next_repetition as word_next_repetition,
                         ${TABLE_NAME}.previous_repetition as word_previous_repetition,
                         ${TABLE_NAME}.hits as word_hits,
                         ${TABLE_NAME}.frequency as word_frequency,
                         ${PHRASE_TABLE_NAME}.id as phrase_id,
-                        ${PHRASE_TABLE_NAME}.english as phrase_english,
-                        ${PHRASE_TABLE_NAME}.portuguese as phrase_portuguese
+                        ${PHRASE_TABLE_NAME}.content as phrase_content,
+                        ${PHRASE_TABLE_NAME}.translated_content as phrase_translated_content
                     FROM ${TABLE_NAME} 
                     LEFT JOIN ${PHRASE_TABLE_NAME} 
                     ON ${PHRASE_TABLE_NAME}.word_id = ${TABLE_NAME}.id
@@ -212,15 +194,15 @@ class Word {
                         const rowsFormatted = rows.map(row => ({
                             id: row[0].word_id,
                             hits: row[0].word_hits,
-                            english: row[0].word_english,
-                            portuguese: row[0].word_portuguese,
+                            content: row[0].word_content,
+                            translated_content: row[0].word_translated_content,
                             frequency: row[0].word_frequency,
                             next_repetition: row[0].word_next_repetition,
                             previous_repetition: row[0].word_previous_repetition,
                             class: row[0].word_class,
                             phrases: row.map(item => ({
-                                english: item.phrase_english,
-                                portuguese: item.phrase_portuguese
+                                content: item.phrase_content,
+                                translated_content: item.phrase_translated_content
                             }))
                         }))
 
@@ -240,15 +222,15 @@ class Word {
                 tx.executeSql(
                     `SELECT 
                         ${TABLE_NAME}.id as word_id,
-                        ${TABLE_NAME}.english as word_english,
-                        ${TABLE_NAME}.portuguese as word_portuguese,
+                        ${TABLE_NAME}.content as word_content,
+                        ${TABLE_NAME}.translated_content as word_translated_content,
                         ${TABLE_NAME}.class as word_class,
                         ${TABLE_NAME}.next_repetition as word_next_repetition,
                         ${TABLE_NAME}.previous_repetition as word_previous_repetition,
                         ${TABLE_NAME}.hits as word_hits,
                         ${PHRASE_TABLE_NAME}.id as phrase_id,
-                        ${PHRASE_TABLE_NAME}.english as phrase_english,
-                        ${PHRASE_TABLE_NAME}.portuguese as phrase_portuguese
+                        ${PHRASE_TABLE_NAME}.content as phrase_content,
+                        ${PHRASE_TABLE_NAME}.translated_content as phrase_translated_content
                     FROM ${TABLE_NAME} 
                     LEFT JOIN ${PHRASE_TABLE_NAME} 
                     ON ${PHRASE_TABLE_NAME}.word_id = ${TABLE_NAME}.id
@@ -274,14 +256,14 @@ class Word {
                         const rowsFormatted = rows.map(row => ({
                             id: row[0].word_id,
                             hits: row[0].word_hits,
-                            english: row[0].word_english,
-                            portuguese: row[0].word_portuguese,
+                            content: row[0].word_content,
+                            translated_content: row[0].word_translated_content,
                             next_repetition: row[0].word_next_repetition,
                             previous_repetition: row[0].word_previous_repetition,
                             class: row[0].word_class,
                             phrases: row.map(item => ({
-                                english: item.phrase_english,
-                                portuguese: item.phrase_portuguese
+                                content: item.phrase_content,
+                                translated_content: item.phrase_translated_content
                             }))
                         }))
 
@@ -299,7 +281,7 @@ class Word {
                 tx.executeSql(
                     `SELECT * FROM ${TABLE_NAME}
                     WHERE ${TABLE_NAME}.class = '${classWord}' 
-                    AND ${TABLE_NAME}.portuguese != '${translation}'
+                    AND ${TABLE_NAME}.translated_content != '${translation}'
                     ORDER BY RANDOM() LIMIT ${limit};`,
                     [],
                     (_, { rows: { _array } }) => {
@@ -356,19 +338,6 @@ class Word {
                     (_, { rows: { _array: [{ quantity }] } }) => {
                         resolve(quantity)
                     },
-                    (_, error) => reject(error)
-                )
-            })
-        })
-    }
-
-    async remove(id) {
-        return new Promise((resolve, reject) => {
-            this.db.transaction(tx => {
-                tx.executeSql(
-                    `DELETE FROM ${TABLE_NAME} WHERE id=?;`,
-                    [id],
-                    (_, { rowsAffected }) => resolve(rowsAffected),
                     (_, error) => reject(error)
                 )
             })
